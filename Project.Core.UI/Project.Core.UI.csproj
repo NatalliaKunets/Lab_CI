@@ -6,11 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Enums\" />
-    <Folder Include="Logging\" />
-    <Folder Include="Utils\" />
-    <Folder Include="Settings\" />
-  </ItemGroup>
-
 </Project>
