@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 
@@ -11,7 +6,7 @@ namespace Project.Core.Settings
 {
 	public class WebDriverManager
 	{
-        public IWebDriver? Driver { get; set; }
+		public IWebDriver? Driver { get; private set; }
 
 		public IWebDriver InitializeDriver(string browser)
 		{
@@ -24,7 +19,7 @@ namespace Project.Core.Settings
 					Driver = new FirefoxDriver();
 					break;
 				default:
-					throw new ArgumentException($"Browser {browser} is not supported");
+					throw new ArgumentException($"Browser {browser} is not supported.");
 			}
 
 			Driver.Manage().Window.Maximize();
