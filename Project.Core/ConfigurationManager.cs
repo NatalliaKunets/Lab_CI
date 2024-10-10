@@ -17,13 +17,13 @@ public class ConfigurationManager
     public Configuration Get()
     {
         var appConfig = new AppConfig(
-            configuration["AppConfig:baseURL"]!,
-            configuration["AppConfig:browser"]!
+            configuration["AppConfig:BaseURL"]!,
+            configuration["AppConfig:Browser"]!
         );
 
         var apiSettings = new ApiSettings(
-            int.Parse(configuration["APIConfig:timeout"]!),
-            configuration["APIConfig:URL"]!
+            int.Parse(configuration["APIConfig:Timeout"]!),
+            configuration["APIConfig:BaseApiURL"]!
         );
 
         return new Configuration(appConfig, apiSettings);
