@@ -3,30 +3,37 @@ using Project.Core.Models;
 
 namespace Project.Core;
 
-public class ConfigurationManager
+public static class ConfigurationManager
 {
-    private readonly IConfiguration configuration;
+    public static IConfiguration configuration;
+    private static BrowserSettings browserSettings;
+    private static ApiSettings apiSettings;
 
-    public ConfigurationManager()
+    static ConfigurationManager()
     {
         configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false)
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("logging.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables()
             .Build();
     }
 
-    public Configuration Get()
+    public static BrowserSettings GetBrowserSettings()
     {
-        var appConfig = new AppConfig(
+        browserSettings = new BrowserSettings(
             configuration["AppConfig:BaseURL"]!,
-            configuration["AppConfig:Browser"]!
-        );
+            configuration["AppConfig:Browser"]!);
+        
+        return browserSettings;
+    }
 
-        var apiSettings = new ApiSettings(
+    public static ApiSettings GetApiSettings()
+    {
+        apiSettings = new ApiSettings(
             int.Parse(configuration["APIConfig:Timeout"]!),
-            configuration["APIConfig:BaseApiURL"]!
-        );
+            configuration["APIConfig:BaseApiURL"]!);
 
-        return new Configuration(appConfig, apiSettings);
-
+        return apiSettings;
     }
 }
