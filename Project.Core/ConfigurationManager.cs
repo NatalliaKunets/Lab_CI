@@ -21,19 +21,13 @@ public static class ConfigurationManager
 
     public static BrowserSettings GetBrowserSettings()
     {
-        browserSettings = new BrowserSettings(
-            configuration["AppConfig:BaseURL"]!,
-            configuration["AppConfig:Browser"]!);
-        
+        browserSettings ??= configuration.GetRequiredSection("AppConfig").Get<BrowserSettings>()!;
         return browserSettings;
     }
 
     public static ApiSettings GetApiSettings()
     {
-        apiSettings = new ApiSettings(
-            int.Parse(configuration["APIConfig:Timeout"]!),
-            configuration["APIConfig:BaseApiURL"]!);
-
+        apiSettings ??= configuration.GetRequiredSection("APIConfig").Get<ApiSettings>()!;
         return apiSettings;
     }
 }
