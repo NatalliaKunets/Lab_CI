@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Project.Core.Settings;
 using Project.Core.Models;
+
 
 namespace Project.Core;
 
