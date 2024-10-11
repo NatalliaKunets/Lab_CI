@@ -3,17 +3,12 @@
   "enabled": true,
   "server": {
     "url": "https://reportportal.epam.com/",
-    "project": "",
-    "authentication": {
-      "uuid": ""
-    }
+    "project": "krystsina_pulatava_personal",
+    "apiKey": "20_HWLsaDf9RWilIfIXmwWm_6Kxj5B8au7p5pnYWwS70bYRmtprC7O0xNd88AbdsmRv"
   },
   "launch": {
-    "name": "",
-    "description": "",
+    "name": "EPAM AT Lab 2024.NET",
     "debugMode": false,
-    "attributes": [ "", "" ],
-    "tags": [ "", "" ]
-  },
-  "rootNamespaces": [ "", "" ]
+    "tags": "Lab_AT.NET"
+  }
 }

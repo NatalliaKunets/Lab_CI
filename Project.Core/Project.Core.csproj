@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ReportPortal.addins" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="ReportPortal.addins">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Enums\" />
     <Folder Include="Logging\" />
     <Folder Include="Utils\" />
