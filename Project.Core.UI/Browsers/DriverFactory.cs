@@ -13,7 +13,7 @@ namespace Project.Core.UI.Browsers
 {
 	public static class DriverFactory
 	{
-		public static IWebDriver GetDriver(BrowserSettings browserSettings)
+		public static IWebDriver InitializeDriver(BrowserSettings browserSettings)
 		{
 			IWebDriver driver;
 
