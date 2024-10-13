@@ -8,16 +8,17 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools.V127.Target;
 using OpenQA.Selenium.Edge;
 using Project.Core.Enums;
+using Project.Core.Settings;
 
 namespace Project.Core.UI.Browsers
 {
 	public static class DriverFactory
 	{
-		public static IWebDriver InitializeDriver(BrowserSettings browserSettings)
+		public static IWebDriver InitializeDriver(BrowserSettings settings)
 		{
 			IWebDriver driver;
 
-			switch (browserSettings.Browser)
+			switch (settings.browserType)
 			{
 				case BrowserType.Chrome:
 					var chromeOptions = new ChromeOptions();
@@ -31,7 +32,7 @@ namespace Project.Core.UI.Browsers
 					driver = new EdgeDriver(edgeOptions);
 					break;
 				default:
-					throw new PlatformNotSupportedException($"{browserSettings.Browser} is not currently supported");
+					throw new ArgumentException($"{settings.browserType} is not supported");
 			}
 			return driver;
 		}
