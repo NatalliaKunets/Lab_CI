@@ -11,7 +11,6 @@ using Project.Core.Enums;
 using Project.Core.Settings;
 
 namespace Project.Core.UI.Browsers;
-{
 	public static class DriverFactory
 	{
 		public static IWebDriver InitializeDriver(BrowserType browserType)
@@ -37,4 +36,3 @@ namespace Project.Core.UI.Browsers;
 			return driver;
 		}
 	}
-}
