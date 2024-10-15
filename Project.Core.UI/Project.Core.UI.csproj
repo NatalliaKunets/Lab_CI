@@ -15,7 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Project.Core\Project.Core.csproj" />
+    <Folder Include="Browsers\" />
+    <Folder Include="Elements\" />
+    <Folder Include="PageObjects\Locators\" />
+    <Folder Include="PageObjects\Pages\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
 
 </Project>
