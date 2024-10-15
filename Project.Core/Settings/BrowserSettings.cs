@@ -2,8 +2,4 @@
 
 namespace Project.Core.Settings;
 
-public class BrowserSettings
-{
-    public BrowserType browserType{ get; set; }
-    public string URL { get; set; }
-}
+public record BrowserSettings(BrowserType browserType, string URL);

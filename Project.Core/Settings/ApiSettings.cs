@@ -1,3 +1,3 @@
-﻿namespace Project.Core.Models;
+﻿namespace Project.Core.Settings;
 
 public record ApiSettings(int Timeout, string URL);

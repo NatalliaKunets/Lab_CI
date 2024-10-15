@@ -1,13 +1,12 @@
 ﻿using Serilog;
 
-namespace Project.Core.Logging
+namespace Project.Core.Logging;
+
+public static class Logger
 {
-	public static class Logger
+	static Logger()
 	{
-		static Logger()
-		{
-			Log.Logger = new LoggerConfiguration()
-				.CreateLogger();
-		}
+		Log.Logger = new LoggerConfiguration()
+			.CreateLogger();
 	}
 }
