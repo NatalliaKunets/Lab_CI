@@ -1,13 +1,14 @@
 ﻿using OpenQA.Selenium;
+using Project.Core.Logging;
 using Project.Core.Settings;
 
 namespace Project.Core.UI.Browsers;
 
 public static class BrowserManager
 {
-    private static IWebDriver? driver;
+    private static Browser? driver;
 
-    public static IWebDriver GetBrowser()
+    public static Browser GetBrowser()
     {
         if (driver == null)
         {
