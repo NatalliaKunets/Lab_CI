@@ -13,7 +13,18 @@ public static class BrowserManager
         if (driver == null)
         {
             BrowserSettings browserSettings = ConfigurationManager.GetBrowserSettings();
-            driver = DriverFactory.InitializeDriver(browserSettings.browserType);
+            try
+            {
+                driver = DriverFactory.InitializeDriver(browserSettings.browserType);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, $"Failed to initialize WebDriver with browser type: {browserSettings.browserType}");
+            }
+            finally
+            {
+                driver = null;
+            }
         }
 
         return driver;
