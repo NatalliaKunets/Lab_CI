@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using Project.Core.Logging;
 using System.Collections.ObjectModel;
 
@@ -12,6 +13,8 @@ public class Browser : IBrowser
     {
         this.driver = driver;
     }
+
+    public WebDriverWait wait => new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
     public string Url { get => driver.Url; set => driver.Url = value; }
 
@@ -54,4 +57,8 @@ public class Browser : IBrowser
         driver.Manage().Window.Maximize();
     }
 
+    INavigation IBrowser.Navigate(string url)
+    {
+        throw new NotImplementedException();
+    }
 }
