@@ -4,5 +4,10 @@ namespace Project.Core.UI.Elements.Elements
 {
 	public interface IElement : IWebElement
 	{
+		string TagName {  get; }
+		void Clear(string element);
+		void Click();
+		void SendKeys(string text);
+		void Submit();
 	}
 }

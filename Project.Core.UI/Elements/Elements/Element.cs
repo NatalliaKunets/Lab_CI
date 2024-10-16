@@ -18,110 +18,19 @@ namespace Project.Core.UI.Elements.Elements
 			_webElement = webElement ?? throw new ArgumentNullException(nameof(webElement), "WebElement cannot be null.");
 		}
 
-		public string TagName
-		{
-			get
-			{
-				try
-				{
-					return _webElement.TagName;
-				}
-				catch (NoSuchElementException e)
-				{
-					throw new InvalidOperationException("Element is not available in the DOM.", e);
-				}
-			}
-		}
+		public string TagName => _webElement.TagName;
 
-		public string Text
-		{
-			get
-			{
-				try
-				{
-					return _webElement.Text;
-				}
-				catch (NoSuchElementException e)
-				{
-					throw new InvalidOperationException("Element is not available in the DOM.", e);
-				}
-			}
-		}
+		public string Text => _webElement.Text;
 
-		public bool Enabled
-		{
-			get
-			{
-				try
-				{
-					return _webElement.Enabled;
-				}
-				catch (NoSuchElementException e)
-				{
-					throw new InvalidOperationException("Element is not available in the DOM.", e);
-				}
-			}
-		}
+		public bool Enabled => _webElement.Enabled;
 
-		public bool Selected
-		{
-			get
-			{
-				try
-				{
-					return _webElement.Selected;
-				}
-				catch (NoSuchElementException e)
-				{
-					throw new InvalidOperationException("Element is not available in the DOM.", e);
-				}
-			}
-		}
+		public bool Selected => _webElement.Selected;
 
-		public Point Location
-		{
-			get
-			{
-				try
-				{
-					return _webElement.Location;
-				}
-				catch (NoSuchElementException e)
-				{
-					throw new InvalidOperationException("Element is not available in the DOM.", e);
-				}
-			}
-		}
+		public Point Location => _webElement.Location;
 
-		public Size Size
-		{
-			get
-			{
-				try
-				{
-					return _webElement.Size;
-				}
-				catch (NoSuchElementException e)
-				{
-					throw new InvalidOperationException("Element is not available in the DOM.", e);
-				}
-			}
-		}
+		public Size Size => _webElement.Size;
 
-		public bool Displayed
-		{
-			get
-			{
-				try
-				{
-					return _webElement.Displayed;
-				}
-				catch (NoSuchElementException e)
-				{
-					throw new InvalidOperationException("Element is not available in the DOM.", e);
-				}
-			}
-		}
+		public bool Displayed => _webElement.Displayed;
 
 		public void Clear()
 		{
@@ -131,8 +40,13 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (InvalidElementStateException e)
 			{
-				throw new InvalidOperationException("Element state is invalid for clearing its content.", e);
+				throw new InvalidElementStateException("Element is not in a state that allows clearing.", e);
 			}
+		}
+
+		public void Clear(string element)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Click()
@@ -143,11 +57,11 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (ElementNotInteractableException e)
 			{
-				throw new InvalidOperationException("Element is not interactable.", e);
+				throw new ElementNotInteractableException("Element is not interactable.", e);
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException("Element does not exist in the DOM.", e);
+				throw new NoSuchElementException("Element does not exist in the DOM.", e);
 			}
 		}
 
@@ -159,7 +73,7 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException($"No element found with locator: {by}", e);
+				throw new NoSuchElementException($"No element found with locator: {by}", e);
 			}
 		}
 
@@ -171,7 +85,7 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException($"No elements found with locator: {by}", e);
+				throw new NoSuchElementException($"No elements found with locator: {by}", e);
 			}
 		}
 
@@ -183,7 +97,7 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException($"Element not found when trying to get attribute '{attributeName}'.", e);
+				throw new NoSuchElementException($"Element not found when trying to get attribute '{attributeName}'.", e);
 			}
 		}
 
@@ -195,7 +109,7 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException($"Element not found when trying to get CSS property '{propertyName}'.", e);
+				throw new NoSuchElementException($"Element not found when trying to get CSS property '{propertyName}'.", e);
 			}
 		}
 
@@ -207,7 +121,7 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException($"Element not found when trying to get DOM attribute '{attributeName}'.", e);
+				throw new NoSuchElementException($"Element not found when trying to get DOM attribute '{attributeName}'.", e);
 			}
 		}
 
@@ -219,7 +133,7 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException($"Element not found when trying to get DOM property '{propertyName}'.", e);
+				throw new NoSuchElementException($"Element not found when trying to get DOM property '{propertyName}'.", e);
 			}
 		}
 
@@ -231,7 +145,7 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException("Element not found when trying to get ShadowRoot.", e);
+				throw new NoSuchElementException("Element not found when trying to get ShadowRoot.", e);
 			}
 		}
 
@@ -243,7 +157,7 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (InvalidElementStateException e)
 			{
-				throw new InvalidOperationException("Element state is invalid for sending keys.", e);
+				throw new InvalidElementStateException("Element state is invalid for sending keys.", e);
 			}
 		}
 
@@ -255,11 +169,11 @@ namespace Project.Core.UI.Elements.Elements
 			}
 			catch (NoSuchElementException e)
 			{
-				throw new InvalidOperationException("Element not found for submitting.", e);
+				throw new NoSuchElementException("Element not found for submitting.", e);
 			}
 			catch (ElementNotInteractableException e)
 			{
-				throw new InvalidOperationException("Element is not interactable for submission.", e);
+				throw new ElementNotInteractableException("Element is not interactable for submission.", e);
 			}
 		}
 	}
