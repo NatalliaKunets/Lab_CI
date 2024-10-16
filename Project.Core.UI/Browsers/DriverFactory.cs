@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.DevTools.V127.Target;
 using OpenQA.Selenium.Edge;
 using Project.Core.Enums;
-using Project.Core.Settings;
 
 namespace Project.Core.UI.Browsers;
-	public static class DriverFactory
+public static class DriverFactory
 	{
     public static Browser InitializeDriver(BrowserType browserType)
 		{
