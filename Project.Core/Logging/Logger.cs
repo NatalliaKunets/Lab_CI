@@ -10,7 +10,7 @@ public static class Logger
 			.CreateLogger();
 	}
 
-    public static void Error(Exception exception, string message)
+	public static void Error(Exception exception, string message)
     {
         Log.Error(exception, message);
     }
