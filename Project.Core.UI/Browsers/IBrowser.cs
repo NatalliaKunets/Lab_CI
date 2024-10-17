@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Project.Core.UI.Elements.Elements;
 using System.Collections.ObjectModel;
 
 namespace Project.Core.UI.Browsers;
@@ -26,7 +27,7 @@ public interface IBrowser
 
     void Quit();
 
-    IWebElement FindElement(By by);
+    IElement FindElement(By by);
 
     void RefreshPage();
 

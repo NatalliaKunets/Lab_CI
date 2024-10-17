@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Project.Core.Logging;
+using Project.Core.UI.Elements.Elements;
 using System.Collections.ObjectModel;
 
 namespace Project.Core.UI.Browsers;
@@ -34,11 +35,11 @@ public class Browser : IBrowser
 
     public void Close() => driver.Close();
 
-    public IWebElement FindElement(By by)
+    public IElement FindElement(By by)
     {
         try
         {
-            return driver.FindElement(by);
+            return new Element(driver.FindElement(by));
         }
         catch (Exception ex)
         {
