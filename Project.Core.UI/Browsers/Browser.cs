@@ -31,7 +31,7 @@ public class Browser : IBrowser
     public ITargetLocator SwitchTo() => driver.SwitchTo();
 
     public void Quit() => driver.Quit();
-    
+
     public void Close() => driver.Close();
 
     public IWebElement FindElement(By by)
@@ -62,3 +62,4 @@ public class Browser : IBrowser
         throw new NotImplementedException();
     }
 }
+
