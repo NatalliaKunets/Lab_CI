@@ -14,7 +14,7 @@ public class Browser : IBrowser
         this.driver = driver;
     }
 
-    public WebDriverWait wait => new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+    public WebDriverWait Wait { get => new WebDriverWait(driver, TimeSpan.FromSeconds(10)); }
 
     public string Url { get => driver.Url; set => driver.Url = value; }
 
@@ -55,11 +55,6 @@ public class Browser : IBrowser
     public void WindowMaximize()
     {
         driver.Manage().Window.Maximize();
-    }
-
-    INavigation IBrowser.Navigate(string url)
-    {
-        throw new NotImplementedException();
     }
 }
 
