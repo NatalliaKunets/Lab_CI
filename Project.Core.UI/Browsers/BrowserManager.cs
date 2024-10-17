@@ -1,14 +1,13 @@
-﻿using OpenQA.Selenium;
-using Project.Core.Logging;
+﻿using Project.Core.Logging;
 using Project.Core.Settings;
 
 namespace Project.Core.UI.Browsers;
 
 public static class BrowserManager
 {
-    private static Browser? driver;
+    private static IBrowser? driver;
 
-    public static Browser GetBrowser()
+    public static IBrowser GetBrowser()
     {
         if (driver == null)
         {
@@ -20,13 +19,9 @@ public static class BrowserManager
             catch (Exception ex)
             {
                 Logger.Error(ex, $"Failed to initialize WebDriver with browser type: {browserSettings.browserType}");
-            }
-            finally
-            {
-                driver = null;
+                throw;
             }
         }
-
         return driver;
     }
 
