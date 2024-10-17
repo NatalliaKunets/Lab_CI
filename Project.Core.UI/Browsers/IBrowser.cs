@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System.Collections.ObjectModel;
 
 namespace Project.Core.UI.Browsers;
@@ -7,18 +8,20 @@ public interface IBrowser
 {
     string Url { get; set; }
 
-    string Title { get;}
+    string Title { get; }
+
+    WebDriverWait Wait { get; }
 
     string CurrentWindowHandle { get; }
 
     ReadOnlyCollection<string> WindowHandles { get; }
-    
+
     IOptions Manage();
-    
-    INavigation Navigate(string url);
-    
+
+    void Navigate(string url);
+
     ITargetLocator SwitchTo();
-    
+
     void Close();
 
     void Quit();
@@ -29,3 +32,4 @@ public interface IBrowser
 
     void WindowMaximize();
 }
+
