@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="PageObjects\Locators\" />
-    <Folder Include="Elements\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
 

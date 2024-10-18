@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Project.Core.Logging;
-using Project.Core.UI.Elements.Elements;
+using Project.Core.UI.Elements;
 using System.Collections.ObjectModel;
 
 namespace Project.Core.UI.Browsers;
