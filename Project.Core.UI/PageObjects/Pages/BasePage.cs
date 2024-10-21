@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using Project.Core.UI.Browsers;
-using Project.Core.UI.Elements.Elements;
+using Project.Core.UI.Elements;
 using System.Globalization;
 
 namespace Project.Core.UI.PageObjects.Pages;
