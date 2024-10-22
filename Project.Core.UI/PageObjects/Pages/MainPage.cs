@@ -4,11 +4,11 @@ using Project.Core.UI.Elements;
 using Project.Core.UI.PageObjects.Locators;
 
 namespace Project.Core.UI.PageObjects.Pages;
+
 public class MainPage : BasePage
 {
 	public MainPage(IBrowser driver) : base(driver)
 	{
-
 		Driver = driver;
 	}
 
