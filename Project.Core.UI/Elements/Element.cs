@@ -1,180 +1,174 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using OpenQA.Selenium;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
 
-namespace Project.Core.UI.Elements.Elements
+namespace Project.Core.UI.Elements;
+
+public class Element : IElement
 {
-	public class Element : IElement
+	private readonly IWebElement _webElement;
+
+	public Element(IWebElement webElement)
 	{
-		private readonly IWebElement _webElement;
+		_webElement = webElement ?? throw new ArgumentNullException(nameof(webElement), "WebElement cannot be null.");
+	}
 
-		public Element(IWebElement webElement)
+	public string TagName => _webElement.TagName;
+
+	public string Text => _webElement.Text;
+
+	public bool Enabled => _webElement.Enabled;
+
+	public bool Selected => _webElement.Selected;
+
+	public Point Location => _webElement.Location;
+
+	public Size Size => _webElement.Size;
+
+	public bool Displayed => _webElement.Displayed;
+
+	public void Clear()
+	{
+		try
 		{
-			_webElement = webElement ?? throw new ArgumentNullException(nameof(webElement), "WebElement cannot be null.");
+			_webElement.Clear();
 		}
-
-		public string TagName => _webElement.TagName;
-
-		public string Text => _webElement.Text;
-
-		public bool Enabled => _webElement.Enabled;
-
-		public bool Selected => _webElement.Selected;
-
-		public Point Location => _webElement.Location;
-
-		public Size Size => _webElement.Size;
-
-		public bool Displayed => _webElement.Displayed;
-
-		public void Clear()
+		catch (InvalidElementStateException e)
 		{
-			try
-			{
-				_webElement.Clear();
-			}
-			catch (InvalidElementStateException e)
-			{
-				throw new InvalidElementStateException("Element is not in a state that allows clearing.", e);
-			}
+			throw new InvalidElementStateException("Element is not in a state that allows clearing.", e);
 		}
+	}
 
-		public void Clear(string element)
+	public void Clear(string element)
+	{
+		throw new NotImplementedException();
+	}
+
+	public void Click()
+	{
+		try
 		{
-			throw new NotImplementedException();
+			_webElement.Click();
 		}
-
-		public void Click()
+		catch (ElementNotInteractableException e)
 		{
-			try
-			{
-				_webElement.Click();
-			}
-			catch (ElementNotInteractableException e)
-			{
-				throw new ElementNotInteractableException("Element is not interactable.", e);
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException("Element does not exist in the DOM.", e);
-			}
+			throw new ElementNotInteractableException("Element is not interactable.", e);
 		}
-
-		public IWebElement FindElement(By by)
+		catch (NoSuchElementException e)
 		{
-			try
-			{
-				return _webElement.FindElement(by);
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException($"No element found with locator: {by}", e);
-			}
+			throw new NoSuchElementException("Element does not exist in the DOM.", e);
 		}
+	}
 
-		public ReadOnlyCollection<IWebElement> FindElements(By by)
+	public IWebElement FindElement(By by)
+	{
+		try
 		{
-			try
-			{
-				return _webElement.FindElements(by);
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException($"No elements found with locator: {by}", e);
-			}
+			return _webElement.FindElement(by);
 		}
-
-		public string GetAttribute(string attributeName)
+		catch (NoSuchElementException e)
 		{
-			try
-			{
-				return _webElement.GetAttribute(attributeName);
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException($"Element not found when trying to get attribute '{attributeName}'.", e);
-			}
+			throw new NoSuchElementException($"No element found with locator: {by}", e);
 		}
+	}
 
-		public string GetCssValue(string propertyName)
+	public ReadOnlyCollection<IWebElement> FindElements(By by)
+	{
+		try
 		{
-			try
-			{
-				return _webElement.GetCssValue(propertyName);
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException($"Element not found when trying to get CSS property '{propertyName}'.", e);
-			}
+			return _webElement.FindElements(by);
 		}
-
-		public string GetDomAttribute(string attributeName)
+		catch (NoSuchElementException e)
 		{
-			try
-			{
-				return _webElement.GetDomAttribute(attributeName);
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException($"Element not found when trying to get DOM attribute '{attributeName}'.", e);
-			}
+			throw new NoSuchElementException($"No elements found with locator: {by}", e);
 		}
+	}
 
-		public string GetDomProperty(string propertyName)
+	public string GetAttribute(string attributeName)
+	{
+		try
 		{
-			try
-			{
-				return _webElement.GetDomProperty(propertyName);
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException($"Element not found when trying to get DOM property '{propertyName}'.", e);
-			}
+			return _webElement.GetAttribute(attributeName);
 		}
-
-		public ISearchContext GetShadowRoot()
+		catch (NoSuchElementException e)
 		{
-			try
-			{
-				return _webElement.GetShadowRoot();
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException("Element not found when trying to get ShadowRoot.", e);
-			}
+			throw new NoSuchElementException($"Element not found when trying to get attribute '{attributeName}'.", e);
 		}
+	}
 
-		public void SendKeys(string value)
+	public string GetCssValue(string propertyName)
+	{
+		try
 		{
-			try
-			{
-				_webElement.SendKeys(value);
-			}
-			catch (InvalidElementStateException e)
-			{
-				throw new InvalidElementStateException("Element state is invalid for sending keys.", e);
-			}
+			return _webElement.GetCssValue(propertyName);
 		}
-
-		public void Submit()
+		catch (NoSuchElementException e)
 		{
-			try
-			{
-				_webElement.Submit();
-			}
-			catch (NoSuchElementException e)
-			{
-				throw new NoSuchElementException("Element not found for submitting.", e);
-			}
-			catch (ElementNotInteractableException e)
-			{
-				throw new ElementNotInteractableException("Element is not interactable for submission.", e);
-			}
+			throw new NoSuchElementException($"Element not found when trying to get CSS property '{propertyName}'.", e);
+		}
+	}
+
+	public string GetDomAttribute(string attributeName)
+	{
+		try
+		{
+			return _webElement.GetDomAttribute(attributeName);
+		}
+		catch (NoSuchElementException e)
+		{
+			throw new NoSuchElementException($"Element not found when trying to get DOM attribute '{attributeName}'.", e);
+		}
+	}
+
+	public string GetDomProperty(string propertyName)
+	{
+		try
+		{
+			return _webElement.GetDomProperty(propertyName);
+		}
+		catch (NoSuchElementException e)
+		{
+			throw new NoSuchElementException($"Element not found when trying to get DOM property '{propertyName}'.", e);
+		}
+	}
+
+	public ISearchContext GetShadowRoot()
+	{
+		try
+		{
+			return _webElement.GetShadowRoot();
+		}
+		catch (NoSuchElementException e)
+		{
+			throw new NoSuchElementException("Element not found when trying to get ShadowRoot.", e);
+		}
+	}
+
+	public void SendKeys(string value)
+	{
+		try
+		{
+			_webElement.SendKeys(value);
+		}
+		catch (InvalidElementStateException e)
+		{
+			throw new InvalidElementStateException("Element state is invalid for sending keys.", e);
+		}
+	}
+
+	public void Submit()
+	{
+		try
+		{
+			_webElement.Submit();
+		}
+		catch (NoSuchElementException e)
+		{
+			throw new NoSuchElementException("Element not found for submitting.", e);
+		}
+		catch (ElementNotInteractableException e)
+		{
+			throw new ElementNotInteractableException("Element is not interactable for submission.", e);
 		}
 	}
 }
