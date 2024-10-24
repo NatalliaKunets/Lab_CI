@@ -10,4 +10,5 @@ public static class MainPageLocators
 	public static readonly By LoginBtnBy = By.CssSelector("button[data-testid='login-button']");
 	public static readonly By SearchBtnBy = By.CssSelector("svg[data-testid='search-icon']");
 	public static readonly By SongPlayBtnBy = By.CssSelector("svg[data-testid='search-icon']");
+	public static readonly By UserProfileBtn = By.CssSelector("button[data-testid='user-widget-link']");
 }

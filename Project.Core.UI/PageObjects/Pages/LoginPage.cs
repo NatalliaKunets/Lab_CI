@@ -36,7 +36,7 @@ public class LoginPage : BasePage
         }
         catch (Exception ex)
         {
-            Logger.Error(ex, "Failed to click the Login button.");
+            Logger.Error(ex, "Login Page: Failed to click the Login button.");
             throw;
         }
     }

@@ -7,14 +7,14 @@ namespace Project.Tests.UI;
 
 public class BaseTest
 {
-    protected IBrowser Driver;
+    protected IBrowser? Driver;
 
     [SetUp]
     public void SetUp()
     {
         Logger.Information("Entering SetUp");
         Driver = BrowserManager.GetBrowser();
-        Driver.Navigate(ConfigurationManager.GetBrowserSettings().URL);
+        Driver.Navigate(ConfigurationManager.GetBrowserSettings().BaseURL);
     }
 
     [TearDown]
