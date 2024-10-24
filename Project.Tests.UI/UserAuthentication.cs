@@ -66,4 +66,30 @@ public class UserAuthentication : BaseTest
         Logger.Information("Test Log In With Invalid Credentials executed.");
     }
 
+    [TestCase("","")]
+    public void LoginWithEmptyFields(string userName, string password)
+    {
+        Logger.Information("Entering Test Login with Emoty Fields");
+
+        MainPage mainPage = new(Driver!);
+        LoginPage loginPage = new(Driver!);
+
+        mainPage.ClickLoginButton();
+
+        if (loginPage.IsPageLoaded())
+        {
+            loginPage.EnterUserName(userName);
+            loginPage.EnterPassword(password);
+            loginPage.ClickLoginButton();
+        }else
+        {
+            var ex = new Exception("Login Page is not loaded");
+            Logger.Error(ex, "Failed to load Login Page");
+            throw ex;
+        }
+
+        Assert.That(string.Equals(loginPage.GetErrorMessage(), "Incorrect username or password.", StringComparison.InvariantCulture));
+        Logger.Information("Test Login with empty fields executed");
+    }
+
 }
