@@ -14,7 +14,6 @@ public static class DriverFactory
 			{
 				case BrowserType.Chrome:
 					var chromeOptions = new ChromeOptions();
-					chromeOptions.AddArgument("--headless");
 					chromeOptions.AddArgument("--no-sandbox");
 					chromeOptions.AddArgument("--disable-dev-shm-usage");
 					driver = new ChromeDriver(chromeOptions);
