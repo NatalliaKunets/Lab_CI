@@ -2,4 +2,4 @@
 
 namespace Project.Core.Settings;
 
-public record BrowserSettings(BrowserType browserType, string URL);
+public record BrowserSettings(BrowserType BrowserType, string BaseURL);

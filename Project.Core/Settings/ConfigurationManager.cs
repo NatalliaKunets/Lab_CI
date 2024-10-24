@@ -4,16 +4,16 @@ namespace Project.Core.Settings;
 
 public static class ConfigurationManager
 {
-    public static IConfiguration configuration;
-    private static BrowserSettings browserSettings;
-    private static ApiSettings apiSettings;
+    public static readonly IConfiguration configuration;
+    private static BrowserSettings? browserSettings;
+    private static ApiSettings? apiSettings;
 
     static ConfigurationManager()
     {
         configuration = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile("logging.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("loggerConfiguration.json", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
     }
