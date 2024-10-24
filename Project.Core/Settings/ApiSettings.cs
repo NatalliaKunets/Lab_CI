@@ -1,3 +1,3 @@
 ﻿namespace Project.Core.Settings;
 
-public record ApiSettings(int Timeout, string URL);
+public record ApiSettings(int Timeout, string BaseApiURL);

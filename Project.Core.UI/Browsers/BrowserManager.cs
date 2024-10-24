@@ -1,4 +1,5 @@
-﻿using Project.Core.Logging;
+﻿using Project.Core.Enums;
+using Project.Core.Logging;
 using Project.Core.Settings;
 
 namespace Project.Core.UI.Browsers;
@@ -14,11 +15,11 @@ public static class BrowserManager
             BrowserSettings browserSettings = ConfigurationManager.GetBrowserSettings();
             try
             {
-                driver = DriverFactory.InitializeDriver(browserSettings.browserType);
+                driver = DriverFactory.InitializeDriver(browserSettings.BrowserType);
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, $"Failed to initialize WebDriver with browser type: {browserSettings.browserType}");
+                Logger.Error(ex, $"Failed to initialize WebDriver with browser type: {browserSettings.BrowserType}");
                 throw;
             }
         }
