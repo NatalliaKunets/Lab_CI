@@ -105,7 +105,12 @@ public class UserAuthentication : BaseTest
         loginPage.EnterUserName(userName);
         loginPage.EnterPassword(password);
         loginPage.ClickLoginButton();
-        mainPage.ClickUserProfileButton();
+		if (!mainPage.IsPageLoaded())
+		{
+			Logger.Error("Failed to load Main Page");
+			Assert.Fail("Main Page is not loaded");
+		}
+		mainPage.ClickUserProfileButton();
         mainPage.ClickLogoutButton();
 
         bool isLoggedOut = mainPage.IsLoggedOut();
