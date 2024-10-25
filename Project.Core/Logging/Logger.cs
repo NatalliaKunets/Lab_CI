@@ -16,6 +16,10 @@ public static class Logger
 	{
 		Log.Error(ex, message);
 	}
+    public static void Error(string message)
+    {
+        Log.Error(message);
+    }
 
     public static void Information(string message)
     {
