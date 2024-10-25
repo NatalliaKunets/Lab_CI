@@ -12,9 +12,15 @@ public class BaseTest
     [SetUp]
     public void SetUp()
     {
-        Logger.Information("Entering SetUp");
+        Logger.Information("Starting SetUp");
         Driver = BrowserManager.GetBrowser();
-        Driver.Navigate(ConfigurationManager.GetBrowserSettings().BaseURL);
+        if (Driver == null)
+        {
+            throw new InvalidOperationException("Browser driver initialization failed.");
+        }
+        var baseUrl = ConfigurationManager.GetBrowserSettings().BaseURL;
+        Driver.Navigate(baseUrl);
+        Logger.Information($"Navigating to base URL: {baseUrl}");
     }
 
     [TearDown]
