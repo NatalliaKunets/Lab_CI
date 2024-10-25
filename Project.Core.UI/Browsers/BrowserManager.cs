@@ -8,7 +8,7 @@ public static class BrowserManager
 {
     private static IBrowser? driver;
 
-    public static IBrowser GetBrowser()
+    public static IBrowser? GetBrowser()
     {
         if (driver == null)
         {
@@ -20,7 +20,6 @@ public static class BrowserManager
             catch (Exception ex)
             {
                 Logger.Error(ex, $"Failed to initialize WebDriver with browser type: {browserSettings.BrowserType}");
-                throw;
             }
         }
         return driver;
