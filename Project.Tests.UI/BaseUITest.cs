@@ -6,7 +6,7 @@ using Project.Core.UI.PageObjects.Pages;
 
 namespace Project.Tests.UI;
 
-public class BaseTest
+public class BaseUITest
 {
     protected IBrowser? Driver;
 
