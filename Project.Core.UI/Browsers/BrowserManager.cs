@@ -30,4 +30,5 @@ public static class BrowserManager
         driver.Value?.Quit();
         driver.Value = null;
     }
+
 }
