@@ -5,7 +5,9 @@ using Project.Core.UI.PageObjects.Pages;
 namespace Project.Tests.UI;
 
 [TestFixture]
-public class UserAuthentication : BaseTest
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
+[Parallelizable(ParallelScope.Children)]
+public class UserAuthentication : BaseUITest
 {
     [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT_Lab2024")]
     public void LoginWithValidCredentials(string userName, string password)

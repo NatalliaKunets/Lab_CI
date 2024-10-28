@@ -5,7 +5,7 @@ using Project.Core.Settings;
 
 namespace Project.Tests.UI;
 
-public class BaseTest
+public class BaseUITest
 {
     protected IBrowser? Driver;
 
