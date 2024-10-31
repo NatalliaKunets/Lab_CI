@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using Project.Core.Logging;
 using Project.Core.UI.Browsers;
 using Project.Core.UI.Elements;
@@ -8,7 +9,6 @@ namespace Project.Core.UI.PageObjects.Pages;
 
 public class MainPage : BasePage
 {
-
 	public MainPage(IBrowser driver) : base(driver)
 	{
 		Driver = driver;
@@ -16,13 +16,13 @@ public class MainPage : BasePage
 
 	private IElement HomeBtn => Driver.FindElement(MainPageLocators.HomeBtnBy);
 	private IElement SearchInput => Driver.FindElement(MainPageLocators.SearchInputBy);
-	private IElement CreatePlaylistBtn => Driver.FindElement(MainPageLocators.CreatePlaylistBtnBy);
+	private IElement CreatePlaylistPlusBtn => Driver.FindElement(MainPageLocators.CreatePlaylistPlusBtnBy);
 	private IElement LoginBtn => Driver.FindElement(MainPageLocators.LoginBtnBy);
 	private IElement SearchBtn => Driver.FindElement(MainPageLocators.SearchBtnBy);
 	private IElement SongPlayBtn => Driver.FindElement(MainPageLocators.SongPlayBtnBy);
-	private IElement UserProfileBtn => Driver.FindElement(MainPageLocators.UserProfileBtn);
-	private IElement LogoutBtn => Driver.FindElement(MainPageLocators.LogOutBtn);
-
+	private IElement UserProfileBtn => Driver.FindElement(MainPageLocators.UserProfileBtnBy);
+	private IElement LogoutBtn => Driver.FindElement(MainPageLocators.LogOutBtnBy);
+    
 	public override bool IsPageLoaded()
 	{
 		try
@@ -61,11 +61,11 @@ public class MainPage : BasePage
 		}
 	}
 
-	public void ClickCreatePlaylistButton()
+	public void ClickCreatePlaylistPlusBtn()
 	{
 		try
 		{
-			CreatePlaylistBtn.Click();
+			CreatePlaylistPlusBtn.Click();
 		}
 		catch (Exception ex)
 		{
@@ -74,7 +74,22 @@ public class MainPage : BasePage
 		}
 	}
 
-	public void ClickSearchButton()
+    public void ClickCreatePlaylistMenuItem()
+    {
+        var CreatePlaylistMenuItem = WaitForElement(MainPageLocators.CreateNewPlaylistMenuItemBy);
+
+        try
+        {
+            CreatePlaylistMenuItem.Click();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Main Page: Failed to click the Create Playlist Menu Item");
+            throw;
+        }
+    }
+
+    public void ClickSearchButton()
 	{
 		try
 		{
@@ -104,7 +119,7 @@ public class MainPage : BasePage
 	{
 		try
 		{
-			WaitForElement(MainPageLocators.UserProfileBtn);
+			WaitForElement(MainPageLocators.UserProfileBtnBy);
 			UserProfileBtn.Click();
 		}
 		catch (Exception ex)
@@ -119,7 +134,7 @@ public class MainPage : BasePage
 	{
 		try
 		{
-			WaitForElement(MainPageLocators.LogOutBtn);
+			WaitForElement(MainPageLocators.LogOutBtnBy);
 			LogoutBtn.Click();
 		}
 		catch (Exception ex)
@@ -133,14 +148,13 @@ public class MainPage : BasePage
 	{
 		try
 		{
-			return WaitForElement(MainPageLocators.UserProfileBtn) != null;
+			return WaitForElement(MainPageLocators.UserProfileBtnBy) != null;
 		}
 		catch (WebDriverTimeoutException)
 		{
 			return false;
 		}
 	}
-
 
 	public bool IsLoggedOut()
 	{
@@ -153,4 +167,10 @@ public class MainPage : BasePage
 			return false;
 		}
 	}
+
+	public string? GetPlaylistTitle()
+	{
+		var NewPlaylistTitle = WaitForElement(MainPageLocators.NewPlaylistTitleBy);
+		return NewPlaylistTitle?.Text;
+    }
 }
