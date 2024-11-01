@@ -9,7 +9,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class UserAuthentication : BaseUITest
 {
-    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT_Lab2024")]
+    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT-Lab2024")]
     public void LoginWithValidCredentials(string userName, string password)
     {
         Logger.Information("Entering Test LogIn With Valid Credentials");
@@ -37,7 +37,7 @@ public class UserAuthentication : BaseUITest
 
     [TestCase("random_user", "pwd123")]
     [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "123")]
-    [TestCase("user", "AT_Lab2024")]
+    [TestCase("user", "AT-Lab2024")]
     public void LoginWithInvalidCredentials(string userName, string password)
     {
         Logger.Information("Entering Test LogIn With Invalid Credentials");
@@ -89,7 +89,7 @@ public class UserAuthentication : BaseUITest
     }
 
 
-    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT_Lab2024")]
+    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT-Lab2024")]
     public void LogOutTest(string userName, string password)
     {
         Logger.Information("Starting Logout Test");
