@@ -7,7 +7,7 @@ namespace Project.Tests.UI;
 [TestFixture]
 public class UserAuthentication : BaseTest
 {
-    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT_Lab2024")]
+    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT-Lab2024")]
     public void LoginWithValidCredentials(string userName, string password)
     {
         Logger.Information("Entering Test LogIn With Valid Credentials");
@@ -35,7 +35,7 @@ public class UserAuthentication : BaseTest
 
     [TestCase("random_user", "pwd123")]
     [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "123")]
-    [TestCase("user", "AT_Lab2024")]
+    [TestCase("user", "AT-Lab2024")]
     public void LoginWithInvalidCredentials(string userName, string password)
     {
         Logger.Information("Entering Test LogIn With Invalid Credentials");
@@ -87,7 +87,7 @@ public class UserAuthentication : BaseTest
     }
 
 
-    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT_Lab2024")]
+    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT-Lab2024")]
     public void LogOutTest(string userName, string password)
     {
         Logger.Information("Starting Logout Test");
@@ -116,7 +116,5 @@ public class UserAuthentication : BaseTest
         bool isLoggedOut = mainPage.IsLoggedOut();
         Assert.That(isLoggedOut, Is.True, "The user is not logged out as expected");
         Logger.Information("Logout Test executed");
-
     }
-
 }
