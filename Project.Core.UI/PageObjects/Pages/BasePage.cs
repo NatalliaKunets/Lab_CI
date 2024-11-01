@@ -11,17 +11,11 @@ public abstract class BasePage
     protected BasePage(IBrowser driver)
     {
         Driver = driver;
-        MaximizeWindow();
     }
 
     public abstract bool IsPageLoaded();
 
     public string Title => Driver.Title; 
-
-    protected virtual void MaximizeWindow()
-    { 
-        Driver.WindowMaximize(); 
-    }
 
     protected IElement? WaitForElement(By locator)
     {

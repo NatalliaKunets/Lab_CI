@@ -65,6 +65,7 @@ public class MainPage : BasePage
 	{
 		try
 		{
+			WaitForElement(MainPageLocators.CreatePlaylistBtnBy);
 			CreatePlaylistBtn.Click();
 		}
 		catch (Exception ex)

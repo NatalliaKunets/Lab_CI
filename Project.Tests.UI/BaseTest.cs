@@ -21,6 +21,7 @@ public class BaseTest
         var baseUrl = ConfigurationManager.GetBrowserSettings().BaseURL;
         Driver.Navigate(baseUrl);
         Logger.Information($"Navigating to base URL: {baseUrl}");
+        Driver.Manage().Window.Maximize();
     }
 
     [TearDown]

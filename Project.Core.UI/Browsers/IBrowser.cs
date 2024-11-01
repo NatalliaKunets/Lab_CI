@@ -28,6 +28,7 @@ public interface IBrowser
     void Quit();
 
     IElement FindElement(By by);
+    IReadOnlyCollection<IElement> FindElements(By by);
 
     void RefreshPage();
 
