@@ -22,16 +22,32 @@ public class UserLibrary : BaseTest
             return;
         }
 
-            Logger.Information("Logged In successfully.");
+        Logger.Information("Logged In successfully.");
 
-            mainPage.ClickCreatePlaylistPlusBtn();
-            mainPage.ClickCreatePlaylistMenuItem();
+        mainPage.ClickCreatePlaylistPlusBtn();
+        mainPage.ClickCreatePlaylistMenuItem();
 
 
         string playlistTitle = mainPage.GetPlaylistTitle();
         Logger.Information($"Retrieved Playlist Title: {playlistTitle}");
         Assert.That(playlistTitle, Does.Match(@"^My Playlist #\d+$"), "The playlist was not created successfully.");
 
-            Logger.Information("Test Create a New Playlist executed.");
-        }
+        Logger.Information("Test Create a New Playlist executed.");
+
     }
+
+    [Test]
+    public void CannotCreatePlaylist_IfUserNotLoggedIn()
+    {
+        Logger.Information("Entering Test Verify that User Cannot Create a Playlist If Not LoggedIn");
+
+        MainPage mainPage = new(Driver!);
+
+        mainPage.ClickCreatePlaylistPlusBtn();
+        mainPage.ClickCreatePlaylistMenuItem();
+
+        Assert.That(mainPage.IsCreatePlaylistTooltipVisible, "The error message was not displayed as expected.");
+
+        Logger.Information("Test Verify that User Cannot Create a Playlist If Not LoggedIn executed.");
+    }
+}
