@@ -7,6 +7,7 @@ public static class ConfigurationManager
     public static readonly IConfiguration configuration;
     private static BrowserSettings? browserSettings;
     private static ApiSettings? apiSettings;
+    private static UserCredentials? userCredentials;
 
     static ConfigurationManager()
     {
@@ -29,4 +30,11 @@ public static class ConfigurationManager
         apiSettings ??= configuration.GetRequiredSection("APIConfig").Get<ApiSettings>()!;
         return apiSettings;
     }
+
+    public static UserCredentials GetUserCredentials()
+    {
+        userCredentials ??= configuration.GetRequiredSection("UserCredentials").Get<UserCredentials>()!;
+        return userCredentials;
+    }
+
 }

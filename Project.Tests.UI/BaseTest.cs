@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Project.Core.Logging;
 using Project.Core.Settings;
+using Project.Core.UI.PageObjects.Pages;
 
 namespace Project.Tests.UI;
 
@@ -29,4 +30,24 @@ public class BaseTest
         BrowserManager.CloseBrowser();
         Logger.Information("TearDown executed");
     }
+
+    protected static bool Login(MainPage mainPage, LoginPage loginPage)
+    {
+        var userCredentials = ConfigurationManager.GetUserCredentials();
+
+        mainPage.ClickLoginButton();
+
+        if (!loginPage.IsPageLoaded())
+        {
+            Logger.Error("Failed to load Login Page");
+            return false;
+        }
+
+        loginPage.EnterUserName(userCredentials.Username);
+        loginPage.EnterPassword(userCredentials.Password);
+        loginPage.ClickLoginButton();
+
+        return mainPage.IsLoggedIn();
+    }
+
 }
