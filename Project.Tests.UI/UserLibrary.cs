@@ -5,7 +5,9 @@ using Project.Core.UI.PageObjects.Pages;
 namespace Project.Tests.UI;
 
 [TestFixture]
-public class UserLibrary : BaseTest
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
+[Parallelizable(ParallelScope.Children)]
+public class UserLibrary : BaseUITest
 {
     [Test]
     public void CreateNewPlaylist()
@@ -22,16 +24,15 @@ public class UserLibrary : BaseTest
             return;
         }
 
-            Logger.Information("Logged In successfully.");
+        Logger.Information("Logged In successfully.");
 
-            mainPage.ClickCreatePlaylistPlusBtn();
-            mainPage.ClickCreatePlaylistMenuItem();
-
+        mainPage.ClickCreatePlaylistPlusBtn();
+        mainPage.ClickCreatePlaylistMenuItem();
 
         string playlistTitle = mainPage.GetPlaylistTitle();
         Logger.Information($"Retrieved Playlist Title: {playlistTitle}");
         Assert.That(playlistTitle, Does.Match(@"^My Playlist #\d+$"), "The playlist was not created successfully.");
 
-            Logger.Information("Test Create a New Playlist executed.");
-        }
+        Logger.Information("Test Create a New Playlist executed.");
     }
+}
