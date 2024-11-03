@@ -7,41 +7,31 @@ namespace Project.Tests.UI;
 [TestFixture]
 public class UserLibrary : BaseTest
 {
-    [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT_Lab2024")]
-    public void CreateNewPlaylist(string userName, string password)
+    [Test]
+    public void CreateNewPlaylist()
     {
         Logger.Information("Entering Test Create a New Playlist");
 
         MainPage mainPage = new(Driver!);
         LoginPage loginPage = new(Driver!);
 
-        if (Login(mainPage, loginPage, userName, password))
+        if (!Login(mainPage, loginPage))
         {
-            Logger.Information("Logged In successfully.");
-
-            mainPage.ClickCreatePlaylistPlusBtn();
-            mainPage.ClickCreatePlaylistMenuItem();
-
-            Assert.That(mainPage.GetPlaylistTitle(), Does.Match(@"^My Playlist #\d+$"), "The playlist was not created successfully.");
-
-            Logger.Information("Test Create a New Playlist executed.");
-        }
-    }
-
-    private bool Login(MainPage mainPage, LoginPage loginPage, string userName, string password)
-    {
-        mainPage.ClickLoginButton();
-
-        if (!loginPage.IsPageLoaded())
-        {
-            Logger.Error("Failed to load Login Page");
-            return false;
+            Logger.Error("Failed to log in");
+            Assert.Fail("Failed to log in");
+            return;
         }
 
-        loginPage.EnterUserName(userName);
-        loginPage.EnterPassword(password);
-        loginPage.ClickLoginButton();
+        Logger.Information("Logged In successfully.");
 
-        return mainPage.IsLoggedIn();
+        mainPage.ClickCreatePlaylistPlusBtn();
+        mainPage.ClickCreatePlaylistMenuItem();
+
+
+        string playlistTitle = mainPage.GetPlaylistTitle();
+        Logger.Information($"Retrieved Playlist Title: {playlistTitle}");
+        Assert.That(playlistTitle, Does.Match(@"^My Playlist #\d+$"), "The playlist was not created successfully.");
+
+        Logger.Information("Test Create a New Playlist executed.");
     }
 }
