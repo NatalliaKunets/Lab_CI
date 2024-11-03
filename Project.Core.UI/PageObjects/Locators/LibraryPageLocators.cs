@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using Microsoft.Extensions.DependencyModel;
+using System.Collections.Generic;
+using OpenQA.Selenium;
 
 namespace Project.Core.UI.PageObjects.Locators;
 public class LibraryPageLocators
@@ -9,6 +11,4 @@ public class LibraryPageLocators
 	public static readonly By EditDetailsBtnBy = By.XPath("//button[@role='menuitem' and .//span[text()='Edit details']]");
 	public static readonly By PlaylistNameInputBy = By.CssSelector("input[data-testid='playlist-edit-details-name-input']");
 	public static readonly By SavePlaylistNameBy = By.CssSelector("button[data-testid='playlist-edit-details-save-button']");
-	public static readonly By ListOfPlaylistsBy = By.CssSelector("//ul[@aria-label='Your Library']']");
-	public static readonly By PlaylistInTheListBy = By.XPath(".//li");
 }

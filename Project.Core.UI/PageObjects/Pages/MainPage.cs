@@ -16,7 +16,7 @@ public class MainPage : BasePage
 
 	private IElement HomeBtn => Driver.FindElement(MainPageLocators.HomeBtnBy);
 	private IElement SearchInput => Driver.FindElement(MainPageLocators.SearchInputBy);
-	private IElement CreatePlaylistBtn => Driver.FindElement(MainPageLocators.CreatePlaylistBtnBy);
+	private IElement CreatePlaylistPlusBtn => Driver.FindElement(MainPageLocators.CreatePlaylistPlusBtnBy);
 	private IElement LoginBtn => Driver.FindElement(MainPageLocators.LoginBtnBy);
 	private IElement SearchBtn => Driver.FindElement(MainPageLocators.SearchBtnBy);
 	private IElement SongPlayBtn => Driver.FindElement(MainPageLocators.SongPlayBtnBy);
@@ -61,12 +61,11 @@ public class MainPage : BasePage
 		}
 	}
 
-	public void ClickCreatePlaylistButton()
+	public void ClickCreatePlaylistPlusBtn()
 	{
 		try
 		{
-			WaitForElement(MainPageLocators.CreatePlaylistBtnBy);
-			CreatePlaylistBtn.Click();
+			CreatePlaylistPlusBtn.Click();
 		}
 		catch (Exception ex)
 		{
@@ -74,6 +73,24 @@ public class MainPage : BasePage
 			throw;
 		}
 	}
+
+
+
+	public void ClickCreatePlaylistMenuItem()
+	{
+		var CreatePlaylistMenuItem = WaitForElement(MainPageLocators.CreateNewPlaylistMenuItemBy);
+
+		try
+		{
+			CreatePlaylistMenuItem.Click();
+		}
+		catch (Exception ex)
+		{
+			Logger.Error(ex, "Main Page: Failed to click the Create Playlist Menu Item");
+			throw;
+		}
+	}
+
 
 	public void ClickSearchButton()
 	{

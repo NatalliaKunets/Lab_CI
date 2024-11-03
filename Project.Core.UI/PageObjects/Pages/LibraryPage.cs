@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Collections.ObjectModel;
+using OpenQA.Selenium;
 using Project.Core.Logging;
 using Project.Core.UI.Browsers;
 using Project.Core.UI.Elements;
@@ -18,8 +19,7 @@ public class LibraryPage : BasePage
 	private IElement LibraryThreeDotsBtn => Driver.FindElement(LibraryPageLocators.LibraryThreeDotsBtnBy);
 	private IElement PlaylistNameInput => Driver.FindElement(LibraryPageLocators.PlaylistNameInputBy);
 	private IElement SavePlaylistName => Driver.FindElement(LibraryPageLocators.SavePlaylistNameBy);
-	private IReadOnlyCollection<IElement> ListOfPlaylists => Driver.FindElements(LibraryPageLocators.ListOfPlaylistsBy);
-	private IElement PlaylistInTheList => Driver.FindElement(LibraryPageLocators.ListOfPlaylistsBy);
+	private static readonly string _playlistXPathTemplate = "//span[contains(text(), '{0}')]";
 
 
 	public override bool IsPageLoaded()
@@ -44,22 +44,20 @@ public class LibraryPage : BasePage
 		return false;
 	}
 
-	public void ChooseRequiredPlaylist(string playlistName)
+
+	public IElement FindPlaylistByName(IBrowser driver, string playlistName)
 	{
-		WaitForElement(LibraryPageLocators.ListOfPlaylistsBy);
-		if (ListOfPlaylists != null)
+		string xpath = string.Format(_playlistXPathTemplate, playlistName);
+		var elem = driver.FindElement(By.XPath(xpath));
+		return elem;
+	}
+
+	public void ChoosePlaylist(string playlistName)
+	{
+		var elem = FindPlaylistByName(Driver, playlistName);
+		if (elem != null)
 		{
-			foreach (var playlist in ListOfPlaylists)
-			{
-				if (playlist.Text.Equals(playlistName))
-				{
-					playlist.Click();
-				}
-				else
-				{
-					Logger.Information("There is no playlist with provided name");
-				}
-			}
+			elem.Click();
 		}
 	}
 
