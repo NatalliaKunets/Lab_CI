@@ -11,7 +11,7 @@ public class UserAuthentication : BaseTest
     [Test]
     public void LoginWithValidCredentials()
     {
-        Logger.Information("Entering Test LogIn With Valid Credentials");
+        Logger.Information("Starting Test LogIn With Valid Credentials");
 
         var userCredentials = ConfigurationManager.GetUserCredentials();
 
@@ -40,7 +40,7 @@ public class UserAuthentication : BaseTest
     [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "123")]
     public void LoginWithInvalidCredentials(string userName, string password)
     {
-        Logger.Information("Entering Test LogIn With Invalid Credentials");
+        Logger.Information("Starting Test LogIn With Invalid Credentials");
 
         MainPage mainPage = new(Driver!);
         LoginPage loginPage = new(Driver!);
@@ -66,7 +66,7 @@ public class UserAuthentication : BaseTest
     [TestCase("", "")]
     public void LoginWithEmptyFields(string userName, string password)
     {
-        Logger.Information("Entering Test Login with Empty Fields");
+        Logger.Information("Starting Test Login with Empty Fields");
 
         MainPage mainPage = new(Driver!);
         LoginPage loginPage = new(Driver!);

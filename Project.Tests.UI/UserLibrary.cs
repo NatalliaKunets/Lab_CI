@@ -10,7 +10,7 @@ public class UserLibrary : BaseTest
     [Test]
     public void CreateNewPlaylist()
     {
-        Logger.Information("Entering Test Create a New Playlist");
+        Logger.Information("Starting Test Create a New Playlist");
 
         MainPage mainPage = new(Driver!);
         LoginPage loginPage = new(Driver!);
@@ -39,7 +39,7 @@ public class UserLibrary : BaseTest
     [Test]
     public void CannotCreatePlaylist_IfUserNotLoggedIn()
     {
-        Logger.Information("Entering Test Verify that User Cannot Create a Playlist If Not LoggedIn");
+        Logger.Information("Starting Test Verify that User Cannot Create a Playlist If Not LoggedIn");
 
         MainPage mainPage = new(Driver!);
 
