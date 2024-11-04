@@ -36,5 +36,4 @@ public static class ConfigurationManager
         userCredentials ??= configuration.GetRequiredSection("UserCredentials").Get<UserCredentials>()!;
         return userCredentials;
     }
-
 }
