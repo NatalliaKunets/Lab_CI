@@ -4,7 +4,8 @@
   "server": {
     "url": "https://reportportal.epam.com/",
     "project": "krystsina_pulatava_personal",
-    "apiKey": ""
+    "apiKey": "",
+    "_comment": "Set up an Environment Variable named 'ReportPortal__server__apiKey' to store the API key securely."
   },
   "launch": {
     "name": "EPAM AT Lab 2024.NET",
