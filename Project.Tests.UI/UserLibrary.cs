@@ -22,10 +22,10 @@ public class UserLibrary : BaseTest
             return;
         }
 
-        Logger.Information("Logged In successfully.");
+            Logger.Information("Logged In successfully.");
 
-        mainPage.ClickCreatePlaylistPlusBtn();
-        mainPage.ClickCreatePlaylistMenuItem();
+            mainPage.ClickCreatePlaylistPlusBtn();
+            mainPage.ClickCreatePlaylistMenuItem();
 
 
         string playlistTitle = mainPage.GetPlaylistTitle();
