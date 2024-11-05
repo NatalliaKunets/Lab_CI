@@ -1,33 +1,33 @@
-﻿using Project.Core.Enums;
-using Project.Core.Logging;
+﻿using Project.Core.Logging;
 using Project.Core.Settings;
 
 namespace Project.Core.UI.Browsers;
 
 public static class BrowserManager
 {
-    private static IBrowser? driver;
+    private static readonly ThreadLocal<IBrowser> driver = new();
 
     public static IBrowser? GetBrowser()
     {
-        if (driver == null)
+        if (driver.Value == null)
         {
             BrowserSettings browserSettings = ConfigurationManager.GetBrowserSettings();
             try
             {
-                driver = DriverFactory.InitializeDriver(browserSettings.BrowserType);
+                driver.Value = DriverFactory.InitializeDriver(browserSettings.BrowserType);
             }
             catch (Exception ex)
             {
                 Logger.Error(ex, $"Failed to initialize WebDriver with browser type: {browserSettings.BrowserType}");
             }
         }
-        return driver;
+
+        return driver.Value;
     }
 
     public static void CloseBrowser()
     {
-        driver?.Quit();
-        driver = null;
+        driver.Value?.Quit();
+        driver.Value = null;
     }
 }
