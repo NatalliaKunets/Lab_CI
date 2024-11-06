@@ -184,4 +184,21 @@ public class MainPage : BasePage
             return false;
         }
     }
+
+    public void ClickAccountMenuItem()
+    {
+        var accountMenuItem = WaitForElement(MainPageLocators.AccountMenuItemBy);
+
+        try
+        {
+            accountMenuItem.Click();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Main Page: Failed to click the Account Menu Item in Profile Menu");
+            throw;
+        }
+
+
+    }
 }
