@@ -10,7 +10,7 @@ public class AccountPage : BasePage
 
     public override bool IsPageLoaded()
     {
-        bool isLoaded = WaitForElement(AccountPageLocators.accountMenu) != null;
+        bool isLoaded = WaitForElement(AccountPageLocators.accountMenuBy) != null;
         Logger.Information($"Login page loaded: {isLoaded}");
         return isLoaded;
     }

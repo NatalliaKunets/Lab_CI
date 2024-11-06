@@ -17,5 +17,7 @@ public static class MainPageLocators
     public static readonly By CreateNewPlaylistMenuItemBy = By.CssSelector("button[role='menuitem'] span[data-encore-id='type']");
 	public static readonly By NewPlaylistTitleBy = By.CssSelector("h1.encore-text-headline-large[data-encore-id='text']");
 	public static readonly By CreatePlaylistTooltipBy = By.CssSelector("div[data-testid='createPlaylist-hook']");
-    
+
+    public static readonly By AccountMenuItemBy = By.XPath("//button[span[text()='Account']]");
+
 }
