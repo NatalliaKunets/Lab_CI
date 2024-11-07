@@ -198,7 +198,25 @@ public class MainPage : BasePage
             Logger.Error(ex, "Main Page: Failed to click the Account Menu Item in Profile Menu");
             throw;
         }
+    }
 
+    public void EnterSearchTerm(string term)
+    {
+        SearchInput.Clear();
+        SearchInput.SendKeys(term);
+        Logger.Information($"Enter search term: {term}");
+    }
 
+    public string GetSearchTopResultTitle(string searchTerm)
+    {
+        try
+        {
+            var SearchTopResultElement = WaitForElement(MainPageLocators.SearchTopResultBy);
+            return SearchTopResultElement?.GetAttribute("title") ?? string.Empty;
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return string.Empty;
+        }
     }
 }
