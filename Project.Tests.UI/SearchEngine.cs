@@ -29,8 +29,34 @@ public class SearchEngine : BaseUITest
         mainPage.EnterSearchTerm(searchTerm);
         mainPage.ClickSearchButton();
         
-        Assert.That(mainPage.GetSearchTopResultTitle(searchTerm), Does.Contain(searchTerm).IgnoreCase, $"The Search Top Result Title does not contain the expected: {searchTerm}.");
+        Assert.That(mainPage.GetSearchTopResultTitle(), Does.Contain(searchTerm).IgnoreCase, $"The Search Top Result Title does not contain the expected: {searchTerm}.");
 
         Logger.Information("Test Search Engine With Valid Term executed.");
+    }
+
+    [Test]
+    public void NoActions_WhenQueryIsEmpty()
+    {
+        Logger.Information("Starting Test No Actions When Query Is Empty");
+
+        MainPage mainPage = new(Driver!);
+        LoginPage loginPage = new(Driver!);
+
+        if (!Login(mainPage, loginPage))
+        {
+            Logger.Error("Failed to log in");
+            Assert.Fail("Failed to log in");
+            return;
+        }
+
+        Logger.Information("Logged In successfully.");
+
+        mainPage.EnterSearchTerm(string.Empty);
+        mainPage.ClickSearchButton();
+
+        var SearchTopResultTitle = mainPage.GetSearchTopResultTitle();
+        Assert.That(SearchTopResultTitle, Is.Empty, $"Unexpected action by Search Engine: Top result found = '{SearchTopResultTitle}'.");
+
+        Logger.Information("Test No Actions When Query Is Empty executed.");
     }
 }

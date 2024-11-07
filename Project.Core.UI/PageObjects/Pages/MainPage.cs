@@ -207,7 +207,7 @@ public class MainPage : BasePage
         Logger.Information($"Enter search term: {term}");
     }
 
-    public string GetSearchTopResultTitle(string searchTerm)
+    public string GetSearchTopResultTitle()
     {
         try
         {
