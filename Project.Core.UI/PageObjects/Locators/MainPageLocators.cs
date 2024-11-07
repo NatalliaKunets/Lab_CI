@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Project.Core.UI.PageObjects.Locators;
 
@@ -20,4 +21,5 @@ public static class MainPageLocators
 
     public static readonly By AccountMenuItemBy = By.XPath("//button[span[text()='Account']]");
 
+	public static readonly By SearchTopResultBy = By.CssSelector("section[aria-label = 'Top result'] a[title]");
 }
