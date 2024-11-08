@@ -8,24 +8,31 @@ public class Element : IElement
 {
 	private readonly IWebElement _webElement;
 
-	public Element(IWebElement webElement)
+    public Element(IWebElement webElement)
 	{
 		_webElement = webElement ?? throw new ArgumentNullException(nameof(webElement), "WebElement cannot be null.");
 	}
 
 	public string TagName => _webElement.TagName;
-
 	public string Text => _webElement.Text;
-
-	public bool Enabled => _webElement.Enabled;
-
-	public bool Selected => _webElement.Selected;
-
 	public Point Location => _webElement.Location;
-
 	public Size Size => _webElement.Size;
-
+	
+	public bool Enabled => _webElement.Enabled;
+	public bool Selected => _webElement.Selected;
 	public bool Displayed => _webElement.Displayed;
+
+    public IElement FindElement(By by)
+	{
+		try
+		{
+			return new Element(_webElement.FindElement(by));
+		}
+		catch (NoSuchElementException e)
+		{
+			throw new NoSuchElementException($"No element found with locator: {by}", e);
+		}
+	}
 
 	public void Clear()
 	{
@@ -37,11 +44,6 @@ public class Element : IElement
 		{
 			throw new InvalidElementStateException("Element is not in a state that allows clearing.", e);
 		}
-	}
-
-	public void Clear(string element)
-	{
-		throw new NotImplementedException();
 	}
 
 	public void Click()
@@ -60,17 +62,6 @@ public class Element : IElement
 		}
 	}
 
-	public IWebElement FindElement(By by)
-	{
-		try
-		{
-			return _webElement.FindElement(by);
-		}
-		catch (NoSuchElementException e)
-		{
-			throw new NoSuchElementException($"No element found with locator: {by}", e);
-		}
-	}
 
 	public ReadOnlyCollection<IWebElement> FindElements(By by)
 	{
@@ -107,48 +98,12 @@ public class Element : IElement
 			throw new NoSuchElementException($"Element not found when trying to get CSS property '{propertyName}'.", e);
 		}
 	}
-
-	public string GetDomAttribute(string attributeName)
+		
+	public void SendKeys(string text)
 	{
 		try
 		{
-			return _webElement.GetDomAttribute(attributeName);
-		}
-		catch (NoSuchElementException e)
-		{
-			throw new NoSuchElementException($"Element not found when trying to get DOM attribute '{attributeName}'.", e);
-		}
-	}
-
-	public string GetDomProperty(string propertyName)
-	{
-		try
-		{
-			return _webElement.GetDomProperty(propertyName);
-		}
-		catch (NoSuchElementException e)
-		{
-			throw new NoSuchElementException($"Element not found when trying to get DOM property '{propertyName}'.", e);
-		}
-	}
-
-	public ISearchContext GetShadowRoot()
-	{
-		try
-		{
-			return _webElement.GetShadowRoot();
-		}
-		catch (NoSuchElementException e)
-		{
-			throw new NoSuchElementException("Element not found when trying to get ShadowRoot.", e);
-		}
-	}
-
-	public void SendKeys(string value)
-	{
-		try
-		{
-			_webElement.SendKeys(value);
+			_webElement.SendKeys(text);
 		}
 		catch (InvalidElementStateException e)
 		{
