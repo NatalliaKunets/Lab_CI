@@ -29,6 +29,8 @@ public interface IBrowser
 
     IElement FindElement(By by);
 
+    ReadOnlyCollection<IElement> FindElements(By by);
+
     void RefreshPage();
 
     void WindowMaximize();

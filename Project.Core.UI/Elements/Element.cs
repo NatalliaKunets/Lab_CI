@@ -63,12 +63,19 @@ public class Element : IElement
 	}
 
 
-	public ReadOnlyCollection<IWebElement> FindElements(By by)
+	public ReadOnlyCollection<IElement> FindElements(By by)
 	{
 		try
 		{
-			return _webElement.FindElements(by);
-		}
+            //return _webElement.FindElements(by);
+            var elements = _webElement.FindElements(by)
+            .Select(e => e as IElement) 
+            .Where(e => e != null) 
+            .ToList()
+            .AsReadOnly();
+
+            return elements;
+        }
 		catch (NoSuchElementException e)
 		{
 			throw new NoSuchElementException($"No elements found with locator: {by}", e);

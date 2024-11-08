@@ -1,12 +1,11 @@
 ﻿using OpenQA.Selenium;
+using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace Project.Core.UI.Elements;
 
 public interface IElement
 {
-    //IWebElement _webElement;
-
     string TagName { get; }
     string Text { get; }
     Point Location { get; }
@@ -17,8 +16,8 @@ public interface IElement
     bool Displayed { get; }
 
     IElement FindElement(By by);
+    ReadOnlyCollection<IElement> FindElements(By by);
 
-    //void Clear(string wevElementName);
     void Clear();
 
     void Click();

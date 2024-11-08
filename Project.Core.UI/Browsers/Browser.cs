@@ -48,6 +48,27 @@ public class Browser : IBrowser
         }
     }
 
+    public ReadOnlyCollection<IElement> FindElements(By by)
+    {
+        try
+        {
+            //return driver.FindElements(by);
+
+            var elements = driver.FindElements(by)
+                .Select(e => e as IElement)
+                .Where(e => e != null)
+                .ToList()
+                .AsReadOnly();
+
+            return elements;
+        }
+        catch (NoSuchElementException e)
+        {
+            throw new NoSuchElementException($"No elements found with locator: {by}", e);
+        }
+    }
+
+
     public void RefreshPage()
     {
         driver.Navigate().Refresh();
