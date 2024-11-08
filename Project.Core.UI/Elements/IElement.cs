@@ -6,6 +6,8 @@ namespace Project.Core.UI.Elements;
 
 public interface IElement
 {
+    IWebElement WebElement { get; }
+
     string TagName { get; }
     string Text { get; }
     Point Location { get; }

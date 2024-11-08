@@ -13,6 +13,8 @@ public class Element : IElement
 		_webElement = webElement ?? throw new ArgumentNullException(nameof(webElement), "WebElement cannot be null.");
 	}
 
+    public IWebElement WebElement => _webElement;
+
 	public string TagName => _webElement.TagName;
 	public string Text => _webElement.Text;
 	public Point Location => _webElement.Location;

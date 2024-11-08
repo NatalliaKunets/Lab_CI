@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using Project.Core.UI.Elements;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ public interface IBrowser
     string Title { get; }
 
     WebDriverWait Wait { get; }
+    Actions Actions { get; }
 
     string CurrentWindowHandle { get; }
 

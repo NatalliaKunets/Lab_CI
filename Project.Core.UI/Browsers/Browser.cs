@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using Project.Core.Logging;
 using Project.Core.UI.Elements;
@@ -15,8 +16,9 @@ public class Browser : IBrowser
         this.driver = driver;
     }
 
-    public WebDriverWait Wait { get => new WebDriverWait(driver, TimeSpan.FromSeconds(10)); }
+    public WebDriverWait Wait => new (driver, TimeSpan.FromSeconds(10)); 
 
+    public Actions Actions => new (driver);
     public string Url { get => driver.Url; set => driver.Url = value; }
 
     public string Title => driver.Title;
