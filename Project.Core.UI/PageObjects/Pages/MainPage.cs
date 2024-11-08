@@ -128,7 +128,6 @@ public class MainPage : BasePage
         }
     }
 
-
     public void ClickLogoutButton()
     {
         try
