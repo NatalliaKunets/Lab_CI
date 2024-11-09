@@ -17,10 +17,8 @@ public class LibraryPage : BasePage
 
 	private IElement LibraryList => Driver.FindElement(LibraryPageLocators.LibraryListBy);
 	private IReadOnlyCollection<IElement> LibraryListItems => Driver.FindElements(LibraryPageLocators.LibraryListItemsBy);
-	private IElement LibraryThreeDotsBtn => Driver.FindElement(LibraryPageLocators.LibraryThreeDotsBtnBy);
 	private IElement PlaylistNameInput => Driver.FindElement(LibraryPageLocators.PlaylistNameInputBy);
 	private IElement SavePlaylistName => Driver.FindElement(LibraryPageLocators.SavePlaylistNameBy);
-	private static readonly string _playlistXPathTemplate = "//span[text()='{0}']/ancestor::li";
 
 
 	public override bool IsPageLoaded()
@@ -51,7 +49,7 @@ public class LibraryPage : BasePage
 	{
 		try
 		{
-			LibraryThreeDotsBtn.Click();
+			WaitForElement(LibraryPageLocators.LibraryThreeDotsBtnBy).Click();
 			WaitForElement(LibraryPageLocators.EditDetailsBtnBy).Click();
 		}
 		catch (Exception ex)
@@ -60,11 +58,18 @@ public class LibraryPage : BasePage
 		}
 	}
 
-	public IElement FindPlaylistByName(string playlistName)
+	public IElement? FindPlaylistByName(string playlistName)
 	{
-		string xpath = string.Format(_playlistXPathTemplate, playlistName);
-		var elem = Driver.FindElement(By.XPath(xpath));
-		return elem;
+		By PlaylistByNameBy = By.XPath(string.Format(LibraryPageLocators.PlaylistByNameTemplate, playlistName));
+
+		try
+		{
+			return WaitForElement(PlaylistByNameBy);
+		}
+		catch (WebDriverTimeoutException)
+		{
+			return null;
+		}
 	}
 
 	public void ChoosePlaylist(string playlist)

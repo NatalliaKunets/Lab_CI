@@ -11,4 +11,5 @@ public class LibraryPageLocators
 	public static readonly By EditDetailsBtnBy = By.XPath("//button[@role='menuitem' and .//span[text()='Edit details']]");
 	public static readonly By PlaylistNameInputBy = By.CssSelector("input[data-testid='playlist-edit-details-name-input']");
 	public static readonly By SavePlaylistNameBy = By.CssSelector("button[data-testid='playlist-edit-details-save-button']");
+	public static readonly string PlaylistByNameTemplate = "//span[contains(text(), '{0}')]/ancestor::li";
 }
