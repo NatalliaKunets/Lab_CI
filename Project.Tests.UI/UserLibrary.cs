@@ -48,20 +48,20 @@ public class UserLibrary : BaseTest
 
 
 
-	[TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT-Lab2024", "My Playlist #6", "New Playlist")]
-	public void RenamePlaylist(string userName, string password, string choosePlaylist,string newPlaylistName)
+	[TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT_Lab_2024", "My Playlist #10", "New Playlist")]
+	public void RenamePlaylist(string userName, string password,string playlistName, string newPlaylistName)
 	{
 		MainPage mainPage = new(Driver!);
 		LibraryPage libPage = new(Driver!);
 		LoginPage loginPage = new(Driver!);
 		Login(mainPage, loginPage,userName,password);
-		libPage.ChoosePlaylist(choosePlaylist);
+		if (!mainPage.IsPageLoaded())
+		{
+			Logger.Error("Failed to load Main Page");
+		}
+		libPage.ChoosePlaylist(playlistName);
 		libPage.EditPlaylistDetails();
 		libPage.RenamePlaylist(newPlaylistName);
-		Console.ReadLine();
-
-
-
 	}
 }
 

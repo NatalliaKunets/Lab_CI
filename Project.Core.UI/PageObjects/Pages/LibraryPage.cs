@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using Project.Core.Logging;
 using Project.Core.UI.Browsers;
 using Project.Core.UI.Elements;
@@ -19,7 +20,7 @@ public class LibraryPage : BasePage
 	private IElement LibraryThreeDotsBtn => Driver.FindElement(LibraryPageLocators.LibraryThreeDotsBtnBy);
 	private IElement PlaylistNameInput => Driver.FindElement(LibraryPageLocators.PlaylistNameInputBy);
 	private IElement SavePlaylistName => Driver.FindElement(LibraryPageLocators.SavePlaylistNameBy);
-	private static readonly string _playlistXPathTemplate = "//span[contains(text(), '{0}')]";
+	private static readonly string _playlistXPathTemplate = "//span[text()='{0}']/ancestor::li";
 
 
 	public override bool IsPageLoaded()
@@ -45,21 +46,6 @@ public class LibraryPage : BasePage
 	}
 
 
-	public IElement FindPlaylistByName(IBrowser driver, string playlistName)
-	{
-		string xpath = string.Format(_playlistXPathTemplate, playlistName);
-		var elem = driver.FindElement(By.XPath(xpath));
-		return elem;
-	}
-
-	public void ChoosePlaylist(string playlistName)
-	{
-		var elem = FindPlaylistByName(Driver, playlistName);
-		if (elem != null)
-		{
-			elem.Click();
-		}
-	}
 
 	public void EditPlaylistDetails()
 	{
@@ -72,6 +58,18 @@ public class LibraryPage : BasePage
 		{
 			Logger.Error(ex, "Library Page: Failed to click on Three Dots Button");
 		}
+	}
+
+	public IElement FindPlaylistByName(string playlistName)
+	{
+		string xpath = string.Format(_playlistXPathTemplate, playlistName);
+		var elem = Driver.FindElement(By.XPath(xpath));
+		return elem;
+	}
+
+	public void ChoosePlaylist(string playlist)
+	{
+		FindPlaylistByName(playlist).Click();
 	}
 
 	public void RenamePlaylist(string name)
