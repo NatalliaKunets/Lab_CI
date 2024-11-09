@@ -54,9 +54,8 @@ public class LibraryPage : BasePage
         }
     }
 
-    public void ClickPlaylistByName(string playlistName)
+    public void ClickPlaylistByName(string playlistName, bool isRightClick = false)
     {
-
         try
         {
             var playlistElement = FindPlaylistByName(playlistName);
@@ -67,7 +66,14 @@ public class LibraryPage : BasePage
                 throw new NoSuchElementException($"Playlist '{playlistName}' not found.");
             }
 
-            playlistElement.Click();
+            if (isRightClick)
+            {
+                RightClickElement(playlistElement);
+            }
+            else
+            {
+                playlistElement.Click();
+            }
         }
         catch (Exception ex)
         {
@@ -102,6 +108,32 @@ public class LibraryPage : BasePage
         catch (Exception ex)
         {
             Logger.Error(ex, "Library Page: Failed to rename the playlist");
+        }
+    }
+
+    public void ClickDeletePlaylistMenuItem()
+    {
+        try
+        {
+            WaitForElement(LibraryPageLocators.DeletePlaylistMenuItemBy)?.Click();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Libraryt Page: Failed to click the Delete Playlist Menu Item.");
+            throw;
+        }
+    }
+
+    public void ClickDeleteButton()
+    {
+        try
+        {
+            WaitForElement(LibraryPageLocators.DeleteBtnBy)?.Click();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Library Page: Failed to click the Delete Playlist button.");
+            throw;
         }
     }
 }

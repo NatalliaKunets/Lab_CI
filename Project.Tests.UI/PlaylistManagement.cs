@@ -72,6 +72,14 @@ public class PlaylistManagement : BaseUITest
 
         Assert.That(playlistPage.FindTrackByName(songName), Is.Null, $"The track '{songName}' was not deleted from the playlist as expected.");
 
+        Logger.Information("Performing postconditions: Delete created empty playlist.");
+
+        libraryPage.ClickPlaylistByName(songName, isRightClick: true);
+        libraryPage.ClickDeletePlaylistMenuItem();
+        libraryPage.ClickDeleteButton();
+        
+        Logger.Information("Empty Playlist was deleted.");
+
         Logger.Information("Test Can Delete Song From Playlist executed.");
     }
 }

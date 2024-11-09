@@ -12,4 +12,7 @@ public static class LibraryPageLocators
     public static readonly By SavePlaylistNameBy = By.CssSelector("button[data-testid='playlist-edit-details-save-button']");
 
     public static readonly string PlaylistByNameTemplate = "//span[contains(text(), '{0}')]/ancestor::li";
+
+    public static readonly By DeletePlaylistMenuItemBy = By.XPath("//button[@role = 'menuitem' and span[text() = 'Delete']]");
+    public static readonly By DeleteBtnBy = By.XPath("//button[@data-encore-id ='buttonPrimary' and span[text() = 'Delete']]");
 }
