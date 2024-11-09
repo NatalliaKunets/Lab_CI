@@ -115,7 +115,7 @@ public class SearchEngine : BaseUITest
         var trackFoundElement = playlistPage.FindTrackByName(searchTerm);
 
         Assert.That(trackFoundElement, Is.Not.Null, $"The track '{searchTerm}' was not found in the playlist '{searchTerm}'.");
-
+        
         Logger.Information("Test Can Add Song To Playlist From Search Results executed.");
     }
 }

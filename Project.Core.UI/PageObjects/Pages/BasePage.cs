@@ -43,7 +43,6 @@ public abstract class BasePage
         });
     }
 
-
     protected void MoveToElement(IElement element)
     {
         try
@@ -53,6 +52,19 @@ public abstract class BasePage
         catch (Exception ex)
         {
             Logger.Error(ex, "Failed to hover over the specified element.");
+            throw;
+        }
+    }
+
+    protected void RightClickElement(IElement element)
+    {
+        try
+        {
+            Driver.Actions.ContextClick(element.WebElement).Perform();   
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Failed to right click the specified element.");
             throw;
         }
     }
