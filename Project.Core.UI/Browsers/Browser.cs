@@ -80,22 +80,5 @@ public class Browser : IBrowser
     {
         driver.Manage().Window.Maximize();
     }
-
-	IReadOnlyCollection<IElement> IBrowser.FindElements(By by)
-	{
-		try
-		{
-			var elements = driver.FindElements(by)
-								 .Select(e => (IElement)new Element(e))
-								 .ToList()
-								 .AsReadOnly();
-			return elements;
-		}
-		catch (Exception ex)
-		{
-			Logger.Error(ex, $"Failed to find WebElements by {by}");
-			throw;
-		}
-	}
 }
 
