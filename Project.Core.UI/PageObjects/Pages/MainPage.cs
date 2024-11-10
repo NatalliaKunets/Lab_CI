@@ -73,20 +73,6 @@ public class MainPage : BasePage
         }
     }
 
-	public void ClickCreatePlaylistPlusBtn()
-	{
-		try
-		{
-			CreatePlaylistPlusBtn.Click();
-		}
-		catch (Exception ex)
-		{
-			Logger.Error(ex, "Main Page: Failed to click the Create Playlist button.");
-			throw;
-		}
-	}
-
-
 
 	public void ClickCreatePlaylistMenuItem()
 	{
@@ -116,19 +102,6 @@ public class MainPage : BasePage
 			throw;
 		}
 	}
-
-    public void ClickSearchButton()
-    {
-        try
-        {
-            SearchBtn.Click();
-        }
-        catch (Exception ex)
-        {
-            Logger.Error(ex, "Main Page: Failed to click the Search button.");
-            throw;
-        }
-    }
 
     public void ClickSongPlayButton()
     {
