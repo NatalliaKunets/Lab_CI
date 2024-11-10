@@ -11,4 +11,6 @@ public static class SearchResultPageLocators
     public static readonly By AddToPlaylistMenuItemBy = By.XPath("//button[div[span[text() ='Add to playlist']]]");
     
     public static readonly By NewPlaylistMenuItemBy = By.XPath("//button[span[text() = 'New playlist']]");
+
+    public static readonly By AddToLikedSongsBtnBy = By.CssSelector("button[aria-label = 'Add to Liked Songs']");
 }

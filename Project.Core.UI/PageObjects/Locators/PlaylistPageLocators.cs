@@ -10,5 +10,4 @@ public static class PlaylistPageLocators
     public static readonly By SongTreeDotMenuBy = By.CssSelector("button[data-testid='more-button']");
 
     public static readonly By RemoveSongMenuItemBy = By.XPath("//button[span[text() ='Remove from this playlist']]");
-
 }
