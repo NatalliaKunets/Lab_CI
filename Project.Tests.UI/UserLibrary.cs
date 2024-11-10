@@ -5,63 +5,50 @@ using Project.Core.UI.PageObjects.Pages;
 namespace Project.Tests.UI;
 
 [TestFixture]
-public class UserLibrary : BaseTest
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
+[Parallelizable(ParallelScope.Children)]
+public class UserLibrary : BaseUITest
 {
-	[TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT-Lab2024")]
-	public void CreateNewPlaylist(string userName, string password)
-	{
-		Logger.Information("Entering Test Create a New Playlist");
+    [Test]
+    public void CreateNewPlaylist()
+    {
+        Logger.Information("Starting Test Create a New Playlist");
 
-		MainPage mainPage = new(Driver!);
-		LoginPage loginPage = new(Driver!);
+        MainPage mainPage = new(Driver!);
+        LoginPage loginPage = new(Driver!);
 
-		if (Login(mainPage, loginPage, userName, password))
-		{
-			Logger.Information("Logged In successfully.");
+        if (!Login(mainPage, loginPage))
+        {
+            Logger.Error("Failed to log in");
+            Assert.Fail("Failed to log in");
+            return;
+        }
 
-			mainPage.ClickCreatePlaylistMenuItem();
-			mainPage.ClickCreatePlaylistMenuItem();
+        Logger.Information("Logged In successfully.");
 
-			//Assert.That(mainPage.GetPlaylistTitle(), Does.Match(@"^My Playlist #\d+$"), "The playlist was not created successfully.");
+        mainPage.ClickCreatePlaylistPlusBtn();
+        mainPage.ClickCreatePlaylistMenuItem();
 
-			Logger.Information("Test Create a New Playlist executed.");
-		}
-	}
+        string playlistTitle = mainPage.GetPlaylistTitle();
+        Logger.Information($"Retrieved Playlist Title: {playlistTitle}");
+        Assert.That(playlistTitle, Does.Match(@"^My Playlist #\d+$"), "The playlist was not created successfully.");
 
-	private bool Login(MainPage mainPage, LoginPage loginPage, string userName, string password)
-	{
-		mainPage.ClickLoginButton();
+        Logger.Information("Test Create a New Playlist executed.");
 
-		if (!loginPage.IsPageLoaded())
-		{
-			Logger.Error("Failed to load Login Page");
-			return false;
-		}
+    }
 
-		loginPage.EnterUserName(userName);
-		loginPage.EnterPassword(password);
-		loginPage.ClickLoginButton();
+    [Test]
+    public void CannotCreatePlaylist_IfUserNotLoggedIn()
+    {
+        Logger.Information("Starting Test Verify that User Cannot Create a Playlist If Not LoggedIn");
 
-		return mainPage.IsLoggedIn();
-	}
+        MainPage mainPage = new(Driver!);
 
+        mainPage.ClickCreatePlaylistPlusBtn();
+        mainPage.ClickCreatePlaylistMenuItem();
 
+        Assert.That(mainPage.IsCreatePlaylistTooltipVisible, "The error message was not displayed as expected.");
 
-
-	[TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "AT_Lab_2024", "My Playlist #10", "New Playlist")]
-	public void RenamePlaylist(string userName, string password,string playlistName, string newPlaylistName)
-	{
-		MainPage mainPage = new(Driver!);
-		LibraryPage libPage = new(Driver!);
-		LoginPage loginPage = new(Driver!);
-		Login(mainPage, loginPage,userName,password);
-		if (!mainPage.IsPageLoaded())
-		{
-			Logger.Error("Failed to load Main Page");
-		}
-		libPage.ChoosePlaylist(playlistName);
-		libPage.EditPlaylistDetails();
-		libPage.RenamePlaylist(newPlaylistName);
-	}
+        Logger.Information("Test Verify that User Cannot Create a Playlist If Not LoggedIn executed.");
+    }
 }
-

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using Project.Core.Logging;
 using Project.Core.UI.Browsers;
 using Project.Core.UI.Elements;
 
@@ -34,5 +35,31 @@ public abstract class BasePage
                 return null; 
             }
         });
+    }
+
+    protected void MoveToElement(IElement element)
+    {
+        try
+        {
+            Driver.Actions.MoveToElement(element.WebElement).Perform();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Failed to hover over the specified element.");
+            throw;
+        }
+    }
+
+    protected void RightClickElement(IElement element)
+    {
+        try
+        {
+            Driver.Actions.ContextClick(element.WebElement).Perform();   
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Failed to right click the specified element.");
+            throw;
+        }
     }
 }

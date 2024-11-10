@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using Project.Core.Logging;
 using Project.Core.UI.Elements;
@@ -15,8 +16,9 @@ public class Browser : IBrowser
         this.driver = driver;
     }
 
-    public WebDriverWait Wait { get => new WebDriverWait(driver, TimeSpan.FromSeconds(10)); }
+    public WebDriverWait Wait => new (driver, TimeSpan.FromSeconds(10)); 
 
+    public Actions Actions => new (driver);
     public string Url { get => driver.Url; set => driver.Url = value; }
 
     public string Title => driver.Title;
@@ -47,6 +49,27 @@ public class Browser : IBrowser
             throw;
         }
     }
+
+    public ReadOnlyCollection<IElement> FindElements(By by)
+    {
+        try
+        {
+            //return driver.FindElements(by);
+
+            var elements = driver.FindElements(by)
+                .Select(e => e as IElement)
+                .Where(e => e != null)
+                .ToList()
+                .AsReadOnly();
+
+            return elements;
+        }
+        catch (NoSuchElementException e)
+        {
+            throw new NoSuchElementException($"No elements found with locator: {by}", e);
+        }
+    }
+
 
     public void RefreshPage()
     {
