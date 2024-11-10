@@ -73,20 +73,49 @@ public class MainPage : BasePage
         }
     }
 
-    public void ClickCreatePlaylistMenuItem()
-    {
-        var CreatePlaylistMenuItem = WaitForElement(MainPageLocators.CreateNewPlaylistMenuItemBy);
+	public void ClickCreatePlaylistPlusBtn()
+	{
+		try
+		{
+			CreatePlaylistPlusBtn.Click();
+		}
+		catch (Exception ex)
+		{
+			Logger.Error(ex, "Main Page: Failed to click the Create Playlist button.");
+			throw;
+		}
+	}
 
-        try
-        {
-            CreatePlaylistMenuItem.Click();
-        }
-        catch (Exception ex)
-        {
-            Logger.Error(ex, "Main Page: Failed to click the Create Playlist Menu Item");
-            throw;
-        }
-    }
+
+
+	public void ClickCreatePlaylistMenuItem()
+	{
+		var CreatePlaylistMenuItem = WaitForElement(MainPageLocators.CreateNewPlaylistMenuItemBy);
+
+		try
+		{
+			CreatePlaylistMenuItem.Click();
+		}
+		catch (Exception ex)
+		{
+			Logger.Error(ex, "Main Page: Failed to click the Create Playlist Menu Item");
+			throw;
+		}
+	}
+
+
+	public void ClickSearchButton()
+	{
+		try
+		{
+			SearchBtn.Click();
+		}
+		catch (Exception ex)
+		{
+			Logger.Error(ex, "Main Page: Failed to click the Search button.");
+			throw;
+		}
+	}
 
     public void ClickSearchButton()
     {

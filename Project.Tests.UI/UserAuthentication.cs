@@ -17,25 +17,25 @@ public class UserAuthentication : BaseUITest
 
         var userCredentials = ConfigurationManager.GetUserCredentials();
 
-        MainPage mainPage = new(Driver!);
-        LoginPage loginPage = new(Driver!);
+		MainPage mainPage = new(Driver!);
+		LoginPage loginPage = new(Driver!);
 
-        mainPage.ClickLoginButton();
+		mainPage.ClickLoginButton();
 
-        if (!loginPage.IsPageLoaded())
-        {
-            Logger.Error("Failed to load Login Page");
-            Assert.Fail("Login Page is not loaded");
-        }
+		if (!loginPage.IsPageLoaded())
+		{
+			Logger.Error("Failed to load Login Page");
+			Assert.Fail("Login Page is not loaded");
+		}
 
         loginPage.EnterUserName(userCredentials.Username);
         loginPage.EnterPassword(userCredentials.Password);
         loginPage.ClickLoginButton();
 
-        Assert.That(mainPage.IsLoggedIn(), "The user is not logged in as expected.");
+		Assert.That(mainPage.IsLoggedIn(), "The user is not logged in as expected.");
 
-        Logger.Information("Test Log In With Valid Credentials executed.");
-    }
+		Logger.Information("Test Log In With Valid Credentials executed.");
+	}
 
 
     [TestCase("random_user", "pwd123")]
@@ -44,51 +44,51 @@ public class UserAuthentication : BaseUITest
     {
         Logger.Information("Starting Test LogIn With Invalid Credentials");
 
-        MainPage mainPage = new(Driver!);
-        LoginPage loginPage = new(Driver!);
+		MainPage mainPage = new(Driver!);
+		LoginPage loginPage = new(Driver!);
 
-        mainPage.ClickLoginButton();
+		mainPage.ClickLoginButton();
 
-        if (!loginPage.IsPageLoaded())
-        {
-            Logger.Error("Failed to load Login Page");
-            Assert.Fail("Login Page is not loaded");
-        }
+		if (!loginPage.IsPageLoaded())
+		{
+			Logger.Error("Failed to load Login Page");
+			Assert.Fail("Login Page is not loaded");
+		}
 
-        loginPage.EnterUserName(userName);
-        loginPage.EnterPassword(password);
-        loginPage.ClickLoginButton();
+		loginPage.EnterUserName(userName);
+		loginPage.EnterPassword(password);
+		loginPage.ClickLoginButton();
 
-        Assert.That(string.Equals(loginPage.GetErrorMessage(), "Incorrect username or password.", StringComparison.InvariantCulture),
-            "The error message does not match the expected: 'Incorrect username or password.'");
+		Assert.That(string.Equals(loginPage.GetErrorMessage(), "Incorrect username or password.", StringComparison.InvariantCulture),
+			"The error message does not match the expected: 'Incorrect username or password.'");
 
-        Logger.Information("Test Log In With Invalid Credentials executed.");
-    }
+		Logger.Information("Test Log In With Invalid Credentials executed.");
+	}
 
     [TestCase("", "")]
     public void LoginWithEmptyFields(string userName, string password)
     {
         Logger.Information("Starting Test Login with Empty Fields");
 
-        MainPage mainPage = new(Driver!);
-        LoginPage loginPage = new(Driver!);
+		MainPage mainPage = new(Driver!);
+		LoginPage loginPage = new(Driver!);
 
-        mainPage.ClickLoginButton();
+		mainPage.ClickLoginButton();
 
-        if (!loginPage.IsPageLoaded())
-        {
-            Logger.Error("Failed to load Login Page");
-            Assert.Fail("Login Page is not loaded");
-        }
+		if (!loginPage.IsPageLoaded())
+		{
+			Logger.Error("Failed to load Login Page");
+			Assert.Fail("Login Page is not loaded");
+		}
 
-        loginPage.EnterUserName(userName);
-        loginPage.EnterPassword(password);
-        loginPage.ClickLoginButton();
+		loginPage.EnterUserName(userName);
+		loginPage.EnterPassword(password);
+		loginPage.ClickLoginButton();
 
-        Assert.That(string.Equals(loginPage.GetErrorMessage(), "Incorrect username or password.", StringComparison.InvariantCulture),
-            "The error message does not match the expected: 'Incorrect username or password.'");
-        Logger.Information("Test Login with empty fields executed");
-    }
+		Assert.That(string.Equals(loginPage.GetErrorMessage(), "Incorrect username or password.", StringComparison.InvariantCulture),
+			"The error message does not match the expected: 'Incorrect username or password.'");
+		Logger.Information("Test Login with empty fields executed");
+	}
 
 
     [Test]
