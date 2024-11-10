@@ -48,7 +48,7 @@ public class SearchResultPage : BasePage
     {
         try
         {
-            WaitForElement(SearchResultPageLocators.SongTreeDotMenuBy);
+            FirstSongsSearchResult.FindElement(SearchResultPageLocators.SongTreeDotMenuBy);
         }
         catch (WebDriverTimeoutException ex)
         {
@@ -89,6 +89,31 @@ public class SearchResultPage : BasePage
         catch (Exception ex)
         {
             Logger.Error(ex, "Search Result Page: Failed to click the New Playlist Menu Item.");
+            throw;
+        }
+    }
+
+    public void ClickAddToLikedSongsBtn()
+    {
+        IElement AddToLikedSongsBtn;
+
+        try
+        {
+            AddToLikedSongsBtn = FirstSongsSearchResult.FindElement(SearchResultPageLocators.AddToLikedSongsBtnBy);
+        }
+        catch (WebDriverTimeoutException ex)
+        {
+            Logger.Error(ex, "Search Result Page: Failed to found the Add To Liked Songs Button.");
+            throw;
+        }
+
+        try
+        {
+            AddToLikedSongsBtn.Click();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Search Result Page: Failed to click the Add To Liked Songs Button");
             throw;
         }
     }

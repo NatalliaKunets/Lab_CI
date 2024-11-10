@@ -17,28 +17,9 @@ public class PlaylistManagement : BaseUITest
 
         MainPage mainPage = new(Driver!);
         LoginPage loginPage = new(Driver!);
-
-        if (!Login(mainPage, loginPage))
-        {
-            Logger.Error("Failed to log in");
-            Assert.Fail("Failed to log in");
-            return;
-        }
-
-        Logger.Information("Logged In successfully.");
-
-        mainPage.EnterSearchTerm(songName);
-        mainPage.ClickSearchButton();
-
         SearchResultPage searchResultPage = new(Driver!);
 
-        if (!searchResultPage.IsPageLoaded())
-        {
-            Logger.Error($"Failed to get Search Results for '{songName}'");
-            Assert.Fail($"Failed to get Search Results for '{songName}'");
-            return;
-        }
-        Logger.Information($"Successfully retrieved Search Results for '{songName}'.");
+        RetrieveSearchResults(mainPage, loginPage, searchResultPage, songName);
 
         searchResultPage.MoveToFirstSongsSearchResult();
         searchResultPage.ClickSongTreeDotMenu();
@@ -50,8 +31,6 @@ public class PlaylistManagement : BaseUITest
         LibraryPage libraryPage = new(Driver!);
         libraryPage.ClickPlaylistByName(songName);
 
-        Logger.Information("Select the new playlist to find added Song in it'.");
-
         PlaylistPage playlistPage = new(Driver!);
         if (!playlistPage.IsPageLoaded())
         {
@@ -60,7 +39,7 @@ public class PlaylistManagement : BaseUITest
             return;
         }
 
-        Logger.Information("The playlist is selected'.");
+        Logger.Information("The new playlist is selected'.");
 
         IElement songElement = playlistPage.FindTrackByName(songName);
         playlistPage.MoveToSong(songElement, songName);
@@ -77,9 +56,62 @@ public class PlaylistManagement : BaseUITest
         libraryPage.ClickPlaylistByName(songName, isRightClick: true);
         libraryPage.ClickDeletePlaylistMenuItem();
         libraryPage.ClickDeleteButton();
-        
+
         Logger.Information("Empty Playlist was deleted.");
 
         Logger.Information("Test Can Delete Song From Playlist executed.");
+    }
+
+    private static void RetrieveSearchResults(MainPage mainPage, LoginPage loginPage, SearchResultPage searchResultPage, string songName)
+    {
+        if (!Login(mainPage, loginPage))
+        {
+            Logger.Error("Failed to log in");
+            Assert.Fail("Failed to log in");
+            return;
+        }
+
+        Logger.Information("Logged In successfully.");
+
+        mainPage.EnterSearchTerm(songName);
+        mainPage.ClickSearchButton();
+
+        if (!searchResultPage.IsPageLoaded())
+        {
+            Logger.Error($"Failed to get Search Results for '{songName}'");
+            Assert.Fail($"Failed to get Search Results for '{songName}'");
+            return;
+        }
+
+        Logger.Information($"Successfully retrieved Search Results for '{songName}'.");
+    }
+
+    [TestCase("Running Up That Hill")]
+    public void CreateLikedSongsPlaylist_WhenSongIsAdded(string songName)
+    {
+        Logger.Information("Starting Test Can Delete Song From Playlist");
+
+        MainPage mainPage = new(Driver!);
+        LoginPage loginPage = new(Driver!);
+        LibraryPage libraryPage = new(Driver!);
+        SearchResultPage searchResultPage = new(Driver!);
+        
+        RetrieveSearchResults(mainPage, loginPage, searchResultPage, songName);
+
+        if (libraryPage.FindPlaylistByName("Liked Songs") != null)
+        {
+            Logger.Error("The 'Liked Songs' playlist already exists");
+            Assert.Inconclusive("The 'Liked Songs' playlist already exists, so the precondition for the test is not met.");
+            return;
+        }
+
+        searchResultPage.MoveToFirstSongsSearchResult();
+        searchResultPage.ClickAddToLikedSongsBtn();
+        
+        Logger.Information($"Song {songName} successfully added to Liked Songs Playlist");
+        
+        Assert.That(libraryPage.FindPlaylistByName("Liked Songs"), Is.Not.Null, "The Liked Songs playlist was not created as expected.");
+
+        Logger.Information("Test Create Liked Songs Playlist When Song Is Added executed");
     }
 }
