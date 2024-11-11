@@ -54,22 +54,19 @@ public class Browser : IBrowser
     {
         try
         {
-            //return driver.FindElements(by);
-
             var elements = driver.FindElements(by)
                 .Select(e => e as IElement)
                 .Where(e => e != null)
                 .ToList()
                 .AsReadOnly();
 
-            return elements;
+            return elements!;
         }
         catch (NoSuchElementException e)
         {
             throw new NoSuchElementException($"No elements found with locator: {by}", e);
         }
     }
-
 
     public void RefreshPage()
     {
