@@ -69,14 +69,13 @@ public class Element : IElement
 	{
 		try
 		{
-            //return _webElement.FindElements(by);
             var elements = _webElement.FindElements(by)
             .Select(e => e as IElement) 
             .Where(e => e != null) 
             .ToList()
             .AsReadOnly();
 
-            return elements;
+            return elements!;
         }
 		catch (NoSuchElementException e)
 		{

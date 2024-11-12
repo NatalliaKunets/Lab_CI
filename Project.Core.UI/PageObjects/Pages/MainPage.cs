@@ -80,7 +80,7 @@ public class MainPage : BasePage
 
 		try
 		{
-			CreatePlaylistMenuItem.Click();
+			CreatePlaylistMenuItem!.Click();
 		}
 		catch (Exception ex)
 		{
@@ -192,7 +192,7 @@ public class MainPage : BasePage
 
         try
         {
-            accountMenuItem.Click();
+            accountMenuItem!.Click();
         }
         catch (Exception ex)
         {

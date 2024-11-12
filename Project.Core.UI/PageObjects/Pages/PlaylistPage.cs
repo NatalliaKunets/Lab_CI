@@ -59,8 +59,6 @@ public class PlaylistPage : BasePage
         IElement? songTreeDotMenu;
         try
         {
-            //songTreeDotMenu = WaitForElement(PlaylistPageLocators.SongTreeDotMenuBy, songElement);
-            
             songTreeDotMenu = songElement.FindElement(PlaylistPageLocators.SongTreeDotMenuBy);
             
             if (songTreeDotMenu == null)
