@@ -18,6 +18,7 @@ public class SearchResultPage : BasePage
     private IElement SongTreeDotMenu => FirstSongsSearchResult.FindElement(SearchResultPageLocators.SongTreeDotMenuBy);
     private IElement AddToPlaylistMenuItem => Driver.FindElement(SearchResultPageLocators.AddToPlaylistMenuItemBy);
     private IElement NewPlaylistMenuItem => Driver.FindElement(SearchResultPageLocators.NewPlaylistMenuItemBy);
+    private IElement FilterBySongsBtn => Driver.FindElement(SearchResultPageLocators.FilterBySongsBtnBy);
 
     public override bool IsPageLoaded()
     {
@@ -117,4 +118,23 @@ public class SearchResultPage : BasePage
             throw;
         }
     }
+
+    public void ClickFilterBySongsBtn()
+    {
+        try
+        {
+            FilterBySongsBtn.Click();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Search Result Page: Failed to click the Filter By Songs Button.");
+            throw;
+        }
+    }
+
+    public bool IsFilteredBySongsCategory()
+    {
+        return WaitForElement(SearchResultPageLocators.FilteredSongsSearchResultsBy) != null;
+    }
+
 }

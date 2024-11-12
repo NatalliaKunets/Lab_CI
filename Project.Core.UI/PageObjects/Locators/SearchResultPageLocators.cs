@@ -13,4 +13,7 @@ public static class SearchResultPageLocators
     public static readonly By NewPlaylistMenuItemBy = By.XPath("//button[span[text() = 'New playlist']]");
 
     public static readonly By AddToLikedSongsBtnBy = By.CssSelector("button[aria-label = 'Add to Liked Songs']");
+
+    public static readonly By FilterBySongsBtnBy = By.XPath("//button[span[text() = 'Songs']]");
+    public static readonly By FilteredSongsSearchResultsBy = By.CssSelector("div[data-testid='tracklist-row']");
 }
