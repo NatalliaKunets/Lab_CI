@@ -29,7 +29,7 @@ public class PlaylistPage : BasePage
 
     public IElement? FindTrackByName(string trackName)
     {
-        By TrackByNameBy = By.CssSelector(string.Format(PlaylistPageLocators.TrackByNameTemplate, trackName));
+        By TrackByNameBy = By.XPath(string.Format(PlaylistPageLocators.TrackByNameTemplate, trackName));
 
         try
         {
@@ -56,10 +56,18 @@ public class PlaylistPage : BasePage
 
     public void ClickSongTreeDotMenu(IElement songElement, string songName)
     {
-        IElement SongTreeDotMenu;
+        IElement? songTreeDotMenu;
         try
         {
-            SongTreeDotMenu = songElement.FindElement(PlaylistPageLocators.SongTreeDotMenuBy);
+            //songTreeDotMenu = WaitForElement(PlaylistPageLocators.SongTreeDotMenuBy, songElement);
+            
+            songTreeDotMenu = songElement.FindElement(PlaylistPageLocators.SongTreeDotMenuBy);
+            
+            if (songTreeDotMenu == null)
+            {
+                throw new WebDriverTimeoutException();
+            }
+
         }
         catch (WebDriverTimeoutException ex)
         {
@@ -69,7 +77,7 @@ public class PlaylistPage : BasePage
 
         try
         {
-            SongTreeDotMenu.Click();
+            songTreeDotMenu.Click();
         }
         catch (Exception ex)
         {
