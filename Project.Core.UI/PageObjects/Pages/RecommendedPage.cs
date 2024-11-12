@@ -6,7 +6,7 @@ using Project.Core.UI.PageObjects.Locators;
 
 namespace Project.Core.UI.PageObjects.Pages;
 
-public class RecommendedPage :BasePage
+public class RecommendedPage : BasePage
 {
     public RecommendedPage(IBrowser driver) : base(driver)
     {
@@ -32,7 +32,7 @@ public class RecommendedPage :BasePage
         try
         {
             IElement? firstPlaylist = FeaturedChartsSection.FindElement(RecommendedPageLocators.FirstPlaylistBy);
-            if(firstPlaylist == null)
+            if (firstPlaylist == null)
             {
                 Logger.Error("Recommended Page: Failed to find the first playlist.");
 
@@ -46,5 +46,38 @@ public class RecommendedPage :BasePage
             Logger.Error(ex, "Recommended Page: Failed to click the first playlist.");
             throw;
         }
+    }
+
+    public void MoveToFirstPlaylist()
+    {
+        try
+        {
+            IElement? firstPlaylist = FeaturedChartsSection.FindElement(RecommendedPageLocators.FirstPlaylistBy);
+            if (firstPlaylist == null)
+            {
+                Logger.Error("Recommended Page: Failed to find the first playlist.");
+
+                throw new NoSuchElementException();
+            }
+
+            MoveToElement(firstPlaylist);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Recommended Page: Failed to click the first playlist.");
+            throw;
+        }
+    }
+
+    public bool IsPlayButtonVisible()
+    {
+        IElement? playButton = FeaturedChartsSection.FindElement(RecommendedPageLocators.PlayBtnBy);
+        if (playButton == null)
+        {
+            Logger.Error("Recommended Page: Failed to find the Play button.");
+            return false;
+        }
+
+        return true;
     }
 }
