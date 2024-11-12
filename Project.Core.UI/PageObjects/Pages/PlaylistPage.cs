@@ -54,13 +54,11 @@ public class PlaylistPage : BasePage
         }
     }
 
-    public void ClickSongTreeDotMenu(IElement songElement, string songName)
+    public static void ClickSongTreeDotMenu(IElement songElement)
     {
         IElement? songTreeDotMenu;
         try
         {
-            //songTreeDotMenu = WaitForElement(PlaylistPageLocators.SongTreeDotMenuBy, songElement);
-            
             songTreeDotMenu = songElement.FindElement(PlaylistPageLocators.SongTreeDotMenuBy);
             
             if (songTreeDotMenu == null)

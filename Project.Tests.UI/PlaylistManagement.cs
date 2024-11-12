@@ -50,7 +50,7 @@ public class PlaylistManagement : BaseUITest
         }
 
         playlistPage.MoveToSong(songElement, songName);
-        playlistPage.ClickSongTreeDotMenu(songElement, songName);
+        PlaylistPage.ClickSongTreeDotMenu(songElement);
         playlistPage.ClickRemoveSongMenuItem();
         playlistPage.RefreashPage();
 
@@ -96,7 +96,7 @@ public class PlaylistManagement : BaseUITest
     [TestCase("Running Up That Hill")]
     public void CreateLikedSongsPlaylist_WhenSongIsAdded(string songName)
     {
-        Logger.Information("Starting Test Can Delete Song From Playlist");
+        Logger.Information("Starting Test Create Liked Songs Playlist When Song Is Added");
 
         MainPage mainPage = new(Driver!);
         LoginPage loginPage = new(Driver!);
@@ -140,7 +140,7 @@ public class PlaylistManagement : BaseUITest
         }
 
         playlistPage.MoveToSong(songElement, songName);
-        playlistPage.ClickSongTreeDotMenu(songElement, songName);
+        PlaylistPage.ClickSongTreeDotMenu(songElement);
         playlistPage.ClickRemoveSongMenuItem();
         playlistPage.RefreashPage();
 
