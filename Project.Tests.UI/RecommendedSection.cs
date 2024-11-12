@@ -35,4 +35,27 @@ public class RecommendedSection : BaseUITest
 
         Logger.Information("Test First Recommended Playlist Is Opened When Clicked executed.");
     }
+
+    [Test]
+    public void PlayButtonAppears_OnMouseMove()
+    {
+        Logger.Information("Starting Test Play Button Appears On Mouse Move");
+
+        RecommendedPage recommendedPage = new(Driver!);
+
+        if (!recommendedPage.IsPageLoaded())
+        {
+            Logger.Error("Failed to load Recommended Page");
+            Assert.Fail("Failed to load Recommended Page");
+            return;
+        }
+
+        Logger.Information("Recommended Page is loaded successfully.");
+
+        recommendedPage.MoveToFirstPlaylist();
+
+        Assert.That(recommendedPage.IsPlayButtonVisible(), Is.True, "The Play Button does not appear On Mouse Move as expected.");
+
+        Logger.Information("Test Play Button Appears On Mouse Move executed.");
+    }
 }
