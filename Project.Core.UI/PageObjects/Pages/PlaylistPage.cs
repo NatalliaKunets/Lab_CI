@@ -54,7 +54,7 @@ public class PlaylistPage : BasePage
         }
     }
 
-    public void ClickSongTreeDotMenu(IElement songElement, string songName)
+    public static void ClickSongTreeDotMenu(IElement songElement)
     {
         IElement? songTreeDotMenu;
         try

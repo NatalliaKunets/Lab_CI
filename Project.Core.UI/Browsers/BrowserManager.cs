@@ -28,6 +28,6 @@ public static class BrowserManager
     public static void CloseBrowser()
     {
         driver.Value?.Quit();
-        driver.Value = null;
+        driver.Value = null!;
     }
 }
