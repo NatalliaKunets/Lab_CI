@@ -51,4 +51,39 @@ public class UserLibrary : BaseUITest
 
         Logger.Information("Test Verify that User Cannot Create a Playlist If Not LoggedIn executed.");
     }
+
+
+
+	[TestCase("My Playlist #7", "New Playlist")]
+	public void RenamePlaylist(string playlistName, string newPlaylistName)
+	{
+		MainPage mainPage = new(Driver!);
+		LibraryPage libPage = new(Driver!);
+		LoginPage loginPage = new(Driver!);
+		Login(mainPage, loginPage);
+		if (!mainPage.IsPageLoaded())
+		{
+			Logger.Error("Failed to load Main Page");
+		}
+		libPage.ClickPlaylistByName(playlistName);
+		libPage.RenamePlaylist(newPlaylistName);
+	}
+
+
+	[TestCase("New Playlist")]
+	public void DeletePlaylist(string playlistName)
+	{
+		MainPage mainPage = new(Driver!);
+		LibraryPage libPage = new(Driver!);
+		LoginPage loginPage = new(Driver!);
+		Login(mainPage, loginPage);
+		if (!mainPage.IsPageLoaded())
+		{
+			Logger.Error("Failed to load Main Page");
+		}
+		libPage.ClickPlaylistByName(playlistName);
+		libPage.EditPlaylistDetails();
+        libPage.ClickDeletePlaylistMenuItem();
+        libPage.ClickDeleteButton();
+	}
 }

@@ -86,8 +86,7 @@ public class LibraryPage : BasePage
     {
         try
         {
-            LibraryThreeDotsBtn.Click();
-            WaitForElement(LibraryPageLocators.EditDetailsBtnBy).Click();
+            WaitForElement(LibraryPageLocators.LibraryThreeDotsBtnBy).Click();
         }
         catch (Exception ex)
         {
@@ -99,7 +98,9 @@ public class LibraryPage : BasePage
     {
         try
         {
-            WaitForElement(LibraryPageLocators.PlaylistNameInputBy);
+			WaitForElement(LibraryPageLocators.LibraryThreeDotsBtnBy).Click();
+			WaitForElement(LibraryPageLocators.EditDetailsBtnBy).Click();
+			WaitForElement(LibraryPageLocators.PlaylistNameInputBy);
             WaitForElement(LibraryPageLocators.SavePlaylistNameBy);
             PlaylistNameInput.Clear();
             PlaylistNameInput.SendKeys(name);
