@@ -37,6 +37,25 @@ public abstract class BasePage
         });
     }
 
+    //protected IElement? WaitForElement(By locator, IElement ancestorElement)
+    //{
+    //    return Driver.Wait.Until(_ => {
+    //        try
+    //        {
+    //            var element = ancestorElement.FindElement(locator);
+    //            return element.Displayed ? element : null;
+    //        }
+    //        catch (NoSuchElementException)
+    //        {
+    //            return null;
+    //        }
+    //        catch (StaleElementReferenceException)
+    //        {
+    //            return null;
+    //        }
+    //    });
+    //}
+
     protected void MoveToElement(IElement element)
     {
         try

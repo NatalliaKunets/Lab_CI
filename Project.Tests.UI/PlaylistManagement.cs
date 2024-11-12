@@ -41,9 +41,16 @@ public class PlaylistManagement : BaseUITest
 
         Logger.Information("The new playlist is selected'.");
 
-        IElement songElement = playlistPage.FindTrackByName(songName);
+        IElement? songElement = playlistPage.FindTrackByName(songName);
+        if (songElement == null)
+        {
+            Logger.Error($"Failed to find track '{songName}' in the Playlist");
+            Assert.Fail($"Failed to find track '{songName}' in the Playlist");
+            return;
+        }
+
         playlistPage.MoveToSong(songElement, songName);
-        playlistPage.ClickSongTreeDotMenu(songElement, songName);
+        PlaylistPage.ClickSongTreeDotMenu(songElement);
         playlistPage.ClickRemoveSongMenuItem();
         playlistPage.RefreashPage();
 
@@ -89,13 +96,13 @@ public class PlaylistManagement : BaseUITest
     [TestCase("Running Up That Hill")]
     public void CreateLikedSongsPlaylist_WhenSongIsAdded(string songName)
     {
-        Logger.Information("Starting Test Can Delete Song From Playlist");
+        Logger.Information("Starting Test Create Liked Songs Playlist When Song Is Added");
 
         MainPage mainPage = new(Driver!);
         LoginPage loginPage = new(Driver!);
         LibraryPage libraryPage = new(Driver!);
         SearchResultPage searchResultPage = new(Driver!);
-        
+
         RetrieveSearchResults(mainPage, loginPage, searchResultPage, songName);
 
         if (libraryPage.FindPlaylistByName("Liked Songs") != null)
@@ -107,11 +114,85 @@ public class PlaylistManagement : BaseUITest
 
         searchResultPage.MoveToFirstSongsSearchResult();
         searchResultPage.ClickAddToLikedSongsBtn();
-        
+
         Logger.Information($"Song {songName} successfully added to Liked Songs Playlist");
-        
+
         Assert.That(libraryPage.FindPlaylistByName("Liked Songs"), Is.Not.Null, "The Liked Songs playlist was not created as expected.");
 
+        Logger.Information("Performing postconditions: Delete song from Liked Songs playlist.");
+
+        libraryPage.ClickPlaylistByName("Liked Songs");
+        PlaylistPage playlistPage = new(Driver!);
+        if (!playlistPage.IsPageLoaded())
+        {
+            Logger.Error("Failed to open playlist Page for 'Liked Songs' Playlist");
+            Assert.Fail("Failed to open playlist Page for 'Liked Songs' Playlist");
+            return;
+        }
+
+        Logger.Information("The 'Liked Songs' playlist is selected'.");
+
+        IElement? songElement = playlistPage.FindTrackByName(songName);
+        if (songElement == null)
+        {
+            Logger.Error($"Failed to find song '{songName}' in Liked Songs Playlist to remove");
+            return;
+        }
+
+        playlistPage.MoveToSong(songElement, songName);
+        PlaylistPage.ClickSongTreeDotMenu(songElement);
+        playlistPage.ClickRemoveSongMenuItem();
+        playlistPage.RefreashPage();
+
+        Logger.Information($"The song {songName} was deleted from Liked Songs playlist'.");
+
         Logger.Information("Test Create Liked Songs Playlist When Song Is Added executed");
+    }
+
+    [Test]
+    public void SelectedPlaylistPersistsAfterRefresh()
+    {
+        Logger.Information("Starting Test Selected Playlist Persists After Refresh");
+
+        MainPage mainPage = new(Driver!);
+        LoginPage loginPage = new(Driver!);
+
+        if (!Login(mainPage, loginPage))
+        {
+            Logger.Error("Failed to log in");
+            Assert.Fail("Failed to log in");
+            return;
+        }
+
+        Logger.Information("Logged In successfully.");
+
+        LibraryPage libraryPage = new(Driver!);
+        var firstPlaylistName = libraryPage.GetFirstPlaylistName();
+        if (string.IsNullOrEmpty(firstPlaylistName))
+        {
+            Logger.Error("There are no playlists in User Library");
+            Assert.Inconclusive("There are no playlists in User Library, so the precondition for the test is not met.");
+            return;
+        }
+
+        libraryPage.ClickPlaylistByName(firstPlaylistName);
+
+        Logger.Information("Selected the first playlist in User Library.");
+
+        PlaylistPage playlistPage = new(Driver!);
+        if(!playlistPage.IsPageLoaded())
+        {
+            Logger.Error("Failed to load the Playlist page");
+            Assert.Fail("Failed to load the Playlist page");
+            return;
+        }
+
+        Logger.Information("The Playlist page is loaded.");
+
+        playlistPage.RefreashPage();
+
+        Assert.That(playlistPage.IsPageLoaded(), Is.True, "The Selected Playlist was not Persist After Refresh as expected.");
+
+        Logger.Information("Test Selected Playlist Persists After Refresh executed");
     }
 }

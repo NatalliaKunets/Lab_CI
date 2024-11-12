@@ -29,7 +29,7 @@ public class UserLibrary : BaseUITest
         mainPage.ClickCreatePlaylistPlusBtn();
         mainPage.ClickCreatePlaylistMenuItem();
 
-        string playlistTitle = mainPage.GetPlaylistTitle();
+        string playlistTitle = mainPage.GetPlaylistTitle() ?? string.Empty;
         Logger.Information($"Retrieved Playlist Title: {playlistTitle}");
         Assert.That(playlistTitle, Does.Match(@"^My Playlist #\d+$"), "The playlist was not created successfully.");
 

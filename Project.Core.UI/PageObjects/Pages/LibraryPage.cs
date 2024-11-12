@@ -3,6 +3,7 @@ using Project.Core.Logging;
 using Project.Core.UI.Browsers;
 using Project.Core.UI.Elements;
 using Project.Core.UI.PageObjects.Locators;
+using System.Xml.Linq;
 
 namespace Project.Core.UI.PageObjects.Pages;
 
@@ -136,5 +137,16 @@ public class LibraryPage : BasePage
             Logger.Error(ex, "Library Page: Failed to click the Delete Playlist button.");
             throw;
         }
+    }
+
+    public string GetFirstPlaylistName()
+    {
+        IElement? firstPlaylist = FindPlaylistByName("");
+        if (firstPlaylist == null)
+        { 
+            return string.Empty;
+        }
+
+        return firstPlaylist.FindElement(By.XPath(".//span[text()]")).Text;
     }
 }

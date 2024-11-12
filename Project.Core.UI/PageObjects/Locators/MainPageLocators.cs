@@ -5,7 +5,8 @@ namespace Project.Core.UI.PageObjects.Locators;
 
 public static class MainPageLocators
 {
-	public static readonly By HomeBtnBy = By.CssSelector(".Button-sc-1dqy6lx-0.bksmLQ");
+    public static readonly By MainViewContainerBy = By.CssSelector("div.main-view-container");
+    public static readonly By HomeBtnBy = By.CssSelector(".Button-sc-1dqy6lx-0.bksmLQ");
 	public static readonly By SearchInputBy = By.CssSelector(".Input-sc-1gbx9xe-0");
 	public static readonly By CreatePlaylistPlusBtnBy = By.CssSelector("button[aria-label='Create playlist or folder']");
 	public static readonly By CreateNewPlaylistMenuItemBy = By.CssSelector("button[role='menuitem'] span[data-encore-id='type']");

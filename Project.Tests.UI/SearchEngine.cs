@@ -67,29 +67,9 @@ public class SearchEngine : BaseUITest
 
         MainPage mainPage = new(Driver!);
         LoginPage loginPage = new(Driver!);
-
-        if (!Login(mainPage, loginPage))
-        {
-            Logger.Error("Failed to log in");
-            Assert.Fail("Failed to log in");
-            return;
-        }
-
-        Logger.Information("Logged In successfully.");
-
-        mainPage.EnterSearchTerm(searchTerm);
-        mainPage.ClickSearchButton();
-
         SearchResultPage searchResultPage = new(Driver!);
 
-        if (!searchResultPage.IsPageLoaded())
-        {
-            Logger.Error($"Failed to get Search Results for '{searchTerm}'");
-            Assert.Fail($"Failed to get Search Results for '{searchTerm}'");
-            return;
-        }
-        Logger.Information($"Successfully retrieved Search Results for '{searchTerm}'.");
-
+        RetrieveSearchResults(mainPage, loginPage, searchResultPage, searchTerm);
 
         searchResultPage.MoveToFirstSongsSearchResult();
         searchResultPage.ClickSongTreeDotMenu();
@@ -117,5 +97,47 @@ public class SearchEngine : BaseUITest
         Assert.That(trackFoundElement, Is.Not.Null, $"The track '{searchTerm}' was not found in the playlist '{searchTerm}'.");
         
         Logger.Information("Test Can Add Song To Playlist From Search Results executed.");
+    }
+
+    private static void RetrieveSearchResults(MainPage mainPage, LoginPage loginPage, SearchResultPage searchResultPage, string songName)
+    {
+        if (!Login(mainPage, loginPage))
+        {
+            Logger.Error("Failed to log in");
+            Assert.Fail("Failed to log in");
+            return;
+        }
+
+        Logger.Information("Logged In successfully.");
+
+        mainPage.EnterSearchTerm(songName);
+        mainPage.ClickSearchButton();
+
+        if (!searchResultPage.IsPageLoaded())
+        {
+            Logger.Error($"Failed to get Search Results for '{songName}'");
+            Assert.Fail($"Failed to get Search Results for '{songName}'");
+            return;
+        }
+
+        Logger.Information($"Successfully retrieved Search Results for '{songName}'.");
+    }
+
+    [TestCase("Running Up That Hill")]
+    public void FilterResults_BySongsCategory(string searchTerm)
+    {
+        Logger.Information("Starting Test Check Filter Results By Songs Category");
+
+        MainPage mainPage = new(Driver!);
+        LoginPage loginPage = new(Driver!);
+        SearchResultPage searchResultPage = new(Driver!);
+
+        RetrieveSearchResults(mainPage, loginPage, searchResultPage, searchTerm);
+
+        searchResultPage.ClickFilterBySongsBtn();
+
+        Assert.That(searchResultPage.IsFilteredBySongsCategory(), Is.True, "The Search Results was not Filtered By Songs Category");
+
+        Logger.Information("Test Check Filter Results By Songs Category executed.");
     }
 }
