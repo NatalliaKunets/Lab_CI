@@ -1,0 +1,17 @@
+# .gitlab-ci.yml
+default: 
+  image: mcr.microsoft.com/dotnet/sdk:8.0
+
+stages:        
+  - test
+
+variables: 
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1" # disable telemetry
+
+test:
+  stage: test
+  script:
+    - dotnet restore # Restore all dependencies
+    - dotnet test --configuration Release --no-restore
+  allow_failure: true # Allows the job to continue even if it fails
+
