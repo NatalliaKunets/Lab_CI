@@ -1,6 +1,6 @@
 {
   "Serilog": {
-    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.File", "ReportPortal.Serilog" ],
+    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
     "MinimumLevel": "Information",
     "WriteTo": [
       {
