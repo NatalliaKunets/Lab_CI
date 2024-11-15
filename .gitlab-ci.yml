@@ -1,7 +1,6 @@
 # .gitlab-ci.yml
 default: 
-  image: mcr.microsoft.com/dotnet/sdk:8.0
-
+  image: selenium/standalone-chrome
 stages:        
   - test
 
