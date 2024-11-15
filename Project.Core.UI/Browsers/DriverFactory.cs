@@ -2,6 +2,8 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using Project.Core.Enums;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
 namespace Project.Core.UI.Browsers;
 public static class DriverFactory
@@ -13,14 +15,19 @@ public static class DriverFactory
         switch (browserType)
         {
             case BrowserType.Chrome:
+                new DriverManager().SetUpDriver(new ChromeConfig());
+
                 var chromeOptions = new ChromeOptions();
+                chromeOptions.AddArgument("--headless");
+                chromeOptions.AddArgument("--disable-gpu");
                 chromeOptions.AddArgument("--no-sandbox");
                 chromeOptions.AddArgument("--disable-dev-shm-usage");
-                chromeOptions.AddArgument("--headless");
 
                 driver = new ChromeDriver(chromeOptions);
                 break;
             case BrowserType.Edge:
+                new DriverManager().SetUpDriver(new EdgeConfig());
+
                 var edgeOptions = new EdgeOptions();
                 edgeOptions.AddArgument("--no-sandbox");
                 edgeOptions.AddArgument("--disable-dev-shm-usage");
