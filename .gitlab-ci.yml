@@ -9,8 +9,6 @@ variables:
 
 test:
   stage: test
-  services:
-    - name: selenium/standalone-chrome:latest 
   script:
     - dotnet restore # Restore all dependencies
     - dotnet test --configuration Release --no-restore
