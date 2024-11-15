@@ -1,6 +1,6 @@
 # .gitlab-ci.yml
 default: 
-  image: selenium/standalone-chrome
+  image: mcr.microsoft.com/dotnet/sdk:8.0 
 stages:        
   - test
 
@@ -9,6 +9,8 @@ variables:
 
 test:
   stage: test
+  services:
+    - name: selenium/standalone-chrome:latest 
   script:
     - dotnet restore # Restore all dependencies
     - dotnet test --configuration Release --no-restore
