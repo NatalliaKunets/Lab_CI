@@ -1,23 +1,44 @@
-# .gitlab-ci.yml
 default: 
-  image: mcr.microsoft.com/dotnet/sdk:8.0 
-stages:        
+  image: mcr.microsoft.com/dotnet/sdk:8.0
+
+stages:
   - test
 
-variables: 
-  DOTNET_CLI_TELEMETRY_OPTOUT: "1" # disable telemetry
+variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
 
-test:
-  stage: test
-  before_script:
-    # Install Google Chrome
-    - apt-get update && apt-get install -y wget gnupg
+before_script:
+  - apt-get update && apt-get install -y wget gnupg
+
+# Install Google Chrome
+install_chrome:
+  script:
     - wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
 
+# Install Microsoft Edge
+install_edge:
   script:
-    - dotnet restore # Restore all dependencies
-    - dotnet test --configuration Release --no-restore
-  allow_failure: true # Allows the job to continue even if it fails
+    - wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft.gpg
+    - echo "deb [signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list
+    - apt-get update && apt-get install -y microsoft-edge-stable
 
+# Chrome Test
+test_chrome:
+  stage: test
+  script:
+    - echo "Updating BrowserType to Chrome in appsettings.json using PowerShell"
+    - pwsh -Command "(Get-Content appsettings.json | ConvertFrom-Json).AppConfig.BrowserType = 'Chrome'; (Get-Content appsettings.json | ConvertFrom-Json | ConvertTo-Json -Compress) |    Set-Content appsettings.json"
+    - dotnet restore
+    - dotnet test --configuration Release --no-restore
+  parallel: 1  # Run this test in parallel
+
+# Edge Test
+test_edge:
+  stage: test
+  script:
+    - pwsh -Command "(Get-Content appsettings.json | ConvertFrom-Json).AppConfig.BrowserType = 'Edge'; (Get-Content appsettings.json | ConvertFrom-Json | ConvertTo-Json -Compress) |    Set-Content appsettings.json"
+    - dotnet restore
+    - dotnet test --configuration Release --no-restore
+  parallel: 1  # Run this test in parallel
