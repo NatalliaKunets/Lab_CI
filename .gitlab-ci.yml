@@ -25,7 +25,6 @@ test_chrome:
   stage: test
   script:
     - echo "Listing files in the current directory:"
-    - echo "Current Directory: ${PWD}"
     - ls -la
     - echo "Installing Google Chrome"
     - wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
