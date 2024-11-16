@@ -18,6 +18,8 @@ cache:
     - '$NUGET_PACKAGES_DIRECTORY'
 
 before_script:
+  - echo "Current Directory: $(pwd)"
+  - ls -R
   - apt-get update && apt-get install -y wget gnupg
   - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
 
