@@ -1,23 +1,35 @@
-# .gitlab-ci.yml
-default: 
-  image: mcr.microsoft.com/dotnet/sdk:8.0 
-stages:        
+default:
+  image: mcr.microsoft.com/dotnet/sdk:8.0
+
+stages:
   - test
 
-variables: 
-  DOTNET_CLI_TELEMETRY_OPTOUT: "1" # disable telemetry
+variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
 
-test:
+before_script:
+  - apt-get update && apt-get install -y wget gnupg
+
+test_chrome:
   stage: test
-  before_script:
-    # Install Google Chrome
-    - apt-get update && apt-get install -y wget gnupg
+  script:
+    - echo "Installing Google Chrome"
     - wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
-
-  script:
-    - dotnet restore # Restore all dependencies
+    - jq '.AppConfig.BrowserType = "Chrome"' appsettings.json > tmp.json && mv tmp.json appsettings.json
+    - dotnet restore
     - dotnet test --configuration Release --no-restore
-  allow_failure: true # Allows the job to continue even if it fails
-
+ 
+test_edge:
+  stage: test
+  script:
+    - echo "Installing Microsoft Edge"
+    - wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft.gpg
+    - echo "deb [signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list
+    - apt-get update && apt-get install -y microsoft-edge-stable
+    - echo "Updating BrowserType to Edge in appsettings.json"
+    - jq '.AppConfig.BrowserType = "Edge"' appsettings.json > tmp.json && mv tmp.json appsettings.json
+    - dotnet restore
+    - dotnet test --configuration Release --no-restore
+ 
