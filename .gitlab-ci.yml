@@ -13,7 +13,7 @@ cache:
   paths:
     - './obj/project.assets.json'
     - './obj/*.csproj.nuget.*'
-    - '.nuget/'
+    - '$NUGET_PACKAGES_DIRECTORY'
 
 before_script:
   - apt-get update && apt-get install -y wget gnupg
