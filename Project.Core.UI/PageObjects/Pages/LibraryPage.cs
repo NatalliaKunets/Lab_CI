@@ -3,7 +3,6 @@ using Project.Core.Logging;
 using Project.Core.UI.Browsers;
 using Project.Core.UI.Elements;
 using Project.Core.UI.PageObjects.Locators;
-using System.Xml.Linq;
 
 namespace Project.Core.UI.PageObjects.Pages;
 
@@ -16,7 +15,6 @@ public class LibraryPage : BasePage
 
     private IElement LibraryList => Driver.FindElement(LibraryPageLocators.LibraryListBy);
     private IReadOnlyCollection<IElement> LibraryListItems => Driver.FindElements(LibraryPageLocators.LibraryListItemsBy);
-    private IElement LibraryThreeDotsBtn => Driver.FindElement(LibraryPageLocators.LibraryThreeDotsBtnBy);
     private IElement PlaylistNameInput => Driver.FindElement(LibraryPageLocators.PlaylistNameInputBy);
     private IElement SavePlaylistName => Driver.FindElement(LibraryPageLocators.SavePlaylistNameBy);
 
@@ -87,7 +85,7 @@ public class LibraryPage : BasePage
     {
         try
         {
-            WaitForElement(LibraryPageLocators.LibraryThreeDotsBtnBy).Click();
+            WaitForElement(LibraryPageLocators.LibraryThreeDotsBtnBy)!.Click();
         }
         catch (Exception ex)
         {
@@ -99,8 +97,8 @@ public class LibraryPage : BasePage
     {
         try
         {
-			WaitForElement(LibraryPageLocators.LibraryThreeDotsBtnBy).Click();
-			WaitForElement(LibraryPageLocators.EditDetailsBtnBy).Click();
+			WaitForElement(LibraryPageLocators.LibraryThreeDotsBtnBy)!.Click();
+			WaitForElement(LibraryPageLocators.EditDetailsBtnBy)!.Click();
 			WaitForElement(LibraryPageLocators.PlaylistNameInputBy);
             WaitForElement(LibraryPageLocators.SavePlaylistNameBy);
             PlaylistNameInput.Clear();
