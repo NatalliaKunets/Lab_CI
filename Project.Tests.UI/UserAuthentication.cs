@@ -41,7 +41,6 @@ public class UserAuthentication : BaseUITest
 
     [TestCase("random_user", "pwd123")]
     [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "123")]
-	[Ignore("Skip for CI check")]
     public void LoginWithInvalidCredentials(string userName, string password)
     {
         Logger.Information("Starting Test LogIn With Invalid Credentials");
@@ -94,6 +93,7 @@ public class UserAuthentication : BaseUITest
 
 
     [Test]
+    [Ignore("Skip for CI check")]
     public void LogOutTest()
     {
         Logger.Information("Starting Logout Test");
