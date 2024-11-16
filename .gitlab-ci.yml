@@ -20,8 +20,7 @@ test_chrome:
     - jq '.AppConfig.BrowserType = "Chrome"' appsettings.json > tmp.json && mv tmp.json appsettings.json
     - dotnet restore
     - dotnet test --configuration Release --no-restore
-  parallel: 1  
-
+ 
 test_edge:
   stage: test
   script:
@@ -33,4 +32,4 @@ test_edge:
     - jq '.AppConfig.BrowserType = "Edge"' appsettings.json > tmp.json && mv tmp.json appsettings.json
     - dotnet restore
     - dotnet test --configuration Release --no-restore
-  parallel: 1  
+ 
