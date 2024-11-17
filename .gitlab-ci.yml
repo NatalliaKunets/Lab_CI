@@ -28,7 +28,8 @@ test_chrome:
     - apt-get update && apt-get install -y google-chrome-stable
     - jq '.AppConfig.BrowserType = "Chrome"' appsettings.json > tmp.json && mv tmp.json appsettings.json  # Updating BrowserType to Chrome in appsettings.json
     - dotnet test --configuration Release --no-restore
-
+  only:
+    - dev  # Run only on the dev branch
 test_edge:
   stage: test
   script:
@@ -38,3 +39,5 @@ test_edge:
     - apt-get update && apt-get install -y microsoft-edge-stable
     - jq '.AppConfig.BrowserType = "Edge"' appsettings.json > tmp.json && mv tmp.json appsettings.json  # Updating BrowserType to Edge in appsettings.json
     - dotnet test --configuration Release --no-restore
+  only:
+    - dev  # Run only on the dev branch
