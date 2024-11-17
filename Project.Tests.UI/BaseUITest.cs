@@ -1,7 +1,7 @@
-﻿using Project.Core.UI.Browsers;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Project.Core.Logging;
 using Project.Core.Settings;
+using Project.Core.UI.Browsers;
 using Project.Core.UI.PageObjects.Pages;
 
 namespace Project.Tests.UI;
@@ -28,6 +28,11 @@ public class BaseUITest
     [TearDown]
     public void TearDown()
     {
+        if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
+        {
+            Driver?.TakeScreenshot();
+        }
+
         BrowserManager.CloseBrowser();
         Logger.Information("TearDown executed");
     }
