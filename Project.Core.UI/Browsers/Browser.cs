@@ -78,7 +78,7 @@ public class Browser : IBrowser
         driver.Manage().Window.Maximize();
     }
 
-    public void TakeScreenshot()
+    public void TakeScreenshot(string testName)
     {
         string filePath = "screenshots";
         string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
@@ -86,7 +86,7 @@ public class Browser : IBrowser
 
         Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
         
-        screenshot.SaveAsFile(Path.Combine(filePath, $"failure_{timestamp}.png"));
+        screenshot.SaveAsFile(Path.Combine(filePath, $"{testName.Split('(')[0]}_failure_{timestamp}.png"));
     }
 }
 

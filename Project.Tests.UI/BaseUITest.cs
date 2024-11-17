@@ -30,7 +30,7 @@ public class BaseUITest
     {
         if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
         {
-            Driver?.TakeScreenshot();
+            Driver?.TakeScreenshot(TestContext.CurrentContext.Test.Name);
         }
 
         BrowserManager.CloseBrowser();

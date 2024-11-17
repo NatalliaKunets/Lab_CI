@@ -37,6 +37,6 @@ public interface IBrowser
 
     void WindowMaximize();
 
-    void TakeScreenshot();
+    void TakeScreenshot(string testName);
 }
 
