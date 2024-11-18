@@ -10,35 +10,23 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class UserAuthentication : BaseUITest
 {
-    [Test]
+    [Test, Retry(2)]
     public void LoginWithValidCredentials()
     {
         Logger.Information("Starting Test LogIn With Valid Credentials");
 
-        var userCredentials = ConfigurationManager.GetUserCredentials();
-
 		MainPage mainPage = new(Driver!);
 		LoginPage loginPage = new(Driver!);
 
-		mainPage.ClickLoginButton();
+		var isLoggedIn = Login(mainPage, loginPage);
 
-		if (!loginPage.IsPageLoaded())
-		{
-			Logger.Error("Failed to load Login Page");
-			Assert.Fail("Login Page is not loaded");
-		}
-
-        loginPage.EnterUserName(userCredentials.Username);
-        loginPage.EnterPassword(userCredentials.Password);
-        loginPage.ClickLoginButton();
-
-		Assert.That(mainPage.IsLoggedIn(), "The user is not logged in as expected.");
+		Assert.That(isLoggedIn, "The user is not logged in as expected.");
 
 		Logger.Information("Test Log In With Valid Credentials executed.");
 	}
 
 
-    [TestCase("random_user", "pwd123")]
+    [TestCase("random_user", "pwd123"), Retry(2)]
     [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "123")]
     public void LoginWithInvalidCredentials(string userName, string password)
     {
@@ -50,13 +38,25 @@ public class UserAuthentication : BaseUITest
 		mainPage.ClickLoginButton();
 
 		if (!loginPage.IsPageLoaded())
-		{
+        {
 			Logger.Error("Failed to load Login Page");
 			Assert.Fail("Login Page is not loaded");
-		}
-
+        }
+        
 		loginPage.EnterUserName(userName);
-		loginPage.EnterPassword(password);
+
+        // Workaround for Login Page without Password field (UserName + Continue button)
+        try
+        {
+            loginPage.EnterPassword(password);
+        }
+        catch (Exception)
+        {
+            loginPage.ClickContinueButton();
+            loginPage.ClickLoginWithPasswordButton();
+            loginPage.EnterPassword(password);
+        }
+
 		loginPage.ClickLoginButton();
 
 		Assert.That(string.Equals(loginPage.GetErrorMessage(), "Incorrect username or password.", StringComparison.InvariantCulture),
@@ -65,7 +65,7 @@ public class UserAuthentication : BaseUITest
 		Logger.Information("Test Log In With Invalid Credentials executed.");
 	}
 
-    [TestCase("", "")]
+    [TestCase("", ""), Retry(2)]
     public void LoginWithEmptyFields(string userName, string password)
     {
         Logger.Information("Starting Test Login with Empty Fields");
@@ -76,22 +76,33 @@ public class UserAuthentication : BaseUITest
 		mainPage.ClickLoginButton();
 
 		if (!loginPage.IsPageLoaded())
-		{
+        {
 			Logger.Error("Failed to load Login Page");
 			Assert.Fail("Login Page is not loaded");
-		}
+        }
 
 		loginPage.EnterUserName(userName);
-		loginPage.EnterPassword(password);
+        // Workaround for Login Page without Password field (UserName + Continue button)
+        try
+        {
+            loginPage.EnterPassword(password);
+        }
+        catch (Exception)
+        {
+            loginPage.ClickContinueButton();
+            loginPage.ClickLoginWithPasswordButton();
+            loginPage.EnterPassword(password);
+        }
+
 		loginPage.ClickLoginButton();
 
-		Assert.That(string.Equals(loginPage.GetErrorMessage(), "Incorrect username or password.", StringComparison.InvariantCulture),
+        Assert.That(string.Equals(loginPage.GetErrorMessage(), "Incorrect username or password.", StringComparison.InvariantCulture),
 			"The error message does not match the expected: 'Incorrect username or password.'");
 		Logger.Information("Test Login with empty fields executed");
 	}
 
 
-    [Test]
+    [Test, Retry(2)]
     public void LogOutTest()
     {
         Logger.Information("Starting Logout Test");

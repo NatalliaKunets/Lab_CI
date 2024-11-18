@@ -5,13 +5,18 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Core", "Project.Core\Project.Core.csproj", "{40F62891-8040-411D-9103-C678F3D7F889}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Core.API", "Project.Core.API\Project.Core.API.csproj", "{876FAF17-EA09-4185-8E44-0F3E61288B7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Core.API", "Project.Core.API\Project.Core.API.csproj", "{876FAF17-EA09-4185-8E44-0F3E61288B7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Core.UI", "Project.Core.UI\Project.Core.UI.csproj", "{7BF27566-23B6-49FD-BF83-A1BF30A3AA09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Core.UI", "Project.Core.UI\Project.Core.UI.csproj", "{7BF27566-23B6-49FD-BF83-A1BF30A3AA09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Tests.API", "Project.Tests.API\Project.Tests.API.csproj", "{7323AAF6-6D8F-4BE9-9F0C-85D0EE12F5D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Tests.API", "Project.Tests.API\Project.Tests.API.csproj", "{7323AAF6-6D8F-4BE9-9F0C-85D0EE12F5D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Tests.UI", "Project.Tests.UI\Project.Tests.UI.csproj", "{B3E458CD-1E79-403D-B8DF-958D50015DFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Tests.UI", "Project.Tests.UI\Project.Tests.UI.csproj", "{B3E458CD-1E79-403D-B8DF-958D50015DFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D514F0AC-302A-4B53-9DFC-6D90283A66B2}"
+	ProjectSection(SolutionItems) = preProject
+		.gitlab-ci.yml = .gitlab-ci.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

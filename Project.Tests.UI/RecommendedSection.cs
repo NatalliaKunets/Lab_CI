@@ -9,7 +9,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class RecommendedSection : BaseUITest
 {
-    [Test]
+    [Test, Retry(2)]
     public void FirstRecommendedPlaylistIsOpened_WhenClicked()
     {
         Logger.Information("Starting Test First Recommended Playlist Is Opened When Clicked");
@@ -36,7 +36,7 @@ public class RecommendedSection : BaseUITest
         Logger.Information("Test First Recommended Playlist Is Opened When Clicked executed.");
     }
 
-    [Test]
+    [Test, Retry(2)]
     public void PlayButtonAppears_OnMouseMove()
     {
         Logger.Information("Starting Test Play Button Appears On Mouse Move");

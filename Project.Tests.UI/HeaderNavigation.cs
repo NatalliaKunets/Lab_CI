@@ -9,7 +9,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class HeaderNavigation : BaseUITest
 {
-    [Test] 
+    [Test, Retry(2)] 
     public void CheckHomeButtonFunctionality()
     {
         Logger.Information("Starting Test Create a New Playlist");

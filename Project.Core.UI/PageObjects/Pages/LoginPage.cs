@@ -12,7 +12,7 @@ public class LoginPage : BasePage
     private IElement UserNameInput => Driver.FindElement(LoginPageLocators.userNameInputBy);
     private IElement PasswordInput => Driver.FindElement(LoginPageLocators.passwordInputBy);
     private IElement LoginButton => Driver.FindElement(LoginPageLocators.loginButtonBy);
-
+    private IElement ContinueButton => Driver.FindElement(LoginPageLocators.continueButtonBy);
 
     public void EnterUserName(string userName)
     {
@@ -51,5 +51,33 @@ public class LoginPage : BasePage
         bool isLoaded = WaitForElement(LoginPageLocators.loginButtonBy) != null;
         Logger.Information($"Login page loaded: {isLoaded}");
         return isLoaded;
+    }
+
+    public void ClickContinueButton()
+    {
+        try
+        {
+            ContinueButton.Click();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Login Page: Failed to click the Continue button.");
+            throw;
+        }
+    }
+
+    public void ClickLoginWithPasswordButton()
+    {
+        try
+        {
+            var loginWithPasswordButton = WaitForElement(LoginPageLocators.loginWithPasswordButtonBy);
+            loginWithPasswordButton!.Click();
+            WaitForElement(LoginPageLocators.passwordInputBy);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Login Page: Failed to click the Login With Password button.");
+            throw;
+        }
     }
 }
