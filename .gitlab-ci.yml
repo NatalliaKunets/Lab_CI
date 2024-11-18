@@ -17,7 +17,7 @@ cache:
     - '$NUGET_PACKAGES_DIRECTORY'
 
 before_script:
-  - apt-get update && apt-get install -y wget gnupg
+  - apt-get update && apt-get install -y wget
   - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
 
 build:
@@ -33,7 +33,7 @@ test_chrome:
     - echo "Installing Google Chrome"
     - wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
-    - apt-get update && apt-get install -y google-chrome-stable
+    - apt-get install -y google-chrome-stable
     - dotnet test --configuration Release --no-restore
   only:
     - dev
