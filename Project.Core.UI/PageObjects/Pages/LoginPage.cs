@@ -13,8 +13,6 @@ public class LoginPage : BasePage
     private IElement PasswordInput => Driver.FindElement(LoginPageLocators.passwordInputBy);
     private IElement LoginButton => Driver.FindElement(LoginPageLocators.loginButtonBy);
     private IElement ContinueButton => Driver.FindElement(LoginPageLocators.continueButtonBy);
-    private IElement LoginWithPasswordButton => Driver.FindElement(LoginPageLocators.loginWithPasswordButtonBy);
-
 
     public void EnterUserName(string userName)
     {
@@ -72,7 +70,9 @@ public class LoginPage : BasePage
     {
         try
         {
-            LoginWithPasswordButton.Click();
+            var loginWithPasswordButton = WaitForElement(LoginPageLocators.loginWithPasswordButtonBy);
+            loginWithPasswordButton!.Click();
+            WaitForElement(LoginPageLocators.passwordInputBy);
         }
         catch (Exception ex)
         {

@@ -51,7 +51,8 @@ public class BaseUITest
         }
 
         loginPage.EnterUserName(userCredentials.Username);
-        // Warkaround for Login Page without Password field (UserName + Continue button)
+
+        // Workaround for Login Page without Password field (UserName + Continue button)
         try
         {
             loginPage.EnterPassword(userCredentials.Password);

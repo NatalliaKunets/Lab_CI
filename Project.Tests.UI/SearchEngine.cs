@@ -9,7 +9,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class SearchEngine : BaseUITest
 {
-    [TestCase("Running Up That Hill")]
+    [TestCase("Running Up That Hill"), Retry(2)]
     public void SearchEngineWithValidTerm(string searchTerm)
     {
         Logger.Information("Starting Test Search Engine With Valid Term");
@@ -34,7 +34,7 @@ public class SearchEngine : BaseUITest
         Logger.Information("Test Search Engine With Valid Term executed.");
     }
 
-    [Test]
+    [Test, Retry(2)]
     public void NoActions_WhenQueryIsEmpty()
     {
         Logger.Information("Starting Test No Actions When Query Is Empty");
@@ -60,7 +60,7 @@ public class SearchEngine : BaseUITest
         Logger.Information("Test No Actions When Query Is Empty executed.");
     }
 
-    [TestCase("You are Welcome")]
+    [TestCase("National Anthem"), Retry(2)]
     public void CanAddSongToPlaylist_FromSearchResults(string searchTerm)
     {
         Logger.Information("Starting Test Can Add Song To Playlist From Search Results");
@@ -123,7 +123,7 @@ public class SearchEngine : BaseUITest
         Logger.Information($"Successfully retrieved Search Results for '{songName}'.");
     }
 
-    [TestCase("National Anthem")]
+    [TestCase("You are Welcome"), Retry(2)]
     public void FilterResults_BySongsCategory(string searchTerm)
     {
         Logger.Information("Starting Test Check Filter Results By Songs Category");

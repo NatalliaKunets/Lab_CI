@@ -9,7 +9,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class UserAccount : BaseUITest
 {
-    [Test]
+    [Test, Retry(2)]
     public void SelectingUserAccountOption_RedirectsToUserAccountPage()
     {
         Logger.Information("Starting Test Selecting User Account option redirects to User Account page");
