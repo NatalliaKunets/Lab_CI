@@ -18,11 +18,11 @@ cache:
 
 before_script:
   - apt-get update && apt-get install -y wget gnupg
+  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
 
 build:
   stage: build
   script:
-    - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
     - dotnet build --configuration Release
   only:
     - dev
