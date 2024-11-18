@@ -93,7 +93,7 @@ public class PlaylistManagement : BaseUITest
         Logger.Information($"Successfully retrieved Search Results for '{songName}'.");
     }
 
-    [TestCase("You're Welcome")]
+    [TestCase("You are Welcome")]
     public void CreateLikedSongsPlaylist_WhenSongIsAdded(string songName)
     {
         Logger.Information("Starting Test Create Liked Songs Playlist When Song Is Added");

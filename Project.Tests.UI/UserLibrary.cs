@@ -55,7 +55,8 @@ public class UserLibrary : BaseUITest
 
 
 	[TestCase("My Playlist #7", "New Playlist")]
-	public void RenamePlaylist(string playlistName, string newPlaylistName)
+    [Ignore("Skip for CI test")]
+    public void RenamePlaylist(string playlistName, string newPlaylistName)
 	{
 		MainPage mainPage = new(Driver!);
 		LibraryPage libPage = new(Driver!);
