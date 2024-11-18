@@ -9,10 +9,10 @@ variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   NUGET_PACKAGES_DIRECTORY: '.nuget'
 
-  REPORT_PORTAL_CONFIG_SRC_PATH: "./ReportPortal.config"
-  REPORT_PORTAL_CONFIG_TGT_PATH: "./ReportPortal.config"
+  REPORT_PORTAL_CONFIG_SRC_PATH: "./ReportPortal.config․json"
+  REPORT_PORTAL_CONFIG_TGT_PATH: "./ReportPortal.config.json"
   REPORT_PORTAL_PROJECT: "krystsina_pulatava_personal"
-  REPORT_PORTAL_API_KEY: "$REPORT_PORTAL_API_KEY_ENV"
+  REPORT_PORTAL_API_KEY: ""
   REPORT_PORTAL_LAUNCH_NAME: "EPAM AT Lab 2024.NET"
   REPORT_PORTAL_LAUNCH_DESCRIPTION: "Automated Test Run For Spotify Application"
 
@@ -34,6 +34,20 @@ build:
   stage: build
   script:
     - dotnet build --configuration Release
+    - apt-get update -y
+    - apt-get install -y jq 
+
+    - set_config_str() { jq "$1 = \"$2\"" "$REPORT_PORTAL_CONFIG_TGT_PATH" > temp.json && mv temp.json "$REPORT_PORTAL_CONFIG_TGT_PATH"; }
+    - set_config() { jq "$1 = $2" "$REPORT_PORTAL_CONFIG_TGT_PATH" > temp.json && mv temp.json "$REPORT_PORTAL_CONFIG_TGT_PATH"; }
+  
+    - echo "Editing RP UI Configs..."
+    - cp $REPORT_PORTAL_CONFIG_SRC_PATH $REPORT_PORTAL_CONFIG_TGT_PATH
+
+    - set_config_str '.server.project' "$REPORT_PORTAL_PROJECT"
+    - set_config_str '.server.apiKey' ""
+
+    - set_config_str '.launch.name' "$REPORT_PORTAL_LAUNCH_NAME"
+    - set_config_str '.launch.description' "$REPORT_PORTAL_LAUNCH_DESCRIPTION"
   only:
     - dev
 
