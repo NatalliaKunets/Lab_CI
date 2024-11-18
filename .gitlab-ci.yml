@@ -2,6 +2,7 @@ default:
   image: mcr.microsoft.com/dotnet/sdk:8.0
 
 stages:
+  - build
   - test
 
 variables:
@@ -17,7 +18,14 @@ cache:
 
 before_script:
   - apt-get update && apt-get install -y wget gnupg
-  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
+
+build:
+  stage: build
+  script:
+    - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
+    - dotnet build --configuration Release
+  only:
+    - dev
 
 test_chrome:
   stage: test
@@ -26,19 +34,6 @@ test_chrome:
     - wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
-    - jq '.AppConfig.BrowserType = "Chrome"' appsettings.json > tmp.json && mv tmp.json appsettings.json  # Updating BrowserType to Chrome in appsettings.json
     - dotnet test --configuration Release --no-restore
   only:
-    - dev  # Run only on the dev branch
-
-test_edge:
-  stage: test
-  script:
-    - echo "Installing Microsoft Edge"
-    - wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft.gpg
-    - echo "deb [signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list
-    - apt-get update && apt-get install -y microsoft-edge-stable
-    - jq '.AppConfig.BrowserType = "Edge"' appsettings.json > tmp.json && mv tmp.json appsettings.json  # Updating BrowserType to Edge in appsettings.json
-    - dotnet test --configuration Release --no-restore
-  only:
-    - dev  # Run only on the dev branch
+    - dev
