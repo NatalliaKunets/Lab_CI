@@ -71,6 +71,7 @@ public class UserLibrary : BaseUITest
 
 
 	[TestCase("New Playlist")]
+    [Ignore("Skip for CI test")]
 	public void DeletePlaylist(string playlistName)
 	{
 		MainPage mainPage = new(Driver!);

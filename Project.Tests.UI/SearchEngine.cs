@@ -60,7 +60,7 @@ public class SearchEngine : BaseUITest
         Logger.Information("Test No Actions When Query Is Empty executed.");
     }
 
-    [TestCase("Running Up That Hill")]
+    [TestCase("You're Welcome")]
     public void CanAddSongToPlaylist_FromSearchResults(string searchTerm)
     {
         Logger.Information("Starting Test Can Add Song To Playlist From Search Results");
@@ -123,7 +123,7 @@ public class SearchEngine : BaseUITest
         Logger.Information($"Successfully retrieved Search Results for '{songName}'.");
     }
 
-    [TestCase("Running Up That Hill")]
+    [TestCase("National Anthem")]
     public void FilterResults_BySongsCategory(string searchTerm)
     {
         Logger.Information("Starting Test Check Filter Results By Songs Category");
