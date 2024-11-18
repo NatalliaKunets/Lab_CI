@@ -8,6 +8,16 @@ stages:
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   NUGET_PACKAGES_DIRECTORY: '.nuget'
+
+  REPORT_PORTAL_CONFIG_SRC_PATH: "./ReportPortal.config"
+  REPORT_PORTAL_CONFIG_TGT_PATH: "./ReportPortal.config"
+  REPORT_PORTAL_PROJECT: "krystsina_pulatava_personal"
+  REPORT_PORTAL_API_KEY: "$REPORT_PORTAL_API_KEY_ENV"
+  REPORT_PORTAL_LAUNCH_NAME: "EPAM AT Lab 2024.NET"
+  REPORT_PORTAL_LAUNCH_DESCRIPTION: "Automated Test Run For Spotify Application"
+
+
+
   
 cache:
   key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
