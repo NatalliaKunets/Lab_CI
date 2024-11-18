@@ -9,4 +9,7 @@ public static class LoginPageLocators
     public static readonly By loginButtonBy = By.CssSelector("button#login-button");
     public static readonly By errorMessageBy = By.CssSelector("div[data-encore-id='banner'] span[class*='Message']");
     public static readonly By errorUserNameElementBy = By.CssSelector("div[data-testid='username-error'] p[class*='sc']");
+    
+    public static readonly By continueButtonBy = By.CssSelector("button#login-button");
+    public static readonly By loginWithPasswordButtonBy = By.XPath("//button[text()='Log in with a password']");
 }

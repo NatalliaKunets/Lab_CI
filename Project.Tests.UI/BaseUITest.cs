@@ -2,6 +2,7 @@
 using Project.Core.Logging;
 using Project.Core.Settings;
 using Project.Core.UI.Browsers;
+using Project.Core.UI.PageObjects.Locators;
 using Project.Core.UI.PageObjects.Pages;
 
 namespace Project.Tests.UI;
@@ -50,7 +51,18 @@ public class BaseUITest
         }
 
         loginPage.EnterUserName(userCredentials.Username);
-        loginPage.EnterPassword(userCredentials.Password);
+        // Warkaround for Login Page without Password field (UserName + Continue button)
+        try
+        {
+            loginPage.EnterPassword(userCredentials.Password);
+        }
+        catch (Exception) 
+        {
+            loginPage.ClickContinueButton();
+            loginPage.ClickLoginWithPasswordButton();
+            loginPage.EnterPassword(userCredentials.Password);
+        }
+
         loginPage.ClickLoginButton();
 
         return mainPage.IsLoggedIn();
