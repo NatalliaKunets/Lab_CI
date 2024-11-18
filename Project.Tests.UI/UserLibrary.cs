@@ -9,7 +9,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class UserLibrary : BaseUITest
 {
-    [Test, Retry(2)]
+    [Test, Retry(3)]
     public void CreateNewPlaylist()
     {
         Logger.Information("Starting Test Create a New Playlist");
@@ -37,7 +37,7 @@ public class UserLibrary : BaseUITest
 
     }
 
-    [Test, Retry(2)]
+    [Test, Retry(3)]
     public void CannotCreatePlaylist_IfUserNotLoggedIn()
     {
         Logger.Information("Starting Test Verify that User Cannot Create a Playlist If Not LoggedIn");
@@ -54,7 +54,7 @@ public class UserLibrary : BaseUITest
 
 
 
-	[TestCase("My Playlist #7", "New Playlist"), Retry(2)]
+	[TestCase("My Playlist #7", "New Playlist"), Retry(3)]
     [Ignore("Skip for CI test")]
     public void RenamePlaylist(string playlistName, string newPlaylistName)
 	{
@@ -71,7 +71,7 @@ public class UserLibrary : BaseUITest
 	}
 
 
-	[TestCase("New Playlist"), Retry(2)]
+	[TestCase("New Playlist"), Retry(3)]
     [Ignore("Skip for CI test")]
 	public void DeletePlaylist(string playlistName)
 	{

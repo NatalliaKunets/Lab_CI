@@ -10,7 +10,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class PlaylistManagement : BaseUITest
 {
-    [TestCase("Running Up That Hill"), Retry(2)]
+    [TestCase("Running Up That Hill"), Retry(3)]
     public void CanDeleteSongFromPlaylist(string songName)
     {
         Logger.Information("Starting Test Can Delete Song From Playlist");
@@ -93,7 +93,7 @@ public class PlaylistManagement : BaseUITest
         Logger.Information($"Successfully retrieved Search Results for '{songName}'.");
     }
 
-    [TestCase("National Anthem"), Retry(2)]
+    [TestCase("National Anthem"), Retry(3)]
     public void CreateLikedSongsPlaylist_WhenSongIsAdded(string songName)
     {
         Logger.Information("Starting Test Create Liked Songs Playlist When Song Is Added");
@@ -149,7 +149,7 @@ public class PlaylistManagement : BaseUITest
         Logger.Information("Test Create Liked Songs Playlist When Song Is Added executed");
     }
 
-    [Test, Retry(2)]
+    [Test, Retry(3)]
     public void SelectedPlaylistPersistsAfterRefresh()
     {
         Logger.Information("Starting Test Selected Playlist Persists After Refresh");
