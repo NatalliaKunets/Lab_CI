@@ -5,14 +5,14 @@ variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   NUGET_PACKAGES_DIRECTORY: '.nuget'
   # SonarQube
-  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
-  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache location for Sonar analysis tasks
+  GIT_DEPTH: "0"  # Fetch all branches, required for Sonar analysis
 
 stages:
+  - sonarqube-check
   - build
   - test
-  - sonarqube-check
-  
+
 cache:
   key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
   paths:
@@ -23,6 +23,21 @@ cache:
 before_script:
   - apt-get update && apt-get install -y wget gnupg
   - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
+
+sonarqube-check:
+  stage: sonarqube-check
+  script:
+    - dotnet tool install --global dotnet-sonarscanner
+    - export PATH="$PATH:$HOME/.dotnet/tools"
+    - dotnet sonarscanner begin /k:"natallia_kunets_lab_ci_64608e38-ec78-4005-b39e-ba1f1ac110c8" /d:sonar.token="$SONAR_TOKEN" /d:sonar.host.url="$SONAR_HOST_URL"
+    - dotnet build --configuration Release
+    - dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'master'
+    - if: $CI_COMMIT_BRANCH == 'main'
+    - if: $CI_COMMIT_BRANCH == 'develop'
 
 build:
   stage: build
@@ -37,19 +52,3 @@ test_chrome:
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
     - dotnet test --configuration Release --no-restore
-
-sonarqube-check:
-  stage: sonarqube-check
-  
-  script: 
-      - "dotnet tool install --global dotnet-sonarscanner"
-      - "export PATH=\"$PATH:$HOME/.dotnet/tools\""
-      - "dotnet sonarscanner begin /k:\"natallia_kunets_lab_ci_64608e38-ec78-4005-b39e-ba1f1ac110c8\" /d:sonar.token=\"$SONAR_TOKEN\" /d:\"sonar.host.url=$SONAR_HOST_URL\" "
-      - "dotnet build"
-      - "dotnet sonarscanner end /d:sonar.token=\"$SONAR_TOKEN\""
-  allow_failure: true
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-    - if: $CI_COMMIT_BRANCH == 'master'
-    - if: $CI_COMMIT_BRANCH == 'main'
-    - if: $CI_COMMIT_BRANCH == 'develop'
