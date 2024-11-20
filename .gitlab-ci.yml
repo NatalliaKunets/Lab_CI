@@ -4,12 +4,8 @@ default:
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   NUGET_PACKAGES_DIRECTORY: '.nuget'
-  # SonarQube
-  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Cache location for Sonar analysis tasks
-  GIT_DEPTH: "0"  # Fetch all branches, required for Sonar analysis
 
 stages:
-  - sonarqube-check
   - build
   - test
 
@@ -23,25 +19,6 @@ cache:
 before_script:
   - apt-get update && apt-get install -y wget gnupg
   - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
-
-sonarqube-check:
-  stage: sonarqube-check
-  script:
-  - echo "SONAR_TOKEN: $SONAR_TOKEN"
-  - echo "SONAR_HOST_URL: $SONAR_HOST_URL"
-  - echo "PATH: $PATH"
-  - dotnet tool install --global dotnet-sonarscanner
-  - export PATH="$PATH:$HOME/.dotnet/tools"
-  - echo "PATH after update: $PATH"
-  - dotnet sonarscanner begin /k:"natallia_kunets_lab_ci_64608e38-ec78-4005-b39e-ba1f1ac110c8" /d:sonar.token="$SONAR_TOKEN" /d:sonar.host.url="$SONAR_HOST_URL"
-  - dotnet build --configuration Release
-  - dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
-  allow_failure: true
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-    - if: $CI_COMMIT_BRANCH == 'master'
-    - if: $CI_COMMIT_BRANCH == 'main'
-    - if: $CI_COMMIT_BRANCH == 'develop'
 
 build:
   stage: build
