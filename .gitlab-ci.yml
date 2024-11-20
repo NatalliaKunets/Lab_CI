@@ -1,17 +1,17 @@
 default:
   image: mcr.microsoft.com/dotnet/sdk:8.0
 
-stages:
-  - build
-  - test
-  - sonarqube-check
-
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   NUGET_PACKAGES_DIRECTORY: '.nuget'
   # SonarQube
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
   GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+
+stages:
+  - build
+  - test
+  - sonarqube-check
   
 cache:
   key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
@@ -28,8 +28,6 @@ build:
   stage: build
   script:
     - dotnet build --configuration Release
-  only:
-    - dev
 
 test_chrome:
   stage: test
@@ -39,8 +37,6 @@ test_chrome:
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
     - dotnet test --configuration Release --no-restore
-  only:
-    - dev
 
 sonarqube-check:
   stage: sonarqube-check
