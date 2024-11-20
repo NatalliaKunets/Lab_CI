@@ -2,11 +2,16 @@ default:
   image: mcr.microsoft.com/dotnet/sdk:8.0
 
 stages:
+  - build
   - test
+  - sonarqube-check
 
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   NUGET_PACKAGES_DIRECTORY: '.nuget'
+  # SonarQube
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
   
 cache:
   key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
@@ -19,6 +24,13 @@ before_script:
   - apt-get update && apt-get install -y wget gnupg
   - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
 
+build:
+  stage: build
+  script:
+    - dotnet build --configuration Release
+  only:
+    - dev
+
 test_chrome:
   stage: test
   script:
@@ -26,18 +38,22 @@ test_chrome:
     - wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
-    - jq '.AppConfig.BrowserType = "Chrome"' appsettings.json > tmp.json && mv tmp.json appsettings.json  # Updating BrowserType to Chrome in appsettings.json
     - dotnet test --configuration Release --no-restore
   only:
-    - dev  # Run only on the dev branch
-test_edge:
-  stage: test
-  script:
-    - echo "Installing Microsoft Edge"
-    - wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft.gpg
-    - echo "deb [signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list
-    - apt-get update && apt-get install -y microsoft-edge-stable
-    - jq '.AppConfig.BrowserType = "Edge"' appsettings.json > tmp.json && mv tmp.json appsettings.json  # Updating BrowserType to Edge in appsettings.json
-    - dotnet test --configuration Release --no-restore
-  only:
-    - dev  # Run only on the dev branch
+    - dev
+
+sonarqube-check:
+  stage: sonarqube-check
+  
+  script: 
+      - "dotnet tool install --global dotnet-sonarscanner"
+      - "export PATH=\"$PATH:$HOME/.dotnet/tools\""
+      - "dotnet sonarscanner begin /k:\"natallia_kunets_lab_ci_64608e38-ec78-4005-b39e-ba1f1ac110c8\" /d:sonar.token=\"$SONAR_TOKEN\" /d:\"sonar.host.url=$SONAR_HOST_URL\" "
+      - "dotnet build"
+      - "dotnet sonarscanner end /d:sonar.token=\"$SONAR_TOKEN\""
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'master'
+    - if: $CI_COMMIT_BRANCH == 'main'
+    - if: $CI_COMMIT_BRANCH == 'develop'
