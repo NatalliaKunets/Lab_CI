@@ -27,11 +27,15 @@ before_script:
 sonarqube-check:
   stage: sonarqube-check
   script:
-    - dotnet tool install --global dotnet-sonarscanner
-    - export PATH="$PATH:$HOME/.dotnet/tools"
-    - dotnet sonarscanner begin /k:"natallia_kunets_lab_ci_64608e38-ec78-4005-b39e-ba1f1ac110c8" /d:sonar.token="$SONAR_TOKEN" /d:sonar.host.url="$SONAR_HOST_URL"
-    - dotnet build --configuration Release
-    - dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+  - echo "SONAR_TOKEN: $SONAR_TOKEN"
+  - echo "SONAR_HOST_URL: $SONAR_HOST_URL"
+  - echo "PATH: $PATH"
+  - dotnet tool install --global dotnet-sonarscanner
+  - export PATH="$PATH:$HOME/.dotnet/tools"
+  - echo "PATH after update: $PATH"
+  - dotnet sonarscanner begin /k:"natallia_kunets_lab_ci_64608e38-ec78-4005-b39e-ba1f1ac110c8" /d:sonar.token="$SONAR_TOKEN" /d:sonar.host.url="$SONAR_HOST_URL"
+  - dotnet build --configuration Release
+  - dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
   allow_failure: true
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
