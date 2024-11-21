@@ -40,5 +40,6 @@ test_chrome:
     - apt-get update && apt-get install -y google-chrome-stable
     - dotnet test --configuration Release --no-restore --logger "reportportal;Project=$REPORT_PORTAL_PROJECT;ApiKey=$REPORT_PORTAL_API_KEY;LaunchName=$REPORT_PORTAL_LAUNCH_NAME;LaunchDescription=$REPORT_PORTAL_LAUNCH_DESCRIPTION" --verbosity detailed
 
+
   only:
     - dev
