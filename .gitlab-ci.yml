@@ -1,5 +1,4 @@
-default:
-  image: mcr.microsoft.com/dotnet/sdk:8.0
+image: mcr.microsoft.com/dotnet/sdk:8.0
 
 stages:
   - build
@@ -8,17 +7,11 @@ stages:
 variables:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   NUGET_PACKAGES_DIRECTORY: '.nuget'
-
-  REPORT_PORTAL_CONFIG_SRC_PATH: "./ReportPortal.config․json"
-  REPORT_PORTAL_CONFIG_TGT_PATH: "./ReportPortal.config.json"
   REPORT_PORTAL_PROJECT: "krystsina_pulatava_personal"
-  REPORT_PORTAL_API_KEY: ""
+  REPORT_PORTAL_API_KEY: "20_HWLsaDf9RWilIfIXmwWm_6Kxj5B8au7p5pnYWwS70bYRmtprC7O0xNd88AbdsmRv"
   REPORT_PORTAL_LAUNCH_NAME: "EPAM AT Lab 2024.NET"
   REPORT_PORTAL_LAUNCH_DESCRIPTION: "Automated Test Run For Spotify Application"
 
-
-
-  
 cache:
   key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
   paths:
@@ -34,22 +27,6 @@ build:
   stage: build
   script:
     - dotnet build --configuration Release
-    - apt-get update -y
-    - apt-get install -y jq 
-
-    - set_config_str() { jq "$1 = \"$2\"" "$REPORT_PORTAL_CONFIG_TGT_PATH" > temp.json && mv temp.json "$REPORT_PORTAL_CONFIG_TGT_PATH"; }
-    - set_config() { jq "$1 = $2" "$REPORT_PORTAL_CONFIG_TGT_PATH" > temp.json && mv temp.json "$REPORT_PORTAL_CONFIG_TGT_PATH"; }
-  
-    - echo "Editing RP UI Configs..."
-    - cp $REPORT_PORTAL_CONFIG_SRC_PATH $REPORT_PORTAL_CONFIG_TGT_PATH
-
-    - set_config_str '.server.project' "$REPORT_PORTAL_PROJECT"
-    - set_config_str '.server.apiKey' ""
-
-    - set_config_str '.launch.name' "$REPORT_PORTAL_LAUNCH_NAME"
-    - set_config_str '.launch.description' "$REPORT_PORTAL_LAUNCH_DESCRIPTION"
-  only:
-    - dev
 
 test_chrome:
   stage: test
@@ -58,6 +35,7 @@ test_chrome:
     - wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
-    - dotnet test --configuration Release --no-restore
-  only:
-    - dev
+    - dotnet test --configuration Release --no-restore --logger "reportportal;Project=$REPORT_PORTAL_PROJECT;ApiKey=$REPORT_PORTAL_API_KEY;LaunchName=$REPORT_PORTAL_LAUNCH_NAME;LaunchDescription=$REPORT_PORTAL_LAUNCH_DESCRIPTION"
+
+only:
+  - dev
