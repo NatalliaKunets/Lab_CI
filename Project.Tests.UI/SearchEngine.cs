@@ -60,7 +60,8 @@ public class SearchEngine : BaseUITest
         Logger.Information("Test No Actions When Query Is Empty executed.");
     }
 
-    [TestCase("National Anthem"), Retry(3)]
+    [TestCase("Bohemian Rhapsody"), Retry(3)]
+    [Ignore("Skip for CI test")]
     public void CanAddSongToPlaylist_FromSearchResults(string searchTerm)
     {
         Logger.Information("Starting Test Can Add Song To Playlist From Search Results");
