@@ -13,6 +13,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Core.UI", "Project.Core.UI\Project.Core.UI.csproj", "{7BF27566-23B6-49FD-BF83-A1BF30A3AA09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Tests.API", "Project.Tests.API\Project.Tests.API.csproj", "{7323AAF6-6D8F-4BE9-9F0C-85D0EE12F5D4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{40F62891-8040-411D-9103-C678F3D7F889} = {40F62891-8040-411D-9103-C678F3D7F889}
+		{876FAF17-EA09-4185-8E44-0F3E61288B7E} = {876FAF17-EA09-4185-8E44-0F3E61288B7E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Tests.UI", "Project.Tests.UI\Project.Tests.UI.csproj", "{B3E458CD-1E79-403D-B8DF-958D50015DFA}"
 EndProject
