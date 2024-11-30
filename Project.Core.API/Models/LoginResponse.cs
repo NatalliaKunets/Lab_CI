@@ -1,4 +1,16 @@
-﻿namespace Project.Core.API.Models;
+﻿using System.Text.Json.Serialization;
 
-public record LoginResponse(string AccessToken, string TokenType, int ExpiresIn);
+namespace Project.Core.API.Models;
+
+public record LoginResponse
+{
+    [JsonPropertyName("access_token")]
+    public string? AccessToken {  get; set; }
+
+    [JsonPropertyName("token_type")]
+    public string? TokenType { get; set; }
+
+    [JsonPropertyName("expires_in")]
+    public int ExpiresIn { get; set; }
+}
 

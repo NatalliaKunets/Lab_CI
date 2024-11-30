@@ -52,6 +52,7 @@ public class AuthenticationService(ISessionManager sessionManager)
         request.AddParameter("grant_type", "client_credentials");
         request.AddParameter("client_id", loginRequest.ClientId);
         request.AddParameter("client_secret", loginRequest.ClientSecret);
+        request.AddParameter("scope", "user-read-private user-read-email");
 
         var response = client.Execute<LoginResponse>(request);
         return response;
