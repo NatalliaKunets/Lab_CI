@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Project.Core.API.Models
 {
@@ -16,16 +17,20 @@ namespace Project.Core.API.Models
 
 	public record ExternalUrls
 	{
-		public string Spotify { get; set; }
+        [JsonPropertyName("spotify")]
+        public string? Spotify { get; set; }
 	}
 
-	public record Followers
-	{
-		public string Href { get; set; }
-		public int Total { get; set; }
-	}
+    public record Followers
+    {
+        [JsonPropertyName("href")]
+        public string? Href { get; set; }
 
-	public record Image
+        [JsonPropertyName("total")]
+        public int Total { get; set; }
+    }
+
+    public record Image
 	{
 		public string Url { get; set; }
 		public int Height { get; set; }
