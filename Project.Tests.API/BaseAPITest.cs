@@ -10,6 +10,7 @@ public class BaseAPITest
     protected readonly ISessionManager sessionManager;
     protected readonly AuthenticationService authenticationService;
     protected readonly string userId;
+    protected readonly UserService _userService;
 
     public BaseAPITest()
     {
@@ -18,7 +19,7 @@ public class BaseAPITest
         var apiSettings = ConfigurationManager.GetApiSettings();
         sessionManager = new SessionManager(apiSettings);
         authenticationService = new AuthenticationService(sessionManager);
-
+        _userService = new UserService(sessionManager,authenticationService);
         userId = ConfigurationManager.GetUserCredentials().Username;
     }
 }
