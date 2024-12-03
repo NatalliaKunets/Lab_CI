@@ -5,6 +5,7 @@ using System.Net;
 
 namespace Project.Tests.API;
 
+[TestFixture]
 public class UserApiAuthentication : BaseAPITest
 {
     [Test]
@@ -20,5 +21,22 @@ public class UserApiAuthentication : BaseAPITest
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Failed to Login With Valid Token.");
 
         Logger.Information("Test User Can Login With Valid Token executed.");
+    }
+
+    [TestCase("NotValidToken")]
+    public void User_CannotLogin_WithInvalidToken(string token)
+    {
+        Logger.Information("Starting Test User Cannot Login With Invalid Token");
+
+        var client = sessionManager.RestClient;
+        client.AddDefaultHeader("Authorization", $"Bearer {token}");
+
+        var request = new RestRequest($"https://api.spotify.com/v1/users/{userId}", Method.Get);
+
+        var response = client.Execute(request);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized), "Login With Invalid Token did not behave as expected.");
+
+        Logger.Information("Test User Cannot Login With Invalid Token executed.");
     }
 }
