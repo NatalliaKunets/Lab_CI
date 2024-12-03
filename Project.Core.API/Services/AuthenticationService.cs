@@ -1,5 +1,6 @@
 ﻿using Project.Core.API.Managers;
 using Project.Core.API.Models;
+using ReportPortal.Client.Abstractions.Responses;
 using RestSharp;
 using System.Text;
 
@@ -62,9 +63,8 @@ public class AuthenticationService(ISessionManager sessionManager)
     private RestResponse GetRefreshToken()
     {
         //get authorizationCode:
-        //https://accounts.spotify.com/authorize?client_id=565f0ed63e9543f9a58ba381ad9a43b2&response_type=code&redirect_uri=http://localhost:3000&scope=playlist-modify-public%20playlist-modify-private%20user-read-private%20user-read-email
-        
-        string authorizationCode = "AQBozn9pdjjH9oICf0wslxBGpQv9bZPii771iAJ0xrTuN_YyYpBrapcioFlp-iMhzq9vFivu0AvBo5MHQwHDIDCHXKZR0V8OaGfkPkoQdT9nR3T1Qpa0FFnwDSLVxMyVu-g-TJJc8asjS6fYNdJjyfyZi7N-OydalHkFvqqKDep74xUMLD0o3mnfxbrplFmdRkFM70DqN4cyIT-oLKnpBs8vt7M6LNV3YiDDTa1Cd0ZXNkPK2i3Rdsnt8OI-HEAvdTib1zsBdMTLG-Lqab4";
+        //https://accounts.spotify.com/authorize?client_id=565f0ed63e9543f9a58ba381ad9a43b2&response_type=code&redirect_uri=http://localhost:3000&scope=playlist-modify-public%20playlist-modify-private%20user-top-read%20user-read-playback-state
+        string authorizationCode = "AQD5ih0rSG3wMDkxyQuWxaCop-0qEqz5q51tJqMG3XoiTeE9UVgmetVWipgNFqM8fnGs0OpfAEJKnJcPUAnkbAz0PbRiJjXt3weNTylJEAOuZtg5kbidbNIfz7AN1UHaQAiAeuw0WvZ3ZGEAJqPt12vtqoGNiQEMYyWij7RDDt_Z1hoZjq0w7IRpymS0RyeF_kq9pgYrg1XCH40mqBsmyumh35CUhtX4tQz3HeZ8CzqnK7UfBdzUXbOeP3L9744jbo3c_WjWiMHwhmZaWlYx1CsW4A";
 
         var client = sessionManager.RestClient;
         var request = sessionManager.RestRequest;
@@ -88,7 +88,7 @@ public class AuthenticationService(ISessionManager sessionManager)
 
     public string GetUserAuthorizedToken_UsingRefreshToken()
     {
-        //string refreshToken = "AQAxnvemrF_F_nG8tXB9vllWLEu28iyPRrySUGAXO1L6c4itDN7T37Rt484mpRO8CP-gdqxFnnB6KrPwhn-tdfqrsObhR1ksTbFpyBz9a9kvTEZI1QvXaMJ-k2G_ssQE1Hs";
+        //string refreshToken = "AQA8Le-9ZM3tXhpAJqCIN71rDQmTflFYklouKB4zztiKxZ3fvIhcDcuyxNF18PKxAfKD_hpFWZHvItoRMBbQQ9SyM7cTt8ZQFtO-cOYPSS9kp0rV3NLN34US5QHkxdI1lo0";
         string? refreshToken = Environment.GetEnvironmentVariable("SPOTIFY_API_REFRESH_TOKEN");
 
         var client = sessionManager.RestClient;

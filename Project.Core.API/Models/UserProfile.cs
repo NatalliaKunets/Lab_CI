@@ -32,7 +32,7 @@ namespace Project.Core.API.Models
 
     public record Image
 	{
-		public string Url { get; set; }
+		public string? Url { get; set; }
 		public int Height { get; set; }
 		public int Width { get; set; }
 	}

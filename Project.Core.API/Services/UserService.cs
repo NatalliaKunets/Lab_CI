@@ -32,8 +32,6 @@ public class UserService : BaseService
 		return response.Data;
 	}
 
-
-
 	public TopItemResponse GetTopItems(string type, string timeRange = "medium_term", int limit = 20, int offset = 0)
 	{
 		Logger.Information($"Fetching top {type} items with time range: {timeRange}, limit: {limit}, offset: {offset}");
@@ -43,8 +41,9 @@ public class UserService : BaseService
 			throw new ArgumentException("Invalid type. Valid values are 'artists' or 'tracks'.", nameof(type));
 		}
 
-		var client = _authenticationService.GetAuthorizedClient();
-		var requestUrl = $"https://api.spotify.com/v1/me/top/{type}?time_range={timeRange}&limit={limit}&offset={offset}";
+		var client = _authenticationService.GetUserAuthorizedClient();
+
+        var requestUrl = $"https://api.spotify.com/v1/me/top/{type}?time_range={timeRange}&limit={limit}&offset={offset}";
 		var request = CreateRequest(requestUrl, Method.Get);
 
 		var response = client.Execute<TopItemResponse>(request);
