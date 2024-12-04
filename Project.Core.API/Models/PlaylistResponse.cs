@@ -108,12 +108,12 @@ public record PlaylistTrackObject
 
 public record AddedByUser
 {
-    public ExternalUrls ExternalUrls { get; set; } // Known external URLs for the user.
-    public string Href { get; set; } // API endpoint for the user.
-    public string Id { get; set; } // Spotify user ID.
-    public string Type { get; set; } // Type of object, e.g., "user".
-    public string Uri { get; set; } // Spotify URI for the user.
-    public string DisplayName { get; set; } // User's display name.
+    public ExternalUrls ExternalUrls { get; set; } 
+    public string Href { get; set; } 
+    public string Id { get; set; } 
+    public string Type { get; set; } 
+    public string Uri { get; set; } 
+    public string DisplayName { get; set; } 
 }
 
 public record TrackObject
