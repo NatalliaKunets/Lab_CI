@@ -45,4 +45,23 @@ public class EndpointsFunctionality : BaseAPITest
 
         Logger.Information("Test Verify Get Player Playback State Response executed.");
     }
+
+    [TestCase("remaster", "track")]
+    public void Verify_SearchForSongResponse(string query, string type)
+    {
+        Logger.Information("Starting Test Verify Search For a Song Response");
+
+        var client = authenticationService.GetAuthorizedClient();
+
+        var request = new RestRequest("https://api.spotify.com/v1/search", Method.Get);
+        request.AddParameter("q", query);
+        request.AddParameter("type", type);
+
+        var response = client.Execute<SearchResponse>(request);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Failed to Search For a Song.");
+        Assert.That(response.Data?.Tracks?.Items[0].Id, Is.Not.Null, "Search Results should not be empty");
+
+        Logger.Information("Test Verify Search For a Song Response executed.");
+    }
 }
