@@ -41,6 +41,68 @@ public class EndpointsFunctionality : BaseAPITest
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created), "Failed to Create a new Playlist.");
         Assert.That(response.Data?.Name, Is.EqualTo(playlistName), $"The Playlist's name does not match {playlistName}");
 
+        Logger.Information("Playlist is created");
+
+        #region PostConditions: Unfolow the created playlist to delete it from user library
+        var delRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{response.Data?.Id}/followers", Method.Delete);
+        var delResponse = client.Execute(delRequest);
+        if (delResponse.StatusCode != HttpStatusCode.OK )
+        {
+            Logger.Error("PostConditions: Unable to unfolow the created playlist to delete it from user library.");
+        }
+        #endregion
+
         Logger.Information("Test Verify Create Playlist Response executed.");
+    }
+
+    [TestCase("TestPlaylist", "spotify:track:1301WleyT98MSxVHPZCA6M")]
+    public void Verify_AddItemToPlaylistResponse(string playlistName, string trackUri)
+    {
+        Logger.Information("Starting Test Add Item To Playlist Response");
+
+        var client = authenticationService.GetUserAuthorizedClient();
+
+        #region Preconditions: Create a playlist
+        var playlistRequest = new RestRequest($"https://api.spotify.com/v1/users/{userId}/playlists", Method.Post);
+        playlistRequest.AddJsonBody(new { name = playlistName });
+
+        var playlistResponse = client.Execute<PlaylistResponse>(playlistRequest);
+
+        if (playlistResponse.StatusCode != HttpStatusCode.Created)
+        {
+            Logger.Error("PreConditions: Unable to create a playlist.");
+            Assert.Fail("Unable to create a playlist");
+            return;
+        }
+
+        var playlistId = playlistResponse.Data?.Id;
+        if (string.IsNullOrEmpty(playlistId))
+        {
+            Logger.Error("PreConditions: Unable to get the new playlist's Id.");
+            Assert.Fail("Unable to get the new playlist's Id");
+            return;
+        }
+
+        Logger.Information($"Playlist {playlistName} created.");
+        #endregion
+
+        var trackRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/tracks", Method.Post);
+        trackRequest.AddJsonBody(new { uris = new[] { trackUri } });
+        var trackResponse = client.Execute(trackRequest);
+        
+        Assert.That(trackResponse.StatusCode, Is.EqualTo(HttpStatusCode.Created), "Failed to Add a track to the Playlist.");
+
+        Logger.Information($"Track was added to Playlist {playlistName}.");
+
+        #region PostConditions: Unfolow the created playlist to delete it from user library
+        var delRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/followers", Method.Delete);
+        var delResponse = client.Execute(delRequest);
+        if (delResponse.StatusCode != HttpStatusCode.OK)
+        {
+            Logger.Error("PostConditions: Unable to unfolow the created playlist to delete it from user library.");
+        }
+        #endregion
+
+        Logger.Information("Test Verify Add Item To Playlist Response executed.");
     }
 }
