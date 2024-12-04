@@ -60,7 +60,8 @@ public class AuthenticationService(ISessionManager sessionManager)
     }
 
     //  One-time execution script for obtaining the Refresh Token
-    private RestResponse GetRefreshToken()
+    /*
+    public RestResponse GetRefreshToken()
     {
         //get authorizationCode:
         //https://accounts.spotify.com/authorize?client_id=565f0ed63e9543f9a58ba381ad9a43b2&response_type=code&redirect_uri=http://localhost:3000&scope=playlist-modify-public%20playlist-modify-private%20user-top-read%20user-read-playback-state
@@ -85,6 +86,7 @@ public class AuthenticationService(ISessionManager sessionManager)
 
         return response;
     }
+    */
 
     public string GetUserAuthorizedToken_UsingRefreshToken()
     {
