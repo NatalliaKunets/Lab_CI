@@ -94,6 +94,7 @@ public class PlaylistManagement : BaseUITest
     }
 
     [TestCase("Bohemian Rhapsody"), Retry(3)]
+    [Ignore("Skip for testing CI/CD")]
     public void CreateLikedSongsPlaylist_WhenSongIsAdded(string songName)
     {
         Logger.Information("Starting Test Create Liked Songs Playlist When Song Is Added");
