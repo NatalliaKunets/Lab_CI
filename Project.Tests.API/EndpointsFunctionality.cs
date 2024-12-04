@@ -46,7 +46,7 @@ public class EndpointsFunctionality : BaseAPITest
         #region PostConditions: Unfolow the created playlist to delete it from user library
         var delRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{response.Data?.Id}/followers", Method.Delete);
         var delResponse = client.Execute(delRequest);
-        if (delResponse.StatusCode != HttpStatusCode.OK )
+        if (delResponse.StatusCode != HttpStatusCode.OK)
         {
             Logger.Error("PostConditions: Unable to unfolow the created playlist to delete it from user library.");
         }
@@ -89,7 +89,7 @@ public class EndpointsFunctionality : BaseAPITest
         var trackRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/tracks", Method.Post);
         trackRequest.AddJsonBody(new { uris = new[] { trackUri } });
         var trackResponse = client.Execute(trackRequest);
-        
+
         Assert.That(trackResponse.StatusCode, Is.EqualTo(HttpStatusCode.Created), "Failed to Add a track to the Playlist.");
 
         Logger.Information($"Track was added to Playlist {playlistName}.");
@@ -104,5 +104,78 @@ public class EndpointsFunctionality : BaseAPITest
         #endregion
 
         Logger.Information("Test Verify Add Item To Playlist Response executed.");
+    }
+
+    [TestCase("TestPlaylist", "spotify:track:1301WleyT98MSxVHPZCA6M")]
+    public void Verify_RemoveItemFromPlaylistResponse(string playlistName, string trackUri)
+    {
+        Logger.Information("Starting Test Remove Item From Playlist Response");
+
+        var client = authenticationService.GetUserAuthorizedClient();
+
+        #region Preconditions: Create a playlist
+        var playlistRequest = new RestRequest($"https://api.spotify.com/v1/users/{userId}/playlists", Method.Post);
+        playlistRequest.AddJsonBody(new { name = playlistName });
+
+        var playlistResponse = client.Execute<PlaylistResponse>(playlistRequest);
+
+        if (playlistResponse.StatusCode != HttpStatusCode.Created)
+        {
+            Logger.Error("PreConditions: Unable to create a playlist.");
+            Assert.Fail("Unable to create a playlist");
+            return;
+        }
+
+        var playlistId = playlistResponse.Data?.Id;
+        if (string.IsNullOrEmpty(playlistId))
+        {
+            Logger.Error("PreConditions: Unable to get the new playlist's Id.");
+            Assert.Fail("Unable to get the new playlist's Id");
+            return;
+        }
+
+        Logger.Information($"Playlist {playlistName} created.");
+        #endregion
+
+        #region Preconditions: Add a track to the playlist
+
+        var trackRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/tracks", Method.Post);
+        trackRequest.AddJsonBody(new { uris = new[] { trackUri } });
+        var trackResponse = client.Execute(trackRequest);
+
+        if (trackResponse.StatusCode != HttpStatusCode.Created)
+        {
+            Logger.Error("PreConditions: Unable to add a track to the playlist.");
+            Assert.Fail("Unable to add a track to the playlist");
+            return;
+        }
+        Logger.Information($"Track added to Playlist {playlistName}.");
+        #endregion
+
+        var trackRemoveRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/tracks", Method.Delete);
+        trackRemoveRequest.AddJsonBody(new 
+            {
+                tracks = new[]
+                    {
+                        new { uri = trackUri }
+                    }
+            });
+        var trackRemoveResponse = client.Execute(trackRemoveRequest);
+
+        Assert.That(trackRemoveResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Failed to Remove a track from the Playlist.");
+
+        Logger.Information($"Track was removed from the Playlist {playlistName}.");
+
+
+        #region PostConditions: Unfolow the created playlist to delete it from user library
+        var delRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/followers", Method.Delete);
+        var delResponse = client.Execute(delRequest);
+        if (delResponse.StatusCode != HttpStatusCode.OK)
+        {
+            Logger.Error("PostConditions: Unable to unfolow the created playlist to delete it from user library.");
+        }
+        #endregion
+
+        Logger.Information("Test Verify Remove Item From the Playlist Response executed.");
     }
 }
