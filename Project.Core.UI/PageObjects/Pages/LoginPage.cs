@@ -80,4 +80,14 @@ public class LoginPage : BasePage
             throw;
         }
     }
+
+    public bool IsUserNameInputVisible()
+    {
+        return UserNameInput.Displayed;
+    }
+
+    public bool IsPasswordInputVisible()
+    {
+        return PasswordInput.Displayed;
+    }
 }
