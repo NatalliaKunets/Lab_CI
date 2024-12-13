@@ -9,7 +9,7 @@ namespace Project.Tests.API;
 [TestFixture]
 public class EndpointsFunctionality : BaseAPITest
 {
-    [TestCase("0TnOYISbd1XYRBk9myaseg")]
+    [TestCase("0TnOYISbd1XYRBk9myaseg"), Category("API")]
     public void Verify_GetArtistResponse_WithValidArtistId(string artistId)
     {
         Logger.Information("Starting Test Verify Get Artist Response With Valid Artist Id");
@@ -26,7 +26,7 @@ public class EndpointsFunctionality : BaseAPITest
         Logger.Information("Test Verify Get Artist Response With Valid Artist Id executed.");
     }
 
-    [Test]
+    [Test, Category("API")]
     public void Verify_GetPlayerPlaybackStateResponse()
     {
         Logger.Information("Starting Test Verify Get Player Playback State Response");
@@ -46,7 +46,7 @@ public class EndpointsFunctionality : BaseAPITest
         Logger.Information("Test Verify Get Player Playback State Response executed.");
     }
 
-    [TestCase("remaster", "track")]
+    [TestCase("remaster", "track"), Category("API")]
     public void Verify_SearchForSongResponse(string query, string type)
     {
         Logger.Information("Starting Test Verify Search For a Song Response");

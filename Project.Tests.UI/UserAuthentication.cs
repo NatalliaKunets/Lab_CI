@@ -10,7 +10,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class UserAuthentication : BaseUITest
 {
-    [Test, Retry(3)]
+    [Test, Category("UI"), Retry(3)]
     public void LoginWithValidCredentials()
     {
         Logger.Information("Starting Test LogIn With Valid Credentials");
@@ -26,7 +26,7 @@ public class UserAuthentication : BaseUITest
 	}
 
 
-    [TestCase("random_user", "pwd123"), Retry(3)]
+    [TestCase("random_user", "pwd123"), Category("UI"), Retry(3)]
     [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "123")]
     public void LoginWithInvalidCredentials(string userName, string password)
     {
@@ -65,7 +65,7 @@ public class UserAuthentication : BaseUITest
 		Logger.Information("Test Log In With Invalid Credentials executed.");
 	}
 
-    [TestCase("", ""), Retry(3)]
+    [TestCase("", ""), Category("UI"), Retry(3)]
     public void LoginWithEmptyFields(string userName, string password)
     {
         Logger.Information("Starting Test Login with Empty Fields");
@@ -102,7 +102,7 @@ public class UserAuthentication : BaseUITest
 	}
 
 
-    [Test, Retry(3)]
+    [Test, Category("UI"), Retry(3)]
     public void LogOutTest()
     {
         Logger.Information("Starting Logout Test");

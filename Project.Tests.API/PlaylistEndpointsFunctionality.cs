@@ -9,7 +9,7 @@ namespace Project.Tests.API;
 [TestFixture]
 public class PlaylistEndpointsFunctionality : BaseAPITest
 {
-    [TestCase("New API test Playlist")]
+    [TestCase("New API test Playlist"), Category("API")]
     public void Verify_CreatePlaylistResponse(string playlistName)
     {
         Logger.Information("Starting Test Verify Create Playlist Response");
@@ -38,7 +38,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
         Logger.Information("Test Verify Create Playlist Response executed.");
     }
 
-    [TestCase("TestPlaylist", "spotify:track:1301WleyT98MSxVHPZCA6M")]
+    [TestCase("TestPlaylist", "spotify:track:1301WleyT98MSxVHPZCA6M"), Category("API")]
     public void Verify_AddItemToPlaylistResponse(string playlistName, string trackUri)
     {
         Logger.Information("Starting Test Add Item To Playlist Response");
@@ -89,7 +89,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
         Logger.Information("Test Verify Add Item To Playlist Response executed.");
     }
 
-    [TestCase("TestPlaylist", "spotify:track:1301WleyT98MSxVHPZCA6M")]
+    [TestCase("TestPlaylist", "spotify:track:1301WleyT98MSxVHPZCA6M"), Category("API")]
     public void Verify_RemoveItemFromPlaylistResponse(string playlistName, string trackUri)
     {
         Logger.Information("Starting Test Remove Item From Playlist Response");
