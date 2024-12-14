@@ -15,7 +15,7 @@ public record PlaybackResponse
     public bool IsPlaying { get; set; }
     public string? CurrentlyPlayingType { get; set; }
     public TrackObject? Item { get; set; } 
-    public Actions Actions { get; set; }
+    public Actions? Actions { get; set; }
 }
 
 public record Device

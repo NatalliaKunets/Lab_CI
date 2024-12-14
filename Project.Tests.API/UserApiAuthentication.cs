@@ -8,7 +8,7 @@ namespace Project.Tests.API;
 [TestFixture]
 public class UserApiAuthentication : BaseAPITest
 {
-    [Test]
+    [Test, Category("API")]
     public void User_CanLogin_WithValidToken() {
         Logger.Information("Starting Test User Can Login With Valid Token");
 
@@ -23,7 +23,7 @@ public class UserApiAuthentication : BaseAPITest
         Logger.Information("Test User Can Login With Valid Token executed.");
     }
 
-    [TestCase("NotValidToken")]
+    [TestCase("NotValidToken"), Category("API")]
     public void User_CannotLogin_WithInvalidToken(string token)
     {
         Logger.Information("Starting Test User Cannot Login With Invalid Token");

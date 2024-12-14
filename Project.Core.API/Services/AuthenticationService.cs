@@ -10,7 +10,7 @@ public class AuthenticationService(ISessionManager sessionManager)
 {
     private readonly ISessionManager sessionManager = sessionManager;
     private string? token;
-    private readonly LoginRequest loginRequest = new("565f0ed63e9543f9a58ba381ad9a43b2", "52c3d9d84d8542fda77fcd31bdff445a");
+    private readonly LoginRequest loginRequest = new("676d45e8eab44f31978c1cc9ca3bb694", "80479642ff4042778b166e47fec69847");
 
     public RestClient GetAuthorizedClient()
     {
@@ -64,8 +64,8 @@ public class AuthenticationService(ISessionManager sessionManager)
     public RestResponse GetRefreshToken()
     {
         //get authorizationCode:
-        //https://accounts.spotify.com/authorize?client_id=565f0ed63e9543f9a58ba381ad9a43b2&response_type=code&redirect_uri=http://localhost:3000&scope=playlist-modify-public%20playlist-modify-private%20user-top-read%20user-read-playback-state
-        string authorizationCode = "AQD5ih0rSG3wMDkxyQuWxaCop-0qEqz5q51tJqMG3XoiTeE9UVgmetVWipgNFqM8fnGs0OpfAEJKnJcPUAnkbAz0PbRiJjXt3weNTylJEAOuZtg5kbidbNIfz7AN1UHaQAiAeuw0WvZ3ZGEAJqPt12vtqoGNiQEMYyWij7RDDt_Z1hoZjq0w7IRpymS0RyeF_kq9pgYrg1XCH40mqBsmyumh35CUhtX4tQz3HeZ8CzqnK7UfBdzUXbOeP3L9744jbo3c_WjWiMHwhmZaWlYx1CsW4A";
+        //https://accounts.spotify.com/authorize?client_id=676d45e8eab44f31978c1cc9ca3bb694&response_type=code&redirect_uri=http://localhost:3000&scope=playlist-modify-public%20playlist-modify-private%20user-top-read%20user-read-playback-state
+        string authorizationCode = "AQBghYARQmB7Uskxb8bqSNCMERAMIH3zrQXZ6j9S0Swf7fQn0Wie6nFkSu_nvesA-IQflYkBv0p6tMO1fyFmIbvSSFukBP25MLcPaW5RV6LDLILRmH9rWyOqjLd0q-MBzcEr4wiDshnLgp7KP1ROYH4wgBwIQXuPWZNmwoqW1qxTxZbPsbnkuvHk6msDFdxEFbAEVs9qEomP5dsNlPYRVpvpKvCR8NaYYcoaU7DSUWppr-wiOdT4Fu-b-vicaN_t4ax6RwgeMRvJ1_jaZTDHyLXtmg";
 
         var client = sessionManager.RestClient;
         var request = sessionManager.RestRequest;
@@ -84,14 +84,16 @@ public class AuthenticationService(ISessionManager sessionManager)
 
         var response = client.Execute(request);
 
+        //Content "{\"access_token\":\"BQCp-I4SI7NnWri27DlpYBe9LfXizPp9TN5qu9jfV-60dEphGjMv3JLoXn0czySmVddAToVSTN9PgXg-v-l1lQJ0E1UXam-R9Ppj3ByxDnsSAoVugCL1qa9xXipKAXaVF7K3E3b75aeIo_tBj0_XDNlP3PlnfL7wSjGoHj1bptdE5BlYBxVRGtGATj1JxhFmSpWKMzviyeBOKQRGo9rSe8NvUL6ha-o7LqQB4l3smVKCfShq1oS-bWP7XsFEitVip00_RYpmTRpqSosxSOgpFA\",\"token_type\":\"Bearer\",\"expires_in\":3600,\"refresh_token\":\"AQDrUyIi3u5fqtZfRv-tPQoNxTzLX2NpNsCLb0NRk5ZJ_4HjyG-eDxBto37mar2-SOZUIxoFmD0jLHmCBYHFyqHF9C-PDhukRuEZcJhDRv58Ax7k-u_GCmE2I4xHTnzSk80\",\"scope\":\"playlist-modify-private playlist-modify-public user-read-playback-state user-top-read\"}" string
+
+
         return response;
     }
     */
 
     public string GetUserAuthorizedToken_UsingRefreshToken()
     {
-        //string refreshToken = "AQA8Le-9ZM3tXhpAJqCIN71rDQmTflFYklouKB4zztiKxZ3fvIhcDcuyxNF18PKxAfKD_hpFWZHvItoRMBbQQ9SyM7cTt8ZQFtO-cOYPSS9kp0rV3NLN34US5QHkxdI1lo0";
-        string? refreshToken = Environment.GetEnvironmentVariable("SPOTIFY_API_REFRESH_TOKEN");
+        string? refreshToken = "AQDrUyIi3u5fqtZfRv-tPQoNxTzLX2NpNsCLb0NRk5ZJ_4HjyG-eDxBto37mar2-SOZUIxoFmD0jLHmCBYHFyqHF9C-PDhukRuEZcJhDRv58Ax7k-u_GCmE2I4xHTnzSk80";
 
         var client = sessionManager.RestClient;
         var request = sessionManager.RestRequest;
