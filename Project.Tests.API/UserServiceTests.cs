@@ -20,7 +20,7 @@ public class UserServiceTests : BaseAPITest
 		Assert.That(result.Limit, Is.EqualTo(limit));
 		Assert.That(result.Offset, Is.EqualTo(offset));
 		Assert.That(result.Total, Is.GreaterThan(0));
-		Assert.That(result.Items.Count, Is.LessThanOrEqualTo(limit));
-		Assert.That(result.Items, Is.All.Not.Null);
+		Assert.That(result?.Items?.Count, Is.LessThanOrEqualTo(limit));
+		Assert.That(result?.Items, Is.All.Not.Null);
 	}
 }

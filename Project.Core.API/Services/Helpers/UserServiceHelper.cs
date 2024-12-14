@@ -19,7 +19,7 @@ namespace Project.Core.API.Helpers
 			return profile?.Followers?.Total ?? 0;
 		}
 
-		public static string GetProfileImageUrl(UserProfile profile)
+		public static string? GetProfileImageUrl(UserProfile profile)
 		{
 			if (profile?.Images?.Count > 0)
 			{

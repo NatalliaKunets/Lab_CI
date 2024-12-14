@@ -60,7 +60,7 @@ public class EndpointsFunctionality : BaseAPITest
         var response = client.Execute<SearchResponse>(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Failed to Search For a Song.");
-        Assert.That(response.Data?.Tracks?.Items[0].Id, Is.Not.Null, "Search Results should not be empty");
+        Assert.That(response.Data?.Tracks?.Items![0].Id, Is.Not.Null, "Search Results should not be empty");
 
         Logger.Information("Test Verify Search For a Song Response executed.");
     }

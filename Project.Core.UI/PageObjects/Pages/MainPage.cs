@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using Project.Core.Logging;
+using Project.Core.Settings;
 using Project.Core.UI.Browsers;
 using Project.Core.UI.Elements;
 using Project.Core.UI.PageObjects.Locators;
@@ -73,7 +74,6 @@ public class MainPage : BasePage
         }
     }
 
-
 	public void ClickCreatePlaylistMenuItem()
 	{
 		var CreatePlaylistMenuItem = WaitForElement(MainPageLocators.CreateNewPlaylistMenuItemBy);
@@ -88,7 +88,6 @@ public class MainPage : BasePage
 			throw;
 		}
 	}
-
 
 	public void ClickSearchButton()
 	{
@@ -219,5 +218,13 @@ public class MainPage : BasePage
         {
             return string.Empty;
         }
+    }
+
+    public void NavigateToBaseURL()
+    {
+        var baseUrl = ConfigurationManager.GetBrowserSettings().BaseURL;
+        Driver!.Navigate(baseUrl);
+        Logger.Information($"Navigating to base URL: {baseUrl}");
+        Driver.Manage().Window.Maximize();
     }
 }

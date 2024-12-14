@@ -1,38 +1,27 @@
-﻿using NUnit.Framework;
-using Project.Core.Logging;
-using Project.Core.Settings;
+﻿using Project.Core.Logging;
 using Project.Core.UI.Browsers;
+using Project.Core.UI.PageObjects.Pages;
 
 namespace Project.Tests.BDD;
 
+[Binding]
 public class BaseBDDTest
 {
     protected IBrowser? Driver;
+    protected MainPage mainPage;
+    protected LoginPage loginPage;
 
-    [BeforeScenario]
-    public void BeforeScenario()
+    public BaseBDDTest(IBrowser? Driver, MainPage mainPage, LoginPage loginPage)
     {
-        Logger.Information("Starting Before Scenario");
-        Driver = BrowserManager.GetBrowser();
+        this.Driver = Driver;
         if (Driver == null)
         {
             throw new InvalidOperationException("Browser driver initialization failed.");
         }
-        var baseUrl = ConfigurationManager.GetBrowserSettings().BaseURL;
-        Driver.Navigate(baseUrl);
-        Logger.Information($"Navigating to base URL: {baseUrl}");
-        Driver.Manage().Window.Maximize();
-    }
 
-    [AfterScenario]
-    public void AfterScenario()
-    {
-        if (TestContext.CurrentContext.Result.Outcome.Status == NUnit.Framework.Interfaces.TestStatus.Failed)
-        {
-            Driver?.TakeScreenshot(TestContext.CurrentContext.Test.Name);
-        }
+        this.mainPage = mainPage;
+        this.loginPage = loginPage;
 
-        BrowserManager.CloseBrowser();
-        Logger.Information("After Scenario executed");
+        Logger.Information("BaseBDDTest constructor executed");
     }
 }
