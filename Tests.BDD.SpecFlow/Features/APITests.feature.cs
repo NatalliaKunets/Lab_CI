@@ -72,6 +72,43 @@ namespace Project.Tests.BDD.Features
         {
             testRunner.CollectScenarioErrors();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get Artist by Id")]
+        [NUnit.Framework.TestCaseAttribute("0TnOYISbd1XYRBk9myaseg", "Pitbull", "200", null)]
+        public void GetArtistById(string id, string name, string statusCode, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("id", id);
+            argumentsOfScenario.Add("name", name);
+            argumentsOfScenario.Add("StatusCode", statusCode);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Artist by Id", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 3
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+ testRunner.Given("I have a valid API token for authentication", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 5
+ testRunner.When(string.Format("I perform a GET request for Artist with id {0}", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 6
+ testRunner.Then(string.Format("Response status code should be {0}", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 7
+  testRunner.And(string.Format("Response should contain artist details ({0}, {1})", id, name), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

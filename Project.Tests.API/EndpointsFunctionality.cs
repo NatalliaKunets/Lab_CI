@@ -16,7 +16,7 @@ public class EndpointsFunctionality : BaseAPITest
 
         var client = authenticationService.GetAuthorizedClient();
 
-        var request = new RestRequest($"https://api.spotify.com/v1/artists/{artistId}", Method.Get);
+        var request = new RestRequest($"/artists/{artistId}", Method.Get);
 
         var response = client.Execute<ArtistResponse>(request);
 
@@ -33,7 +33,7 @@ public class EndpointsFunctionality : BaseAPITest
 
         var client = authenticationService.GetUserAuthorizedClient();
 
-        var request = new RestRequest("https://api.spotify.com/v1/me/player", Method.Get);
+        var request = new RestRequest("/me/player", Method.Get);
 
         var response = client.Execute<PlaybackResponse>(request);
 
@@ -53,7 +53,7 @@ public class EndpointsFunctionality : BaseAPITest
 
         var client = authenticationService.GetAuthorizedClient();
 
-        var request = new RestRequest("https://api.spotify.com/v1/search", Method.Get);
+        var request = new RestRequest("/search", Method.Get);
         request.AddParameter("q", query);
         request.AddParameter("type", type);
 

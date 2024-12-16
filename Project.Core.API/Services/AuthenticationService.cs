@@ -1,6 +1,5 @@
 ﻿using Project.Core.API.Managers;
 using Project.Core.API.Models;
-using ReportPortal.Client.Abstractions.Responses;
 using RestSharp;
 using System.Text;
 

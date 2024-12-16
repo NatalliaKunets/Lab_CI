@@ -7,7 +7,7 @@ public static class BrowserManager
 {
     private static readonly ThreadLocal<IBrowser> driver = new();
 
-    public static IBrowser? GetBrowser()
+    public static IBrowser GetBrowser()
     {
         if (driver.Value == null)
         {
@@ -22,7 +22,7 @@ public static class BrowserManager
             }
         }
 
-        return driver.Value;
+        return driver.Value!;
     }
 
     public static void CloseBrowser()

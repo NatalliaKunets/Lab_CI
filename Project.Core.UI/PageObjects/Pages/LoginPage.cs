@@ -5,10 +5,8 @@ using Project.Core.UI.PageObjects.Locators;
 
 namespace Project.Core.UI.PageObjects.Pages;
 
-public class LoginPage : BasePage
+public class LoginPage(IBrowser driver) : BasePage(driver)
 {
-    public LoginPage(IBrowser driver) : base(driver) { }
-
     private IElement UserNameInput => Driver.FindElement(LoginPageLocators.userNameInputBy);
     private IElement PasswordInput => Driver.FindElement(LoginPageLocators.passwordInputBy);
     private IElement LoginButton => Driver.FindElement(LoginPageLocators.loginButtonBy);
