@@ -5,16 +5,16 @@ using Project.Core.UI.PageObjects.Pages;
 namespace Project.Tests.BDD;
 
 [Binding]
-public class BaseBDDTest
+public class BaseBddUITest
 {
     protected MainPage mainPage;
     protected LoginPage loginPage;
 
-    public BaseBDDTest(MainPage mainPage, LoginPage loginPage)
+    public BaseBddUITest(MainPage mainPage, LoginPage loginPage)
     {
         this.mainPage = mainPage;
         this.loginPage = loginPage;
 
-        Logger.Information("BaseBDDTest constructor executed");
+        Logger.Information("BaseBddUITest constructor executed");
     }
 }

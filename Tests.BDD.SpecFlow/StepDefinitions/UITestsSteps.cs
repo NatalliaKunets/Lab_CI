@@ -6,7 +6,7 @@ using Project.Core.UI.PageObjects.Pages;
 namespace Project.Tests.BDD.StepDefinitions;
 
 [Binding]
-public class UITestsSteps(MainPage mainPage, LoginPage loginPage) : BaseBDDTest(mainPage, loginPage)
+public class UITestsSteps(MainPage mainPage, LoginPage loginPage) : BaseBddUITest(mainPage, loginPage)
 {
     [Given("User is on Spotify homepage")]
     public void GivenUserIsOnSpotifyHomepage()

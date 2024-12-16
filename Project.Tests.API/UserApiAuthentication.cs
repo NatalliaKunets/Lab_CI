@@ -14,7 +14,7 @@ public class UserApiAuthentication : BaseAPITest
 
         var client = authenticationService.GetAuthorizedClient();
 
-        var request = new RestRequest($"https://api.spotify.com/v1/users/{userId}", Method.Get);
+        var request = new RestRequest($"/users/{userId}", Method.Get);
 
         var response = client.Execute(request);
 
@@ -31,7 +31,7 @@ public class UserApiAuthentication : BaseAPITest
         var client = sessionManager.RestClient;
         client.AddDefaultHeader("Authorization", $"Bearer {token}");
 
-        var request = new RestRequest($"https://api.spotify.com/v1/users/{userId}", Method.Get);
+        var request = new RestRequest($"/users/{userId}", Method.Get);
 
         var response = client.Execute(request);
 

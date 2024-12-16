@@ -8,16 +8,27 @@ namespace Project.Tests.BDD;
 public static class Hooks
 {
     [BeforeScenario]
-    public static void BeforeScenario(IObjectContainer diContainer) 
+    public static void BeforeScenario(FeatureContext featureContext, IObjectContainer diContainer) 
     {
-        diContainer.RegisterTestDependencies();
+        if (featureContext.FeatureInfo.Title == "UITests")
+        {
+            diContainer.RegisterUITestDependencies();
+        }
+        else if (featureContext.FeatureInfo.Title == "APITests")
+        {
+            diContainer.RegisterAPITestDependencies();
+        }
+
         Logger.Information("Before Scenario executed");
     }
 
     [AfterScenario]
-    public static void AfterScenario()
+    public static void AfterScenario(FeatureContext featureContext)
     {
-        BrowserManager.CloseBrowser();
+        if (featureContext.FeatureInfo.Title == "UITests")
+        {
+            BrowserManager.CloseBrowser();
+        }
         Logger.Information("After Scenario executed");
     }
 }

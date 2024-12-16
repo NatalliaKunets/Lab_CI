@@ -16,7 +16,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
 
         var client = authenticationService.GetUserAuthorizedClient();
 
-        var request = new RestRequest($"https://api.spotify.com/v1/users/{userId}/playlists", Method.Post);
+        var request = new RestRequest($"/users/{userId}/playlists", Method.Post);
         request.AddJsonBody(new { name = playlistName });
 
         var response = client.Execute<PlaylistResponse>(request);
@@ -27,7 +27,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
         Logger.Information("Playlist is created");
 
         #region PostConditions: Unfolow the created playlist to delete it from user library
-        var delRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{response.Data?.Id}/followers", Method.Delete);
+        var delRequest = new RestRequest($"/playlists/{response.Data?.Id}/followers", Method.Delete);
         var delResponse = client.Execute(delRequest);
         if (delResponse.StatusCode != HttpStatusCode.OK)
         {
@@ -46,7 +46,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
         var client = authenticationService.GetUserAuthorizedClient();
 
         #region Preconditions: Create a playlist
-        var playlistRequest = new RestRequest($"https://api.spotify.com/v1/users/{userId}/playlists", Method.Post);
+        var playlistRequest = new RestRequest($"/users/{userId}/playlists", Method.Post);
         playlistRequest.AddJsonBody(new { name = playlistName });
 
         var playlistResponse = client.Execute<PlaylistResponse>(playlistRequest);
@@ -69,7 +69,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
         Logger.Information($"Playlist {playlistName} created.");
         #endregion
 
-        var trackRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/tracks", Method.Post);
+        var trackRequest = new RestRequest($"/playlists/{playlistId}/tracks", Method.Post);
         trackRequest.AddJsonBody(new { uris = new[] { trackUri } });
         var trackResponse = client.Execute(trackRequest);
 
@@ -78,7 +78,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
         Logger.Information($"Track was added to Playlist {playlistName}.");
 
         #region PostConditions: Unfolow the created playlist to delete it from user library
-        var delRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/followers", Method.Delete);
+        var delRequest = new RestRequest($"/playlists/{playlistId}/followers", Method.Delete);
         var delResponse = client.Execute(delRequest);
         if (delResponse.StatusCode != HttpStatusCode.OK)
         {
@@ -97,7 +97,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
         var client = authenticationService.GetUserAuthorizedClient();
 
         #region Preconditions: Create a playlist
-        var playlistRequest = new RestRequest($"https://api.spotify.com/v1/users/{userId}/playlists", Method.Post);
+        var playlistRequest = new RestRequest($"/users/{userId}/playlists", Method.Post);
         playlistRequest.AddJsonBody(new { name = playlistName });
 
         var playlistResponse = client.Execute<PlaylistResponse>(playlistRequest);
@@ -122,7 +122,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
 
         #region Preconditions: Add a track to the playlist
 
-        var trackRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/tracks", Method.Post);
+        var trackRequest = new RestRequest($"/playlists/{playlistId}/tracks", Method.Post);
         trackRequest.AddJsonBody(new { uris = new[] { trackUri } });
         var trackResponse = client.Execute(trackRequest);
 
@@ -135,7 +135,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
         Logger.Information($"Track added to Playlist {playlistName}.");
         #endregion
 
-        var trackRemoveRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/tracks", Method.Delete);
+        var trackRemoveRequest = new RestRequest($"/playlists/{playlistId}/tracks", Method.Delete);
         trackRemoveRequest.AddJsonBody(new 
             {
                 tracks = new[]
@@ -151,7 +151,7 @@ public class PlaylistEndpointsFunctionality : BaseAPITest
 
 
         #region PostConditions: Unfolow the created playlist to delete it from user library
-        var delRequest = new RestRequest($"https://api.spotify.com/v1/playlists/{playlistId}/followers", Method.Delete);
+        var delRequest = new RestRequest($"/playlists/{playlistId}/followers", Method.Delete);
         var delResponse = client.Execute(delRequest);
         if (delResponse.StatusCode != HttpStatusCode.OK)
         {
