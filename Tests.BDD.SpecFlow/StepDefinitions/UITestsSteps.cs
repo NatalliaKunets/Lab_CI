@@ -1,6 +1,5 @@
 using Project.Core.Logging;
 using Project.Core.Settings;
-using Project.Core.UI.Browsers;
 using Project.Core.UI.PageObjects.Pages;
 
 namespace Project.Tests.BDD.StepDefinitions;

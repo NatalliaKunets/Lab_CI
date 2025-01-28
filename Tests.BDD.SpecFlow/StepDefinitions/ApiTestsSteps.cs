@@ -1,6 +1,6 @@
-using Project.Core.Logging;
 using Project.Core.API.Models;
 using Project.Core.API.Services;
+using Project.Core.Logging;
 using RestSharp;
 using System.Net;
 

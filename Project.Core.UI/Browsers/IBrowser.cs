@@ -13,6 +13,7 @@ public interface IBrowser
     string Title { get; }
 
     WebDriverWait Wait { get; }
+
     Actions Actions { get; }
 
     string CurrentWindowHandle { get; }
