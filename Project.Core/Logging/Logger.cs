@@ -25,5 +25,4 @@ public static class Logger
     {
         Log.Information(message);
     }
-    
 }

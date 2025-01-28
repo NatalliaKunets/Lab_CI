@@ -13,6 +13,7 @@ public interface IBrowser
     string Title { get; }
 
     WebDriverWait Wait { get; }
+
     Actions Actions { get; }
 
     string CurrentWindowHandle { get; }
@@ -36,5 +37,7 @@ public interface IBrowser
     void RefreshPage();
 
     void WindowMaximize();
+
+    void TakeScreenshot(string testName);
 }
 

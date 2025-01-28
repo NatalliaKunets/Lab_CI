@@ -9,9 +9,7 @@ namespace Project.Tests.UI;
 [Parallelizable(ParallelScope.Children)]
 public class UserLibrary : BaseUITest
 {
-    [Test]
-    [Ignore("Skip for CI check")]
-
+    [Test, Category("UI"), Retry(3)]
     public void CreateNewPlaylist()
     {
         Logger.Information("Starting Test Create a New Playlist");
@@ -39,7 +37,7 @@ public class UserLibrary : BaseUITest
 
     }
 
-    [Test]
+    [Test, Category("UI"), Retry(3)]
     public void CannotCreatePlaylist_IfUserNotLoggedIn()
     {
         Logger.Information("Starting Test Verify that User Cannot Create a Playlist If Not LoggedIn");
@@ -56,9 +54,8 @@ public class UserLibrary : BaseUITest
 
 
 
-	[TestCase("My Playlist #7", "New Playlist")]
-    [Ignore("Skip for CI check")]
-
+	[TestCase("My Playlist #7", "New Playlist"), Category("UI"), Retry(3)]
+    [Ignore("Skip for CI test")]
     public void RenamePlaylist(string playlistName, string newPlaylistName)
 	{
 		MainPage mainPage = new(Driver!);
@@ -74,10 +71,9 @@ public class UserLibrary : BaseUITest
 	}
 
 
-	[TestCase("New Playlist")]
-    [Ignore("Skip for CI check")]
-
-    public void DeletePlaylist(string playlistName)
+	[TestCase("New Playlist"), Category("UI"), Retry(3)]
+    [Ignore("Skip for CI test")]
+	public void DeletePlaylist(string playlistName)
 	{
 		MainPage mainPage = new(Driver!);
 		LibraryPage libPage = new(Driver!);

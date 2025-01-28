@@ -1,0 +1,15 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/reportportal/agent-net-nunit/master/src/ReportPortal.NUnitExtension/ReportPortal.config.schema",
+  "enabled": true,
+  "server": {
+    "url": "https://reportportal.epam.com/",
+    "project": "natallia_kunets_personal",
+    "apiKey": "",
+    "_comment": "Set up an Environment Variable named 'ReportPortal__server__apiKey' to store the API key securely."
+  },
+  "launch": {
+    "name": "EPAM AT Lab .NET",
+    "debugMode": false,
+    "tags": "Lab_AT.NET"
+  }
+}

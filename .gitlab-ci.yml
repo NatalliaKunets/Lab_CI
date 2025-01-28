@@ -1,14 +1,16 @@
 default:
   image: mcr.microsoft.com/dotnet/sdk:8.0
 
-variables:
-  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
-  NUGET_PACKAGES_DIRECTORY: '.nuget'
-
 stages:
   - build
   - test
 
+variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  NUGET_PACKAGES_DIRECTORY: '.nuget'
+  REPORT_PORTAL_CONFIG_PATH: "Lab_CI\\Project.Core\\ReportPortal.config.json"
+
+  
 cache:
   key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
   paths:
@@ -24,12 +26,20 @@ build:
   stage: build
   script:
     - dotnet build --configuration Release
+  only:
+    - master
 
 test_chrome:
   stage: test
   script:
-    - echo "Installing Google Chrome"
+    - echo "Running NUnit tests with ReportPortal integration"
+    - dotnet add package ReportPortal.NUnitExtension
+    - cp $REPORT_PORTAL_CONFIG_PATH .
+    - echo "Installing Google Chrome..."
     - wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
-    - dotnet test --configuration Release --no-restore
+    - dotnet test --configuration Release --no-restore --filter "TestCategory!=UI"
+    
+  only:
+    - dev

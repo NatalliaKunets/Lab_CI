@@ -10,7 +10,6 @@ public static class ConfigurationManager
             .AddJsonFile("loggerConfiguration.json", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
-
     private static BrowserSettings? browserSettings;
     private static ApiSettings? apiSettings;
     private static UserCredentials? userCredentials;

@@ -7,9 +7,14 @@ using System.Collections.ObjectModel;
 
 namespace Project.Core.UI.Browsers;
 
-public class Browser(IWebDriver driver) : IBrowser
+public class Browser : IBrowser
 {
-    private readonly IWebDriver driver = driver;
+    private readonly IWebDriver driver;
+
+    public Browser(IWebDriver driver)
+    {
+        this.driver = driver;
+    }
 
     public WebDriverWait Wait => new (driver, TimeSpan.FromSeconds(10)); 
 
@@ -71,6 +76,17 @@ public class Browser(IWebDriver driver) : IBrowser
     public void WindowMaximize()
     {
         driver.Manage().Window.Maximize();
+    }
+
+    public void TakeScreenshot(string testName)
+    {
+        string filePath = "screenshots";
+        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        Directory.CreateDirectory(filePath);
+
+        Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+        
+        screenshot.SaveAsFile(Path.Combine(filePath, $"{testName.Split('(')[0]}_failure_{timestamp}.png"));
     }
 }
 
