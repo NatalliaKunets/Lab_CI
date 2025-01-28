@@ -52,6 +52,6 @@ test_chrome:
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
     - echo "Executing tests..."
-    - dotnet test --configuration Release --no-restore --filter "TestCategory!=UI"
+    - dotnet test --configuration Release --no-restore --filter "TestCategory=API"
   only:
     - master
