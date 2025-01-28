@@ -42,4 +42,4 @@ test_chrome:
     - dotnet test --configuration Release --no-restore --filter "TestCategory!=UI"
     
   only:
-    - dev
+    - master
