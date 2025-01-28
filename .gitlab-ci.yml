@@ -48,7 +48,7 @@ test_chrome:
   stage: test
   script:
     - echo "Running NUnit tests with ReportPortal integration"
-    - dotnet add package ReportPortal.NUnitExtension
+    - dotnet add Lab_CI/Project.Core/Project.Core.csproj package ReportPortal.NUnitExtension
     - cp $REPORT_PORTAL_CONFIG_PATH .
 
     - echo "Installing Google Chrome..."
