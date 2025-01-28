@@ -13,9 +13,6 @@ variables:
   #SONAR_PROJECT_KEY: "kunets.natallia_epam_lab.net"
   #SONAR_ORGANIZATION: "kunets-natallia"
   
-  # ReportPortal
-  REPORT_PORTAL_CONFIG_PATH: "Lab_CI\\Project.Core\\ReportPortal.config.json"
-
 cache:
   key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
   paths:
@@ -44,7 +41,7 @@ build:
 #    - dotnet build
 #    - dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
 
-test_chrome:
+test:
   stage: test
   script:
     - echo "Installing Google Chrome..."
@@ -52,6 +49,6 @@ test_chrome:
     - echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
     - apt-get update && apt-get install -y google-chrome-stable
     - echo "Executing tests..."
-    - dotnet test --configuration Release --no-restore --filter "TestCategory=API"
+    - dotnet test --configuration Release --no-restore --filter "TestCategory=UI_CI"
   only:
     - master

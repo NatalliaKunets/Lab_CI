@@ -37,7 +37,7 @@ public class UserLibrary : BaseUITest
 
     }
 
-    [Test, Category("UI"), Retry(3)]
+    [Test, Category("UI_CI"), Retry(3)]
     public void CannotCreatePlaylist_IfUserNotLoggedIn()
     {
         Logger.Information("Starting Test Verify that User Cannot Create a Playlist If Not LoggedIn");

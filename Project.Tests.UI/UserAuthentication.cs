@@ -26,7 +26,7 @@ public class UserAuthentication : BaseUITest
 	}
 
 
-    [TestCase("random_user", "pwd123"), Category("UI"), Retry(3)]
+    [TestCase("random_user", "pwd123"), Category("UI_CI"), Retry(3)]
     [TestCase("31cinettxjyfv2um6x3aa2iqkkdi", "123")]
     public void LoginWithInvalidCredentials(string userName, string password)
     {
@@ -65,7 +65,7 @@ public class UserAuthentication : BaseUITest
 		Logger.Information("Test Log In With Invalid Credentials executed.");
 	}
 
-    [TestCase("", ""), Category("UI"), Retry(3)]
+    [TestCase("", ""), Category("UI_CI"), Retry(3)]
     public void LoginWithEmptyFields(string userName, string password)
     {
         Logger.Information("Starting Test Login with Empty Fields");
