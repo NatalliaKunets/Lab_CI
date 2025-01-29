@@ -21,5 +21,4 @@ The project involves developing a **Test Automation Framework** for learning pur
 ---
 
 ## Environment Variables Setup  
-Set up an environment variable named `ReportPortal__server__apiKey` to store the API key securely:  
-DotNetLabApiKey_R5iaUhVdQnSTXjG9SpY8OjppSp5UQ5ERIZAH9vqQpq_GwgfO_amT11GszyauFjfW
+Set up an environment variable named `ReportPortal__server__apiKey` to store the API key securely
